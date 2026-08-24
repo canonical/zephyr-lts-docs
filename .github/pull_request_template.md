@@ -1,4 +1,5 @@
-- [ ] Have you updated `CHANGELOG.md` with relevant non-documentation file changes?
-- [ ] Have you updated the documentation for this change?
+- [ ] I built the documentation with `make -C docs html`.
+- [ ] I ran the checks that apply to this change.
+- [ ] I updated `CHANGELOG.md` when the change affects documentation infrastructure.
 
 -----

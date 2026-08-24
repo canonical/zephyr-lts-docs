@@ -1,0 +1,27 @@
+name: zephyr-24-04
+base: ubuntu@24.04
+sdks:
+  - name: uv
+    channel: latest/stable
+  - name: zephyr
+    channel: 24.04/stable
+  - name: zephyr-sdk-ng
+    channel: 0.16.9/stable
+  - name: zephyr-amd64
+    channel: 0.16.9/stable
+connections:
+  - plug: zephyr:venv
+    slot: uv:venv
+  - plug: zephyr:sdk-ng
+    slot: zephyr-sdk-ng:sdk-ng
+  - plug: zephyr-sdk-ng:amd64
+    slot: zephyr-amd64:toolchain
+actions:
+  sync: |
+    west update "$@"
+  build: |
+    cd /project/zephyr
+    west build "$@"
+  flash: |
+    cd /project/zephyr
+    west flash "$@"

@@ -1,7 +1,6 @@
-# This workflow tests the Sphinx Stack.
-# Don't run this workflow on any repos that use the Sphinx Stack.
+# This workflow tests the Zephyr 24.04 documentation.
 
-name: Test Sphinx Stack
+name: Test documentation
 
 on:
   push:
