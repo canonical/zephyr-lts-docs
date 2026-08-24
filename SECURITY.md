@@ -1,9 +1,9 @@
 # Security Policy
 
-This repository is part of **Zephyr RTOS 3.7 LTS (Superdistro distribution)** —
-Canonical's downstream redistribution of the upstream
+This repository is part of **Zephyr 24.04** — Canonical's downstream
+redistribution of the upstream
 [Zephyr RTOS](https://github.com/zephyrproject-rtos/zephyr) Long Term Support
-(LTS) v3.7 line, packaged and delivered through Superdistro.
+(LTS) v3.7 line.
 
 We take the security of our software seriously and appreciate your efforts to
 responsibly disclose your findings.
@@ -33,18 +33,18 @@ from you. This product adopts that policy.
 ## Supported Versions
 
 Security maintenance follows the upstream Zephyr **v3.7 LTS** line as published
-on the Superdistro LTS track.
+for Zephyr 24.04.
 
 | Version / track                     | Supported          |
 | ----------------------------------- | ------------------ |
-| Zephyr 3.7 LTS (latest patch, Superdistro LTS track) | :white_check_mark: |
-| Older 3.7 LTS patch releases        | :x: (upgrade to the latest 3.7 LTS patch) |
+| Zephyr 24.04 (latest update)        | :white_check_mark: |
+| Older Zephyr 24.04 updates          | :x: (upgrade to the latest Zephyr 24.04 update) |
 | Edge / non-LTS tracks               | :x:                |
-| Releases prior to 3.7               | :x:                |
+| Releases prior to 24.04             | :x:                |
 
-Only the **latest patch release of the 3.7 LTS line** (currently 3.7.2) is
-actively maintained. Users are expected to track the latest patch on the
-Superdistro LTS channel to receive security fixes.
+Only the **latest update of the Zephyr 24.04 release series** is actively
+maintained. Users are expected to track the latest Zephyr 24.04 update to
+receive security fixes.
 
 ## Product Lifetime and Support Phases
 
@@ -54,8 +54,8 @@ Superdistro LTS channel to receive security fixes.
   approximately 2.5 years of standard maintenance.
 - **Extended support.** Where upstream provides an extended maintenance window
   for v3.7, and/or where a customer or contractual Extended Security
-  Maintenance (ESM) commitment applies, the Superdistro LTS track is maintained
-  for that longer period.
+  Maintenance (ESM) commitment applies, the Zephyr 24.04 release series is
+  maintained for that longer period.
 - **End of life (EOL).** When the applicable maintenance window ends, the track
   stops receiving security updates. The authoritative maintenance window and
   EOL date are published on the Zephyr LTS product documentation/security page
@@ -81,9 +81,9 @@ folded into routine rebuilds.
 
 ## How Fixes Are Delivered
 
-Security fixes are delivered as new revisions published to the Superdistro LTS
-track. Users receive fixes by refreshing to the new revision. Fixes are
-announced through:
+Security fixes are delivered as new revisions published for Zephyr 24.04.
+Users receive fixes by updating to the new revision. Fixes are announced
+through:
 
 - [Ubuntu Security Notices (USN)](https://ubuntu.com/security/notices) where applicable;
 - the release notes/changelog accompanying each rebuild; and

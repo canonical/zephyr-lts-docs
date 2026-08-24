@@ -1,5 +1,6 @@
 import datetime
 import os
+import re
 import textwrap
 
 # Configuration for the Sphinx documentation builder.
@@ -11,17 +12,36 @@ import textwrap
 # A complete list of built-in Sphinx configuration values:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 #
-# The Sphinx Stack uses the Canonical Sphinx theme to keep all documentation consistent
-# and on brand:
-# https://github.com/canonical/canonical-sphinx
+# The project uses the Canonical Sphinx theme.
+# https://canonical-sphinx.readthedocs-hosted.com/
 
 #######################
 # Project information #
 #######################
 
+# Release profile. A new release branch should only need to change these values,
+# plus the concrete files listed below.
+product_release = "24.04"
+upstream_release = "3.7"
+sdk_ng_channel = "0.16.9/stable"
+source_tag = "24.04.rc-1"
+
+# Keep docs/reference/workshop.yaml, the release-note filename and heading,
+# toctree entries, page labels, and reST metadata descriptions aligned with the
+# profile. These are consumed outside normal reST substitution processing.
+product_name = f"Zephyr {product_release}"
+upstream_docs_release = f"{upstream_release}.0"
+workshop_name = f"zephyr-{product_release.replace('.', '-')}"
+workshop_definition = f"{workshop_name}.yaml"
+workshop_base = f"ubuntu@{product_release}"
+workshop_sdk_channel = f"{product_release}/stable"
+launchpad_project_url = "https://code.launchpad.net/~arctic-tern/zephyr-rtos"
+launchpad_git_base = "https://git.launchpad.net/~arctic-tern/zephyr-rtos/+git"
+manifest_repository = "zephyr-manifest"
+manifest_repository_url = f"{launchpad_git_base}/{manifest_repository}"
+
 # Project name
-# TODO: Update with the official name of your project or product (e.g., "Ubuntu Server")
-project = "Project"
+project = product_name
 
 # Author name; used in the default copyright statement in the page footer
 author = "Canonical Ltd."
@@ -29,15 +49,13 @@ author = "Canonical Ltd."
 # The year in the copyright statement
 copyright = f"{datetime.date.today().year}"
 
-# Sidebar documentation title
-# To disable the title, set it to an empty string.
-html_title = project + " documentation"
+# Sidebar documentation title; empty to defer to the theme default.
+html_title = ""
 
 # Documentation website URL
 ogp_site_url = os.environ.get("READTHEDOCS_CANONICAL_URL", "/")
 
 # Preview name of the documentation website
-# TODO: To use a different name for the project in previews, update the next line.
 ogp_site_name = project
 
 # Preview image URL
@@ -55,7 +73,7 @@ html_context = {
     # TODO: Change to your product website URL, dropping the 'https://' prefix (e.g.,
     #       'ubuntu.com/lxd'). If there's no such website, remove the {{ product_page }}
     #       link from the _templates/header.html file.
-    "product_page": "",
+    "product_page": "documentation.ubuntu.com",
     # Product tag image; the orange part of your logo, shown in the page header
     # TODO: To add a tag image, uncomment and update as needed.
     # 'product_tag': '_static/tag.png',
@@ -72,7 +90,7 @@ html_context = {
     # documentation source files and creating GitHub issues are added at the bottom of
     # each page.
     # TODO: Change to your documentation GitHub repository URL or leave empty.
-    "github_url": "",
+    "github_url": "https://github.com/canonical/zephyr-lts-docs",
     # Docs branch in the repo; used in links for viewing the source files
     "repo_default_branch": "main",
     # Docs location in the repo; used in links for viewing the source files
@@ -91,22 +109,15 @@ html_context = {
         # TODO: Specify your project's license.
         # For the name, we recommend using the standard shorthand identifier from
         # https://spdx.org/licenses
-        "name": "",
+        "name": "GPL-3.0",
         # TODO: Link directly to your project's license statement.
-        "url": "",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.html",
     },
 }
 
-# TODO: To enable the edit button on pages, uncomment and change the link to a
-# public repository on GitHub or Launchpad. Any of the following link domains
-# are accepted:
-# - https://github.com/example-org/example"
-# - https://launchpad.net/example
-# - https://git.launchpad.net/example
-#
-# html_theme_options = {
-# 'source_edit_link': 'https://github.com/canonical/sphinx-stack',
-# }
+html_theme_options = {
+    "source_edit_link": "https://github.com/canonical/zephyr-lts-docs",
+}
 
 # Project slug
 # TODO: If your documentation is hosted on https://documentation.ubuntu.com/,
@@ -167,9 +178,9 @@ rediraffe_dir_only = True
 # TODO: Add a description in the form "This is the documentation for <product name>,
 # <first sentence of home page>".
 llms_txt_description = textwrap.dedent(
-    """\
-    This is the documentation for the Sphinx Stack, a template repository that helps you
-    set up, build, and publish Sphinx documentation.
+    f"""\
+    This is the documentation for {product_name}, Canonical's long-term support
+    distribution of the Zephyr real-time operating system.
     """
 )
 
@@ -184,7 +195,9 @@ if os.environ.get("READTHEDOCS"):
 # A regex list of URLs that are ignored by 'make linkcheck'
 linkcheck_ignore = [
     "http://127.0.0.1:8000",
-    "https://github.com",
+    rf"{re.escape(launchpad_project_url)}.*",
+    rf"{re.escape(launchpad_git_base)}.*",
+    r"https://github\.com/canonical/zephyr-lts-docs(?:/.*)?$",
     r"https://matrix\.to/.*",
     "https://example.com",
     # SourceForge domains often block linkcheck
@@ -192,7 +205,7 @@ linkcheck_ignore = [
 ]
 
 # A regex list of URLs where anchors are ignored by 'make linkcheck'
-linkcheck_anchors_ignore_for_url = [r"https://github\.com/.*"]
+linkcheck_anchors_ignore_for_url = [r"https://code\.launchpad\.net/.*"]
 
 # How long the link checker will wait for a response for each request
 # TODO: Decrease to improve run time or increase if links frequently time out.
@@ -243,6 +256,7 @@ extensions = [
 exclude_patterns = [
     "doc-cheat-sheet*",
     ".venv*",
+    "_dev",
 ]
 
 # Adds custom CSS files, located remotely or in 'html_static_path'.
@@ -255,13 +269,59 @@ exclude_patterns = [
 #     "https://assets.ubuntu.com/v1/287a5e8f-bundle.js",
 # ]
 
-# Appends extra markup to the end of every document written in reST
-# rst_epilog = """
-# """
+# Appends release substitutions and reusable external links to every reST page.
+rst_epilog = f"""
+.. |product_name| replace:: {product_name}
+.. |product_release| replace:: {product_release}
+.. |upstream_release| replace:: {upstream_release}
+.. |upstream_docs_release| replace:: {upstream_docs_release}
+.. |workshop_name| replace:: {workshop_name}
+.. |workshop_definition| replace:: {workshop_definition}
+.. |workshop_base| replace:: {workshop_base}
+.. |workshop_sdk_channel| replace:: {workshop_sdk_channel}
+.. |sdk_ng_channel| replace:: {sdk_ng_channel}
+.. |source_tag| replace:: {source_tag}
+.. |launchpad_project_url| replace:: {launchpad_project_url}
+.. |launchpad_git_base| replace:: {launchpad_git_base}
+.. |manifest_repository| replace:: {manifest_repository}
+.. |manifest_repository_url| replace:: {manifest_repository_url}
+.. |product_release_samp| replace:: :samp:`{product_release}`
+.. |upstream_release_samp| replace:: :samp:`{upstream_release}`
+.. |workshop_name_samp| replace:: :samp:`{workshop_name}`
+.. |workshop_definition_file| replace:: :file:`.workshop/{workshop_definition}`
+.. |workshop_base_samp| replace:: :samp:`{workshop_base}`
+.. |workshop_sdk_channel_samp| replace:: :samp:`{workshop_sdk_channel}`
+.. |sdk_ng_channel_samp| replace:: :samp:`{sdk_ng_channel}`
+.. |source_tag_samp| replace:: :samp:`{source_tag}`
+.. |manifest_repository_url_samp| replace:: :samp:`{manifest_repository_url}`
+.. |workshop_project_prompt| replace:: workshop\\@{workshop_name}:/project$
+.. |workshop_zephyr_prompt| replace:: workshop\\@{workshop_name}:/project/zephyr$
+.. |workshop_info_command| replace:: :command:`workshop info {workshop_name}`
+.. |manifest_tag_command| replace:: :command:`git -C {manifest_repository} describe --tags --exact-match`
+.. |workshop_sync_command| replace:: :command:`workshop run {workshop_name} -- sync`
+.. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
+.. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
+.. |Workshop| replace:: **Workshop**
+
+.. _Zephyr RTOS Launchpad project: {launchpad_project_url}
+.. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}
+.. _Zephyr source repository: {launchpad_project_url}/+git/zephyr
+.. _MCUboot repository: {launchpad_project_url}/+git/mcuboot
+.. _CMSIS repository: {launchpad_project_url}/+git/cmsis
+.. _Nordic HAL repository: {launchpad_project_url}/+git/hal_nordic
+.. _STM32 HAL repository: {launchpad_project_url}/+git/hal_stm32
+.. _sdk-ng repository: {launchpad_project_url}/+git/sdk-ng
+.. _upstream Zephyr SDK installation procedure: https://docs.zephyrproject.org/{upstream_docs_release}/develop/toolchains/zephyr_sdk.html
+.. _Diátaxis documentation framework: https://diataxis.fr/
+.. _License: https://github.com/canonical/zephyr-lts-docs/blob/main/LICENSE
+.. _Report a documentation issue: https://github.com/canonical/zephyr-lts-docs/issues
+.. _Security policy: https://github.com/canonical/zephyr-lts-docs/blob/main/SECURITY.md
+.. _Ubuntu Code of Conduct: https://ubuntu.com/community/docs/ethos/code-of-conduct
+.. _Workshop: https://ubuntu.com/workshop
+"""
 
 # Feedback button at the top; enabled by default
-# TODO: Disable the button if your project is unsuitable for public feedback.
-# disable_feedback_button = True
+disable_feedback_button = True
 
 # Your manpage URL
 # TODO: To enable manpage links, uncomment and replace {codename} with required
