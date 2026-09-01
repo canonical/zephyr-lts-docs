@@ -236,8 +236,36 @@ extensions = [
     "sphinxcontrib.cairosvgconverter",
     "sphinx_last_updated_by_git",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
+    "sphinx.ext.todo",
     "sphinx_sitemap",
 ]
+
+#####################
+# External link shortcuts
+#####################
+
+# Shortcut roles for linking to external sites; see
+# https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
+#
+# Usage: :zephyr37-docs:`develop/west/manifest.html <West Manifests>` links
+# to https://docs.zephyrproject.org/3.7.0/develop/west/manifest.html with the
+# link text "West Manifests". Omitting the "<...>" part uses the path itself
+# as the link text.
+extlinks = {
+    "zephyr37-docs": ("https://docs.zephyrproject.org/3.7.0/%s", "%s"),
+}
+
+#####################
+# Todo extension
+#####################
+
+# Enables the `.. todo::` directive and `todolist` directive; see
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html
+#
+# Set to False (or remove) before publishing a release build if you don't
+# want TODOs to appear in the rendered output.
+todo_include_todos = True
 
 # Excludes files or directories from processing
 exclude_patterns = [
