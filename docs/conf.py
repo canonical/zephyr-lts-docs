@@ -268,6 +268,8 @@ extensions = [
 # as the link text.
 extlinks = {
     "zephyr37-docs": ("https://docs.zephyrproject.org/3.7.0/%s", "%s"),
+    "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
+    "canonical-zephyr": ("https://git.launchpad.net/~arctic-tern/zephyr-rtos/+git/%s", "%s"),
 }
 
 #####################
@@ -331,6 +333,10 @@ rst_epilog = f"""
 .. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
 .. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
+.. |canonical-zephyr-repo| replace::
+.. |zephyr37-lts| replace:: 26.04 LTS
+.. |zephyr2604-base| replace:: Zephyr v3.7
+.. |west-min-version| replace:: v1.5
 
 .. _Zephyr RTOS Launchpad project: {launchpad_project_url}
 .. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}
