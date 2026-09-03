@@ -21,3 +21,17 @@ repos:
         language: system
         pass_filenames: false
         files: ^docs/.*\.(rst|md|txt)$
+
+      - id: make-doctest
+        name: Run make doctest
+        entry: make -C docs doctest
+        language: system
+        pass_filenames: false
+        files: ^docs/.*\.(rst|md)$
+
+      - id: make-cram
+        name: Run make cram
+        entry: make -C docs cram
+        language: system
+        pass_filenames: false
+        files: ^docs/_dev/tests/.*\.t$

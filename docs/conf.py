@@ -251,6 +251,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
     "sphinx.ext.todo",
+    "sphinx.ext.doctest",
     "sphinx_sitemap",
 ]
 

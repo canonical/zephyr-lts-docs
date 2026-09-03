@@ -35,6 +35,8 @@ help:
 	@echo "* check links:                               make linkcheck"
 	@echo "* check markdown:                            make lint-md"
 	@echo "* check spelling:                            make spelling"
+	@echo "* run in-page doctests (assert CLI output):  make doctest"
+	@echo "* run cram CLI transcript tests:             make cram"
 	@echo "* check spelling (without building again):   make spellcheck"
 	@echo "* check inclusive language:                  make woke"
 	@echo "* check accessibility:                       make pa11y"
@@ -47,7 +49,7 @@ help:
 .PHONY: help full-help html epub pdf linkcheck spelling spellcheck woke \
         vale pa11y run serve install pa11y-install   \
         vale-install pdf-prep pdf-prep-force clean clean-doc \
-        update lint-md
+        update lint-md doctest cram
 
 full-help: $(DOCS_VENVDIR)
 	@. $(DOCS_VENV); $(SPHINX_BUILD) -M help "$(DOCS_SOURCEDIR)" "$(DOCS_BUILDDIR)" $(SPHINX_OPTS) $(O)
@@ -160,6 +162,18 @@ spelling: vale-install
 
 spellcheck: spelling
 	@echo "Please note that the \`make spellcheck\` command is being deprecated in favor of \`make spelling\`"
+
+# Runs sphinx.ext.doctest blocks (testcode/testoutput) embedded in the
+# sources. Use hidden blocks (:hide:) to keep assertions out of the
+# rendered page, and :options: +ELLIPSIS to match only the relevant
+# parts of a command's output.
+doctest: install
+	. $(DOCS_VENV); $(SPHINX_BUILD) -b doctest "$(DOCS_SOURCEDIR)" "$(DOCS_BUILDDIR)" -w $(DEV_DIR)/warnings.txt $(SPHINX_OPTS)
+
+# Runs cram transcript tests (golden CLI output) under _dev/tests.
+# Use (glob) suffixes to wildcard irrelevant output lines.
+cram: install
+	. $(DOCS_VENV); $(DOCS_VENVDIR)/bin/cram $(DEV_DIR)/tests
 
 pdf-prep: install
 	@for packageName in $(DOCS_PDFPACKAGES); do (dpkg-query -W -f='$${Status}' $$packageName 2>/dev/null | \

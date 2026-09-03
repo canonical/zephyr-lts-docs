@@ -88,9 +88,6 @@ venv
 rtd
 Launchpad
 LTS
-MCUboot
-bootloader
-CMake
 CMSIS
 Microcontroller
 mitigations
@@ -99,7 +96,19 @@ OpenOCD
 RTOS
 STM32
 toolchain
-toolchains
-west
+toolchains west
 Workshop
 Zephyr
+SHAs
+forall
+Kconfig
+topdir
+CMake
+debugserver
+bootloader
+MCUboot('s)?
+spdx
+bindesc
+subprocess
+doctests?
+cmd
