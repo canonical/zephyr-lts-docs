@@ -6,11 +6,12 @@ following indented lines are the expected output. Suffix a line with
 `(glob)` to treat `*` as a wildcard, which is how irrelevant parts of
 the output are excluded from the assertion.
 
-The installed west meets the documented minimum version (v1.0+,
-matching the Zephyr 3.7 LTS):
+The installed west matches the documented minimum version. The expected
+value comes from versions.env ($DOC_WEST_MIN_VERSION is in the
+environment, sourced by the cram make target), so bumping the documented
+version re-points this assertion automatically:
 
-  $ west --version
-  West version: v1.* (glob)
+  $ west --version | grep -q "^West version: v$DOC_WEST_MIN_VERSION\b"
 
 The built-in workspace commands are present in the top-level help. Only
 the command roster is relevant here; the surrounding help text is

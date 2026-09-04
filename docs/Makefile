@@ -172,8 +172,11 @@ doctest: install
 
 # Runs cram transcript tests (golden CLI output) under _dev/tests.
 # Use (glob) suffixes to wildcard irrelevant output lines.
+# versions.env is sourced so tests reference the same DOC_* versions as
+# the prose (which gets them via conf.py).
 cram: install
-	. $(DOCS_VENV); $(DOCS_VENVDIR)/bin/cram $(DEV_DIR)/tests
+	. $(DOCS_VENV); set -a && . ./versions.env && set +a && \
+	$(DOCS_VENVDIR)/bin/cram $(DEV_DIR)/tests
 
 pdf-prep: install
 	@for packageName in $(DOCS_PDFPACKAGES); do (dpkg-query -W -f='$${Status}' $$packageName 2>/dev/null | \

@@ -134,12 +134,33 @@ instead of hand-writing an example. For example:
    :end-before: built-in workspace commands
 ```
 
+### Documented versions: one source of truth
+
+The versions this documentation describes (the release, the upstream
+Zephyr base, the minimum west version) are defined once in
+`docs/versions.env`.
+
+* `docs/conf.py` parses it to generate the `rst_epilog` substitution
+  macros and the `extlinks` URLs, and injects the values as `DOC_*`
+  Python variables into every doctest.
+* `make cram` sources it into the environment, so cram tests reference
+  `$DOC_WEST_MIN_VERSION` etc. instead of hardcoding versions.
+* `docs/_dev/tests/versions.t` pins the values against the live
+  resources they name: the upstream docs page for
+  `$DOC_UPSTREAM_VERSION` and the Launchpad manifest branch for
+  `$DOC_VERSION`. These tests need network access.
+
+To move the documentation to a new release, bump `docs/versions.env`.
+Prose written with the macros updates automatically, and any test or
+tool that no longer matches the documented version fails.
+
 ### Which one should I use?
 
 * Use doctest when asserting a property of the environment; such as a version, a
   config value, that a command exists.
-* Use a cram test when you want to document a command's output or a sequence of commands and ensure that the output is an exact match to — write a cram
-  transcript, and consider `literalinclude`-ing it into the page.
+* Use a cram test when you want to document a command's output or a sequence of
+  commands and ensure that the output is an exact match to. You can write to a
+  cram transcript and import the text with a `literalinclude` in the page.
 
 
 ## Requirements and limitations
