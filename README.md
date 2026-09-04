@@ -60,24 +60,15 @@ the workflow prepares one first.
 ### Doctest: assertions inside the pages
 
 [sphinx.ext.doctest](https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html)
-runs Python snippets embedded in the pages during the `doctest` build. The
-pages define a small `sh()` helper in a hidden `testsetup` block, so
-asserting against a shell command looks like this:
+runs Python snippets embedded in the pages during the `doctest` build. A
+small `sh()` helper (run a shell command, fail on non-zero exit) is defined
+once in `doctest_global_setup` in `docs/conf.py` and is available in every
+doctest on every page, so asserting against a shell command looks like
+this:
 
 ```rst
-.. testsetup:: *
-
-   import subprocess
-
-   def sh(cmd):
-       """Run a shell command; fail the doctest on non-zero exit."""
-       result = subprocess.run(
-           cmd, shell=True, capture_output=True, text=True
-       )
-       assert result.returncode == 0, f"{cmd!r} failed: {result.stderr}"
-       return result.stdout
-
 .. testcode::
+   :hide:
 
    print(sh("west --version"), end="")
 
@@ -90,9 +81,9 @@ asserting against a shell command looks like this:
 
 How it works:
 
-* `.. testsetup:: *` — code that runs before every test in the file. It is
-  never rendered. Use this to define helpers once per page.
-* `.. testcode::` — Python code to execute.
+* `.. testcode::` — Python code to execute. `sh()` comes from
+  `doctest_global_setup` in `docs/conf.py`; use `.. testsetup:: *` to
+  define additional helpers local to one page.
 * `.. testoutput::` — the expected stdout. `:hide:` keeps it out of the rendered
   page; `:options: +ELLIPSIS` makes `...` a wildcard match.
   uses the ellipsis to match all west versions according to the regex: `v1.*`.

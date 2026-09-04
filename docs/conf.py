@@ -283,6 +283,25 @@ extlinks = {
 # want TODOs to appear in the rendered output.
 todo_include_todos = True
 
+#####################
+# Doctest extension
+#####################
+
+# Code run before every doctest on every page (`make doctest`); see
+# https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html
+#
+# Pages can still add file-local helpers with `.. testsetup::`.
+doctest_global_setup = """
+import subprocess
+
+
+def sh(cmd):
+    \"\"\"Run a shell command; fail the doctest on non-zero exit.\"\"\"
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    assert result.returncode == 0, f"{cmd!r} failed: {result.stderr}"
+    return result.stdout
+"""
+
 # Excludes files or directories from processing
 exclude_patterns = [
     "doc-cheat-sheet*",
