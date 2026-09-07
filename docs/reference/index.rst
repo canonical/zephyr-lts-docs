@@ -10,7 +10,6 @@ Reference
 These reference guides provide technical details
 for developing with |product_name|.
 
-
 Development environment
 -----------------------
 
@@ -22,7 +21,7 @@ project paths, actions, and host interfaces:
 
    Workshop environment <workshop-environment>
    West Manifest File <west-manifest>
-
+   West Command Line Interface <west-cli>
 
 Source and releases
 -------------------

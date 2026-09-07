@@ -3,6 +3,22 @@ import os
 import re
 import textwrap
 
+#####################
+# Documented versions
+#####################
+
+# Single source of truth for documented versions: versions.env is parsed
+# here and used to generate the extlinks, the rst_prolog substitution
+# macros, and the doctest variables below; it is also sourced by the
+# `make cram` target, so prose, links, and tests cannot diverge.
+_doc_versions = {}
+with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
+    for _line in _f:
+        _line = _line.strip()
+        if _line and not _line.startswith("#"):
+            _key, _, _value = _line.partition("=")
+            _doc_versions[_key.strip()] = _value.strip()
+
 # Configuration for the Sphinx documentation builder.
 # All configuration specific to your project should be done in this file.
 #
@@ -251,6 +267,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
     "sphinx.ext.todo",
+    "sphinx.ext.doctest",
+    "sphinx_substitution_extensions",
     "sphinx_sitemap",
 ]
 
@@ -261,12 +279,19 @@ extensions = [
 # Shortcut roles for linking to external sites; see
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
 #
-# Usage: :zephyr37-docs:`develop/west/manifest.html <West Manifests>` links
+# Usage: :zephyr-docs:`West Manifests <develop/west/manifest.html>` links
 # to https://docs.zephyrproject.org/3.7.0/develop/west/manifest.html with the
 # link text "West Manifests". Omitting the "<...>" part uses the path itself
 # as the link text.
+# URLs are built from versions.env so links follow the documented
+# versions; _dev/tests/versions.t pins them against the live resources.
 extlinks = {
-    "zephyr37-docs": ("https://docs.zephyrproject.org/3.7.0/%s", "%s"),
+    "zephyr-docs": (
+        f"https://docs.zephyrproject.org/{_doc_versions['DOC_UPSTREAM_VERSION']}/%s",
+        "%s",
+    ),
+    "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
+    "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
 }
 
 #####################
@@ -279,6 +304,32 @@ extlinks = {
 # Set to False (or remove) before publishing a release build if you don't
 # want TODOs to appear in the rendered output.
 todo_include_todos = True
+
+#####################
+# Doctest extension
+#####################
+
+# Code run before every doctest on every page (`make doctest`); see
+# https://www.sphinx-doc.org/en/master/usage/extensions/doctest.html
+#
+# Pages can still add file-local helpers with `.. testsetup::`.
+# The documented versions from versions.env are injected as DOC_* Python
+# variables so doctests assert against the same values as the prose.
+doctest_global_setup = f"""
+import subprocess
+
+DOC_VERSION = "{_doc_versions["DOC_VERSION"]}"
+DOC_UPSTREAM_VERSION = "{_doc_versions["DOC_UPSTREAM_VERSION"]}"
+DOC_LP_ZEPHYR_URL = "{_doc_versions["DOC_LP_ZEPHYR_URL"]}"
+DOC_WEST_MIN_VERSION = "{_doc_versions["DOC_WEST_MIN_VERSION"]}"
+
+
+def sh(cmd):
+    \"\"\"Run a shell command; fail the doctest on non-zero exit.\"\"\"
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    assert result.returncode == 0, f"{{cmd!r}} failed: {{result.stderr}}"
+    return result.stdout
+"""
 
 # Excludes files or directories from processing
 exclude_patterns = [
@@ -296,6 +347,21 @@ exclude_patterns = [
 # html_js_files = [
 #     "https://assets.ubuntu.com/v1/287a5e8f-bundle.js",
 # ]
+
+# Global substitutions generated from versions.env, so product names and
+# versions stay consistent; write e.g. |zephyr-lts| in any .rst file.
+
+# NOTE: these live in rst_prolog (below), not rst_epilog, so they are
+# registered before any directive runs. sphinx_substitution_extensions
+# resolves substitutions in code blocks at parse time and would not see
+# epilog definitions.
+_version_substitutions = f"""
+.. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
+.. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
+.. |zephyr-upstream| replace:: Zephyr v{_doc_versions["DOC_UPSTREAM_VERSION"]}
+.. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
+.. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
+"""
 
 # Appends release substitutions and reusable external links to every reST page.
 rst_epilog = f"""
@@ -348,6 +414,8 @@ rst_epilog = f"""
 .. _Workshop: https://ubuntu.com/workshop
 """
 
+
+
 # Feedback button at the top; enabled by default
 disable_feedback_button = True
 
@@ -364,9 +432,10 @@ disable_feedback_button = True
 # Specifies a reST snippet to be prepended to each .rst file
 # This defines a :center: role that centers table cell content.
 # This defines a :h2: role that styles content for use with PDF generation.
-rst_prolog = """
+rst_prolog = (
+     """
 .. role:: center
-   :class: align-center
+    :class: align-center
 .. role:: h2
     :class: hclass2
 .. role:: woke-ignore
@@ -374,6 +443,8 @@ rst_prolog = """
 .. role:: vale-ignore
     :class: vale-ignore
 """
+     + _version_substitutions
+)
 
 # Configuration for Intersphinx projects
 #

@@ -32,3 +32,11 @@ sphinx-llm~=0.4
 # Vale dependencies
 rst2html
 vale~=3.13
+
+# Documentation testing (make doctest / make cram)
+west>=1.0    # asserted against in CLI doctests
+cram~=0.7
+
+# Substitution macros inside code blocks; 2024.10.17 is the last release
+# supporting Sphinx 7
+sphinx-substitution-extensions==2024.10.17

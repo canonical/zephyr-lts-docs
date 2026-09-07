@@ -16,6 +16,9 @@ _dev/vale.ini
 # Build outputs
 _build
 
+# Cram failure artifacts
+_dev/tests/**/*.t.err
+
 # Node.js
 package*.json
 
