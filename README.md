@@ -27,8 +27,8 @@ make -C docs run
 
 ## Testing the documentation
 
-This documentation tests itself. Two complementary systems check that the
-commands and output shown in the docs match what the real tools do:
+Two complementary systems check that the commands and output shown in the docs
+match what the real tools do:
 
 | System | Command | Tests live in | Best for |
 | ------ | ------- | ------------- | -------- |
@@ -94,12 +94,12 @@ the matching assertion too.
 
 ### Cram: golden transcripts
 
-[Cram](https://github.com/brodie/cram) tests are whole transcripts —
-commands and their complete expected output in a plain-text `.t` file under
-`docs/_dev/tests/`. Lines indented by two spaces that start with `$` are
-executed; the indented lines that follow are the expected output. Anything
-not indented is prose, so the files read like documentation themselves. See
-`docs/_dev/tests/cli/west.t` for a working example:
+[Cram](https://github.com/brodie/cram) tests are golden tests that compare
+ output to expected output transcripts in a `.t` file under `docs/_dev/tests/`.
+ Lines indented by two spaces that start with `$` are executed; the indented
+ lines that follow are the expected output. Anything not indented is prose, so
+ the files read like documentation themselves. See `docs/_dev/tests/cli/west.t`
+ for a working example:
 
 ```text
 The installed west meets the documented minimum version (v1.0+):
@@ -108,7 +108,7 @@ The installed west meets the documented minimum version (v1.0+):
   West version: v1.* (glob)
 ```
 
-Matching is line-for-line. Two mechanisms keep tests focused on the relevant
+Matching is line-for-line. You can filter output or match with regexex:
 output:
 
 * **Filter at the command** (preferred): pipe through `grep` or `head`, then
@@ -118,14 +118,13 @@ output:
   anything within that line. A glob line still matches exactly one output
   line — you cannot skip a whole block with one `* (glob)`.
 
-When output legitimately changes, run `cram --interactive _dev/tests`
-(inside the docs venv) to review each diff and accept it into the `.t`
-file, then commit the result. Failed runs also leave a git-ignored `.t.err`
-file next to the test containing the actual output; delete it once you have
-read the diff.
+When output legitimately changes, run `cram --interactive _dev/tests` to review
+each diff and accept it into the `.t` file, then commit the result. Failed runs
+also leave a git-ignored `.t.err` file next to the test containing the actual
+output; delete it once you have read the diff.
 
-Because a `.t` file is a tested transcript, you can show it in a page
-instead of hand-writing an example. For example:
+Because a `.t` file is a tested transcript, you can show it in a page via a
+``literalinclude::`` instead of hand-writing an example. For example:
 
 ```rst
 .. literalinclude:: /_dev/tests/cli/west.t
@@ -136,8 +135,7 @@ instead of hand-writing an example. For example:
 
 ### Documented versions: one source of truth
 
-The versions this documentation describes (the release, the upstream
-Zephyr base, the minimum west version) are defined once in
+The versions this documentation describes are defined once in
 `docs/versions.env`.
 
 * `docs/conf.py` parses it to generate the `rst_epilog` substitution

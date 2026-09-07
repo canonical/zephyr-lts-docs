@@ -279,7 +279,7 @@ extensions = [
 # Shortcut roles for linking to external sites; see
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
 #
-# Usage: :zephyr-docs:`develop/west/manifest.html <West Manifests>` links
+# Usage: :zephyr-docs:`West Manifests <develop/west/manifest.html>` links
 # to https://docs.zephyrproject.org/3.7.0/develop/west/manifest.html with the
 # link text "West Manifests". Omitting the "<...>" part uses the path itself
 # as the link text.
@@ -348,6 +348,20 @@ exclude_patterns = [
 #     "https://assets.ubuntu.com/v1/287a5e8f-bundle.js",
 # ]
 
+# Global substitutions generated from versions.env, so product names and
+# versions stay consistent; write e.g. |zephyr-lts| in any .rst file.
+
+# NOTE: these live in rst_prolog (below), not rst_epilog, so they are
+# registered before any directive runs. sphinx_substitution_extensions
+# resolves substitutions in code blocks at parse time and would not see
+# epilog definitions.
+_version_substitutions = f"""
+.. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
+.. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
+.. |zephyr-upstream| replace:: Zephyr v{_doc_versions["DOC_UPSTREAM_VERSION"]}
+.. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
+.. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
+"""
 
 # Appends release substitutions and reusable external links to every reST page.
 rst_epilog = f"""
@@ -382,7 +396,6 @@ rst_epilog = f"""
 .. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
 .. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
-.. |canonical-zephyr-repo| replace::
 
 .. _Zephyr RTOS Launchpad project: {launchpad_project_url}
 .. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}
@@ -401,20 +414,7 @@ rst_epilog = f"""
 .. _Workshop: https://ubuntu.com/workshop
 """
 
-# Global substitutions generated from versions.env, so product names and
-# versions stay consistent; write e.g. |zephyr-lts| in any .rst file.
 
-# NOTE: these live in rst_prolog (below), not rst_epilog, so they are
-# registered before any directive runs. sphinx_substitution_extensions
-# resolves substitutions in code blocks at parse time and would not see
-# epilog definitions.
-_version_substitutions = f"""
-.. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
-.. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
-.. |zephyr-upstream| replace:: Zephyr v{_doc_versions["DOC_UPSTREAM_VERSION"]}
-.. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
-.. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
-"""
 
 # Feedback button at the top; enabled by default
 disable_feedback_button = True

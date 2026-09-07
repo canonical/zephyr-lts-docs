@@ -5,7 +5,7 @@ West manifest
 
 The west manifest file defines your Zephyr workspace. The manifest file
 specifies the Git remotes, Git repositories (called *projects*), and project
-attributes that Zephyr's meta-tool :zephyr37-docs:`west <develop/west/index.html>`,
+attributes that Zephyr's meta-tool :zephyr-docs:`west <develop/west/index.html>`,
 uses to build, manage and update the workspace.
 
 .. todo::
@@ -14,7 +14,7 @@ uses to build, manage and update the workspace.
 
 This page documents the fields accepted in a west manifest file. For an
 introduction to the concepts behind manifests, projects, and imports, see the
-upstream documentation on :zephyr37-docs:`West Manifests
+upstream documentation on :zephyr-docs:`West Manifests
 <develop/west/manifest.html>`.
 
 Filename and location
@@ -249,7 +249,7 @@ in the workspace. Each item is an object with these fields:
        ``path-allowlist``, ``name-blocklist``, ``path-blocklist``, and
        ``path-prefix``; an array combines any of the above. A project may not
        use both ``import`` and ``groups``. See the upstream documentation on
-       :zephyr37-docs:`manifest Imports
+       :zephyr-docs:`manifest Imports
        <develop/west/manifest.html#manifest-imports>` for full details.
    * - ``groups``
      - array
@@ -359,11 +359,11 @@ Where ``scripts/west-commands.yml`` might be:
 See also
 --------
 
-* :zephyr37-docs:`West Manifests <develop/west/manifest.html>` — the upstream
+* :zephyr-docs:`West Manifests <develop/west/manifest.html>` — the upstream
   documentation on west manifest files.
-* :zephyr37-docs:`west.manifest API  <develop/west/west-apis.html#module-west.manifest>` —
+* :zephyr-docs:`west.manifest API  <develop/west/west-apis.html#module-west.manifest>` —
   the Python API for parsing and resolving manifests.
-* :zephyr37-docs:`Built-in Configuration Options  <develop/west/config.html#west-config-index>` —
+* :zephyr-docs:`Built-in Configuration Options  <develop/west/config.html#west-config-index>` —
   the ``manifest.path``, ``manifest.group-filter``, and
   ``manifest.project-filter`` workspace configuration options that
   interact with this file.
