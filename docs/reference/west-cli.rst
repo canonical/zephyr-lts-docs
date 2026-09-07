@@ -22,20 +22,6 @@ west itself. The second group are *extension commands*, provided by the
        f"West version: v{DOC_WEST_MIN_VERSION}"
    )
 
-.. todo::
-
-   Jeff: Once the west manifest chapter lands on this branch, add a
-   cross-reference to it (label ``ref-west-yml``) here for the manifest
-   file fields that ``west init`` and ``west update`` consume.
-
-.. todo::
-
-   Jeff: somewhere we need to state that this documentation expects west
-   |west-min-version| or greater; it corresponds to the |zephyr-lts| release.
-
-.. todo::
-
-   Jeff: Add tests
 
 Global Flags
 ------------

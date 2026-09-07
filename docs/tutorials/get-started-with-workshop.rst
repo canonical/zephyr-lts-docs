@@ -7,12 +7,12 @@
 Get started with Workshop
 =========================
 
-In this tutorial, you create a |product_name| workspace.
-Then, you build and run the Hello World sample.
+In this tutorial, you'll create a |product_name| workspace and build and run the
+Hello World sample.
 
-Workshop is the standard development environment for |product_name|.
-The Workshop definition combines the Zephyr source,
-Python environment, SDK bundle, and x86 toolchain.
+Workshop is the standard development environment for |product_name|. The
+Workshop definition combines the Zephyr source, Python environment, SDK bundle,
+and x86 toolchain.
 
 Install Workshop
 ----------------
@@ -22,7 +22,7 @@ Prerequisites
 
 Before starting, ensure you have these requirements satisfied:
 
-* A host running Ubuntu or another Linux distribution that supports snaps.
+* A host running |ubuntu-base| or another Linux distribution that supports snaps.
 * Access to the internet.
 * Permission to use :command:`sudo` on the host.
 
@@ -58,6 +58,11 @@ Create the Workshop definition under :file:`.workshop/`:
    $ editor .workshop/|workshop_definition|
 
 Add this content to the file:
+
+.. todo::
+
+   Jeff: This pulls in 3.7/stable zephyr. We need this to be 24.04/stable.
+   @lincoln or setup the lts track that Dmitry recommended
 
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
