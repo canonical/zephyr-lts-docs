@@ -21,6 +21,7 @@ project paths, actions, and host interfaces:
    :titlesonly:
 
    Workshop environment <workshop-environment>
+   West Manifest File <west-manifest>
 
 
 Source and releases
