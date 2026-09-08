@@ -20,4 +20,4 @@ Follow the sections of the tutorial in order.
 .. toctree::
    :maxdepth: 1
 
-   Part 1: Get started with Workshop <get-started-with-workshop>
+   Get started with Workshop <get-started-with-workshop>

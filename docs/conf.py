@@ -35,24 +35,26 @@ with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
 # Project information #
 #######################
 
-# Release profile. A new release branch should only need to change these values,
-# plus the concrete files listed below.
-product_release = "24.04"
-upstream_release = "3.7"
-sdk_ng_channel = "0.16.9/stable"
-source_tag = "24.04.rc-1"
+# Release profile. These are all derived from versions.env (parsed above),
+# so a new release branch only needs to bump that file.
+product_release = _doc_versions["DOC_VERSION"]
+upstream_release = _doc_versions["DOC_UPSTREAM_VERSION"].rsplit(".", 1)[0]
+upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
+sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
+source_tag = _doc_versions["SOURCE_TAG"]
 
 # Keep docs/reference/workshop.yaml, the release-note filename and heading,
 # toctree entries, page labels, and reST metadata descriptions aligned with the
 # profile. These are consumed outside normal reST substitution processing.
-product_name = f"Zephyr {product_release}"
-upstream_docs_release = f"{upstream_release}.0"
+product_name = f"Zephyr {product_release} LTS"
 workshop_name = f"zephyr-{product_release.replace('.', '-')}"
 workshop_definition = f"{workshop_name}.yaml"
 workshop_base = f"ubuntu@{product_release}"
 workshop_sdk_channel = f"{product_release}/stable"
-launchpad_project_url = "https://code.launchpad.net/~arctic-tern/zephyr-rtos"
-launchpad_git_base = "https://git.launchpad.net/~arctic-tern/zephyr-rtos/+git"
+launchpad_git_base = _doc_versions["DOC_LP_ZEPHYR_URL"]
+launchpad_project_url = launchpad_git_base.replace(
+    "git.launchpad.net", "code.launchpad.net"
+).removesuffix("/+git")
 manifest_repository = "zephyr-manifest"
 manifest_repository_url = f"{launchpad_git_base}/{manifest_repository}"
 
@@ -292,7 +294,21 @@ extlinks = {
     ),
     "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
     "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
+    "sdk-issue": ("https://github.com/canonical/zephyr-sdk-ng/issues/%s", "%s")
 }
+
+#####################
+# Copybutton extension
+#####################
+
+# Let readers copy shell examples without picking up the prompt, and keep
+# backslash-continued multi-line commands intact when copied; see
+# https://sphinx-copybutton.readthedocs.io/en/latest/use.html
+#
+# Matches prompts like "$ ", "workshop@zephyr-24-04:/project$ ", etc.
+copybutton_prompt_text = r"^[\w@:/.\-]*\$\s"
+copybutton_prompt_is_regexp = True
+copybutton_line_continuation_character = "\\"
 
 #####################
 # Todo extension
@@ -361,10 +377,7 @@ _version_substitutions = f"""
 .. |zephyr-upstream| replace:: Zephyr v{_doc_versions["DOC_UPSTREAM_VERSION"]}
 .. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
 .. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
-"""
-
-# Appends release substitutions and reusable external links to every reST page.
-rst_epilog = f"""
+.. |ubuntu-base| replace:: Ubuntu {_doc_versions["UBUNTU_BASE_VERSION"]}
 .. |product_name| replace:: {product_name}
 .. |product_release| replace:: {product_release}
 .. |upstream_release| replace:: {upstream_release}
@@ -396,6 +409,12 @@ rst_epilog = f"""
 .. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
 .. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
+"""
+
+# Appends reusable external link targets to every reST page. Substitution
+# (|name| replace::) definitions live in rst_prolog instead — see the NOTE
+# above _version_substitutions for why.
+rst_epilog = f"""
 
 .. _Zephyr RTOS Launchpad project: {launchpad_project_url}
 .. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}

@@ -133,7 +133,7 @@ lint-md: pymarkdownlnt-install
 	exit $$status;
 
 vale-install: install
-	@. $(DOCS_VENV); test -f $(VALE_CONFIG) || python3 $(DEV_DIR)/get_vale_conf.py
+	@. $(DOCS_VENV); test -d $(DEV_DIR)/styles/Canonical || python3 $(DEV_DIR)/get_vale_conf.py --no-overwrite
 	@echo '.Name=="Canonical.400-Enforce-inclusive-terms"' > $(DEV_DIR)/styles/woke.filter
 	@echo '.Level=="error" and .Name!="Canonical.500-Repeated-words" and .Name!="Canonical.000-US-spellcheck"' > $(DEV_DIR)/styles/error.filter
 	@echo '.Name=="Canonical.000-US-spellcheck"' > $(DEV_DIR)/styles/spelling.filter

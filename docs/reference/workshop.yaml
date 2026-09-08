@@ -1,5 +1,5 @@
 name: zephyr-24-04
-base: ubuntu@24.04
+base: ubuntu@26.04
 sdks:
   - name: uv
     channel: latest/stable

@@ -6,8 +6,8 @@
    :description: Documentation for Canonical's Zephyr LTS distribution,
                  including setup, source repositories, and support.
 
-Zephyr 24.04
-============
+Zephyr |zephyr-lts|
+===================
 
 .. toctree::
    :hidden:
@@ -39,6 +39,8 @@ If Workshop is not suitable for your system,
 follow the :ref:`manual installation guide <how_install_manually>`.
 
 ----
+
+.. todolist::
 
 
 In this documentation

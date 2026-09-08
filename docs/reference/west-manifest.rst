@@ -8,10 +8,6 @@ specifies the Git remotes, Git repositories (called *projects*), and project
 attributes that Zephyr's meta-tool :zephyr-docs:`west <develop/west/index.html>`,
 uses to build, manage and update the workspace.
 
-.. todo::
-
-   Jeff: Should this point upstream? Or to explanation?
-
 This page documents the fields accepted in a west manifest file. For an
 introduction to the concepts behind manifests, projects, and imports, see the
 upstream documentation on :zephyr-docs:`West Manifests
