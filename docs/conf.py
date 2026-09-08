@@ -294,7 +294,21 @@ extlinks = {
     ),
     "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
     "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
+    "sdk-issue": ("https://github.com/canonical/zephyr-sdk-ng/issues/%s", "%s")
 }
+
+#####################
+# Copybutton extension
+#####################
+
+# Let readers copy shell examples without picking up the prompt, and keep
+# backslash-continued multi-line commands intact when copied; see
+# https://sphinx-copybutton.readthedocs.io/en/latest/use.html
+#
+# Matches prompts like "$ ", "workshop@zephyr-24-04:/project$ ", etc.
+copybutton_prompt_text = r"^[\w@:/.\-]*\$\s"
+copybutton_prompt_is_regexp = True
+copybutton_line_continuation_character = "\\"
 
 #####################
 # Todo extension
@@ -364,10 +378,6 @@ _version_substitutions = f"""
 .. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
 .. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
 .. |ubuntu-base| replace:: Ubuntu {_doc_versions["UBUNTU_BASE_VERSION"]}
-"""
-
-# Appends release substitutions and reusable external links to every reST page.
-rst_epilog = f"""
 .. |product_name| replace:: {product_name}
 .. |product_release| replace:: {product_release}
 .. |upstream_release| replace:: {upstream_release}
@@ -399,6 +409,12 @@ rst_epilog = f"""
 .. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
 .. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
+"""
+
+# Appends reusable external link targets to every reST page. Substitution
+# (|name| replace::) definitions live in rst_prolog instead — see the NOTE
+# above _version_substitutions for why.
+rst_epilog = f"""
 
 .. _Zephyr RTOS Launchpad project: {launchpad_project_url}
 .. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}
