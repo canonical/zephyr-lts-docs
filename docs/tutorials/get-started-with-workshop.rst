@@ -86,43 +86,52 @@ Open a shell in the Workshop:
 
    $ workshop shell |workshop_name|
 
-Initialize a :program:`west` workspace
-from the |source_tag| source tag
-in Canonical's Zephyr manifest repository:
+Initialize a :program:`west` workspace from the |source_tag| source tag in
+Canonical's Zephyr manifest repository:
 
 .. parsed-literal::
 
    |workshop_project_prompt| west init \
-       -m |manifest_repository_url| \
-       --mr |source_tag| .
+   -m |manifest_repository_url| \
+   --mr |source_tag| .
 
-The source tag identifies an immutable,
-tested |product_name| source set.
-Verify the selected tag:
+The source tag identifies an immutable, tested |product_name| source set. Verify
+the selected tag:
 
 .. parsed-literal::
 
    |workshop_project_prompt| git -C |manifest_repository| \
-       describe --tags --exact-match
+   describe --tags --exact-match
 
    |source_tag|
 
-Download the repositories
-from the |product_name| manifest:
+Download the repositories from the |product_name| manifest:
 
 .. parsed-literal::
 
    |workshop_project_prompt| west update
 
-The manifest pins each repository
-to a tested revision.
-It also directs west to the Zephyr RTOS Launchpad project.
+The manifest pins each repository to a tested revision. It also directs west to
+the Zephyr RTOS Launchpad project.
 
 Export the Zephyr CMake package:
 
 .. parsed-literal::
 
    |workshop_project_prompt| west zephyr-export
+
+Extract the SDK host tools
+--------------------------
+
+.. todo::
+
+   Jeff: this section is needed until :sdk-issue:`sdk issue 16 <16>` and
+   :sdk-issue:`17 <17>` are resolved.
+
+.. parsed-literal::
+
+   |workshop_project_prompt| sudo bash /var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d ~/hosttools -y -n
+   |workshop_project_prompt| echo 'export PATH=~/hosttools/sysroots/x86_64-pokysdk-linux/usr/bin:$PATH' >> ~/.profile
 
 Build and run Hello World
 -------------------------
@@ -135,10 +144,16 @@ Change to the Zephyr repository:
 
 Build Hello World for the QEMU x86 board:
 
+.. todo::
+
+   Jeff: these environment variables must be passed until :sdk-issue:`sdk issue
+   16 <16>` and :sdk-issue:`17 <17>` are resolved.
+
 .. parsed-literal::
 
-   |workshop_zephyr_prompt| west build -p always \
-       -b qemu_x86 samples/hello_world
+   |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world -- \
+    -DZEPHYR_TOOLCHAIN_VARIANT=cross-compile \
+    -DCROSS_COMPILE=/var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/x86_64-zephyr-elf/bin/x86_64-zephyr-elf-
 
 Run the application in QEMU:
 
@@ -146,7 +161,7 @@ Run the application in QEMU:
 
    |workshop_zephyr_prompt| west build -t run
 
-The console includes output similar to this:
+The console should show output similar to:
 
 .. code-block:: text
 
@@ -159,31 +174,33 @@ Run :command:`exit` to leave the Workshop shell.
 Use the project actions
 -----------------------
 
-The Workshop definition includes actions
-for common development tasks.
-Run these actions from the host project directory.
+Instead of manually entering a workshop shell, you may also run ``actions`` from
+the host's project directory.
 
-Synchronize all manifest projects
-with the revisions selected by the source tag:
+For example, one can run the ``sync`` action to synchronize all manifest
+projects with the revisions selected by the source tag:
 
 .. parsed-literal::
 
    $ workshop run |workshop_name| -- sync
+
+.. todo::
+
+   Jeff: the following is not tested yet
 
 Build another application:
 
 .. parsed-literal::
 
    $ workshop run |workshop_name| -- build -p always \
-       -b qemu_x86 samples/basic/blinky
+   -b qemu_x86 samples/basic/blinky
 
 Next steps
 ----------
 
 You now have a working |product_name| development environment.
 
-To flash a physical board,
-follow :ref:`how_access_hardware_from_workshop`.
+To flash a physical board, follow :ref:`how_access_hardware_from_workshop`.
 
-To understand the files that Workshop manages,
-read :ref:`ref_workshop_environment`.
+To understand the files that Workshop manages, read
+:ref:`ref_workshop_environment`.
