@@ -4,29 +4,40 @@
    :description: Install the Zephyr source and development tools manually on
                  Ubuntu without Workshop.
 
-How to install Zephyr manually
-==============================
+How to install |product_name| manually
+======================================
 
-This guide installs |product_name|
-without the standard Workshop development environment.
-It follows the upstream Zephyr installation model
-and keeps Python packages in a virtual environment.
+This guide installs |product_name| without the standard Workshop development
+environment. It follows the upstream Zephyr installation model but installs
+:program:`west` and its Python requirements from Ubuntu packages instead of
+:command:`pip` and a Python virtual environment.
 
-Workshop is the supported standard path.
-With a manual installation,
-you must maintain each host dependency.
+Workshop is the supported standard path. With a manual installation, you must
+maintain each host dependency.
 
 Prerequisites
 -------------
 
 Before starting, ensure you have these requirements satisfied:
 
-* A supported Ubuntu host.
+* A supported Ubuntu host, we recommend |ubuntu-base|.
 * Access to the internet.
 * Permission to use :command:`sudo` on the host.
 
-Install host packages
----------------------
+Install host packages and the Package Index
+-------------------------------------------
+
+To provide LTS guarantees, we encourage users to install :program:`west`, the
+Zephyr toolchains and Python dependencies through the |product_name| Personal
+Package Archive (PPA): |zephyr-lts-ppa|.
+
+This will add packages globally, ff this is not desirable the rest of this
+how-to can be run in a `Docker <https://snapcraft.io/docker>`_ or `LXD
+<https://snapcraft.io/lxd>`_ container.
+
+.. code-block:: console
+
+   $ sudo add-apt-repository ppa:arctic-tern/zephyr-toolchain
 
 Update the package index:
 
@@ -34,109 +45,140 @@ Update the package index:
 
    $ sudo apt update
 
-Install the build and Python packages:
+Install the build packages:
 
 .. code-block:: console
 
    $ sudo apt install --no-install-recommends \
        git cmake ninja-build gperf ccache dfu-util device-tree-compiler wget \
-       python3-dev python3-pip python3-setuptools python3-tk python3-venv \
-       python3-wheel xz-utils file make gcc gcc-multilib g++-multilib \
-       libsdl2-dev libmagic1
+       xz-utils file make gcc gcc-multilib g++-multilib libsdl2-dev libmagic1
 
 Create the west workspace
 -------------------------
-
-Create a Python virtual environment,
-then activate it:
-
-.. code-block:: console
-
-   $ mkdir -p ~/zephyrproject
-   $ python3 -m venv ~/zephyrproject/.venv
-   $ source ~/zephyrproject/.venv/bin/activate
 
 Install :program:`west`:
 
 .. code-block:: console
 
-   (.venv) $ pip install west
+   $ sudo apt install west
 
-Initialize the workspace from the |source_tag| source tag
-in Canonical's Zephyr manifest repository:
+Initialize the workspace from the |source_tag| source tag in Canonical's Zephyr
+manifest repository:
 
 .. parsed-literal::
 
-   (.venv) $ west init \
-       -m |manifest_repository_url| \
-       --mr |source_tag| ~/zephyrproject
-   (.venv) $ cd ~/zephyrproject
+   $ west init -m |manifest_repository_url| \
+   --mr |source_tag| ~/zephyrproject
+   $ cd ~/zephyrproject
 
 Download shallow copies of the pinned repositories:
 
 .. code-block:: console
 
-   (.venv) $ west update --narrow -o=--depth=1
+   $ west update --narrow -o=--depth=1
 
-This fetches only the selected revisions with one commit of history,
-which reduces the download size and disk usage.
-
-Install the Python requirements
-from the Zephyr source:
+Install the Python packages that the Zephyr source tree requires:
 
 .. code-block:: console
 
-   (.venv) $ pip install -r zephyr/scripts/requirements.txt
+   $ sudo apt install --no-install-recommends \
+       python3-yaml python3-pykwalify python3-canopen python3-packaging \
+       python3-progress python3-psutil python3-pylink-square python3-serial \
+       python3-requests python3-anytree python3-intelhex python3-pyelftools
 
 Export the Zephyr CMake package:
 
 .. code-block:: console
 
-   (.venv) $ west zephyr-export
+   $ west zephyr-export
 
-Install a toolchain
--------------------
+Install the |product_name| SDK
+------------------------------
 
-Install the Zephyr SDK version
-that the source tree specifies.
-Read the version from :file:`SDK_VERSION`:
+The :canonical-zephyr:`sdk-ng repository <sdk-ng>` contains the LTS version of
+the |zephyr-upstream| SDK.
+
+First, ensure that SDK version listed in :file:`zephyr/SDK_VERSION` match
+|sdk-version|:
+
+.. code-block:: console
+   :substitutions:
+
+   $ cat zephyr/SDK_VERSION
+
+   |sdk-version|
+
+Install the common SDK files. This will register the CMake package and export
+:samp:`ZEPHYR_SDK_INSTALL_DIR`:
 
 .. code-block:: console
 
-   (.venv) $ cat zephyr/SDK_VERSION
+   $ sudo apt install rtos-zephyr-sdk-ng-common
 
-Follow the `upstream Zephyr SDK installation procedure`_.
-Install the version from :file:`SDK_VERSION`.
-
-The Zephyr SDK supplies cross-compilers,
-QEMU, and OpenOCD.
-The `sdk-ng repository`_
-contains Canonical's port of its source.
-
-Check the installation
-----------------------
-
-Build the Hello World sample:
+Install the toolchain package for your target architecture. The Hello World
+sample in this guide targets :samp:`qemu_x86`, which requires the
+``x86_64-zephyr-elf`` toolchain:
 
 .. code-block:: console
 
-   (.venv) $ cd ~/zephyrproject/zephyr
-   (.venv) $ west build -p always -b qemu_x86 samples/hello_world
+   $ sudo apt install rtos-zephyr-sdk-x86-64-zephyr-elf
 
-Run the sample in QEMU:
+.. note::
+
+   If you are targeting a different board,
+   search the PPA for its toolchain package:
+
+   .. code-block:: console
+
+      $ apt search rtos-zephyr-sdk-
+
+.. note::
+
+   To install every toolchain instead,
+   use the ``rtos-zephyr-sdk-ng`` metapackage:
+
+   .. code-block:: console
+
+      $ sudo apt install rtos-zephyr-sdk-ng
+
+Start a new shell, or source the profile script directly, so
+:samp:`ZEPHYR_SDK_INSTALL_DIR` takes effect:
 
 .. code-block:: console
 
-   (.venv) $ west build -t run
+   $ source /etc/profile.d/zephyr-sdk-ng.sh
+
+West reads :samp:`ZEPHYR_SDK_INSTALL_DIR` to find the SDK.
+
+.. note::
+
+   The SDK toolchain packages do not include OpenOCD or its udev rules,
+   unlike the upstream tarball. To flash real hardware, install OpenOCD
+   from the Ubuntu archive, which already provides the required udev
+   rules:
+
+   .. code-block:: console
+
+      $ sudo apt install openocd
+
+
+Build Hello World
+-----------------
+
+Now build the Hello World sample:
+
+.. code-block:: console
+
+   $ cd ~/zephyrproject/zephyr
+   $ west build -p always -b qemu_x86 samples/hello_world
+
+And run the sample in QEMU:
+
+.. code-block:: console
+
+   $ west build -t run
 
 Press :kbd:`Ctrl+A`, then press :kbd:`X` to stop QEMU.
-
-Activate the virtual environment before each development session:
-
-.. code-block:: console
-
-   $ source ~/zephyrproject/.venv/bin/activate
-
 
 See also
 --------

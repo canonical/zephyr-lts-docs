@@ -101,6 +101,7 @@ toolchain(s)?
 toolchains west
 topdir
 txt
+udev
 ulwazi
 uncomment(ing)?
 utils
