@@ -294,7 +294,7 @@ extlinks = {
     ),
     "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
     "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
-    "sdk-issue": ("https://github.com/canonical/zephyr-sdk-ng/issues/%s", "%s")
+    "issue": ("https://warthogs.atlassian.net/browse/%s", "%s")
 }
 
 #####################

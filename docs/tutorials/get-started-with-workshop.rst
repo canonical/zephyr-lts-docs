@@ -125,8 +125,8 @@ Extract the SDK host tools
 
 .. todo::
 
-   Jeff: this section is needed until :sdk-issue:`sdk issue 16 <16>` and
-   :sdk-issue:`17 <17>` are resolved.
+   Jeff: this section is needed until :issue:`RTOS-226 <RTOS-226>` and
+   :issue:`RTOS-225 <RTOS-225>` are resolved.
 
 .. parsed-literal::
 
@@ -146,8 +146,8 @@ Build Hello World for the QEMU x86 board:
 
 .. todo::
 
-   Jeff: these environment variables must be passed until :sdk-issue:`sdk issue
-   16 <16>` and :sdk-issue:`17 <17>` are resolved.
+   Jeff: these environment variables must be passed until :issue:`sdk issue
+   RTOS-226 <RTOS-226>` and :issue:`RTOS-225 <RTOS-225>` are resolved.
 
 .. parsed-literal::
 
