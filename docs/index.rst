@@ -59,7 +59,8 @@ In this documentation
        :ref:`Development environment concepts <exp_development_environments>`
 
    * - **Hardware**
-     - :ref:`Access hardware from Workshop <how_access_hardware_from_workshop>`
+     - :ref:`Access hardware from Workshop <how_access_hardware_from_workshop>` •
+       :ref:`Flash hardware from Workshop <tut_flash_hardware>`
 
    * - **Source and releases**
      - :ref:`Source repositories <ref_repositories>` •

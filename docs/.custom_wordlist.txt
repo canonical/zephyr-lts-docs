@@ -43,11 +43,13 @@ URL
 VMs
 WCAG
 Workshop
+Xtensa
 YouTube
 Zephyr
 backend
 backends
 bindesc
+blinky
 bootloader
 cjk
 cmd
@@ -57,6 +59,7 @@ debugserver
 docstrings?
 doctests?
 dvipng
+esptool
 fonts
 forall
 freefont
@@ -65,6 +68,7 @@ gyre
 hotfix(es)?
 html
 https
+hygiene
 imgtool
 io
 ip
@@ -90,6 +94,7 @@ rerediraffe
 retrigger(ing)?
 rst
 rtd
+sandbox(ed)
 sequenceDiagram
 sitemapindex
 spdx
@@ -115,6 +120,7 @@ venv
 whitespace
 whitespaces
 wordlist
+workshop
 xetex
 xindy
 xml
