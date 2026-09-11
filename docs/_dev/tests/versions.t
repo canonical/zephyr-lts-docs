@@ -26,6 +26,36 @@ pages:
 
   $ assert_http_ok "https://docs.zephyrproject.org/$DOC_UPSTREAM_VERSION/"
 
+The documented upstream Zephyr version matches the VERSION file at the
+root of the zephyr-rtos repository on Launchpad, on the DOC_VERSION
+branch — the file CMake reads to set the project's version, browsable
+at https://git.launchpad.net/zephyr-rtos/tree/VERSION?h=24.04 for
+DOC_VERSION=24.04. Only the major.minor pair is compared — patch-level
+bumps on the branch don't require a docs release, and EXTRAVERSION
+(e.g. rc1) is shown in the diagnostic but not asserted, since
+DOC_UPSTREAM_VERSION tracks the release, not the pre-release tag:
+
+  $ assert_upstream_version() {
+  >   url="https://git.launchpad.net/zephyr-rtos/plain/VERSION?h=$DOC_VERSION"
+  >   if ! body=$(curl -sf "$url"); then
+  >     echo "$url: fetch failed"
+  >     return 1
+  >   fi
+  >   actual=$(printf '%s\n' "$body" | awk '
+  >     /^VERSION_MAJOR/ { maj = $3 }
+  >     /^VERSION_MINOR/ { min = $3 }
+  >     END { printf "%s.%s", maj, min }')
+  >   expected=${DOC_UPSTREAM_VERSION%.*}
+  >   if [ "$actual" = "$expected" ]; then
+  >     return 0
+  >   fi
+  >   echo "branch $DOC_VERSION: VERSION says $actual.x, versions.env says $DOC_UPSTREAM_VERSION"
+  >   printf '%s\n' "$body"
+  >   return 1
+  > }
+
+  $ assert_upstream_version
+
 The documented release exists as a branch of the manifest repository on
 Launchpad — the same tree the canonical-zephyr extlink points at,
 browsable at

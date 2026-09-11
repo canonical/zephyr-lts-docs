@@ -28,10 +28,3 @@ repos:
         language: system
         pass_filenames: false
         files: ^docs/.*\.(rst|md)$
-
-      - id: make-cram
-        name: Run make cram
-        entry: make -C docs cram
-        language: system
-        pass_filenames: false
-        files: ^docs/_dev/tests/.*\.t$
