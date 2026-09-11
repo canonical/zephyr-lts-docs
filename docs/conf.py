@@ -292,7 +292,7 @@ extlinks = {
         f"https://docs.zephyrproject.org/{_doc_versions['DOC_UPSTREAM_VERSION']}/%s",
         "%s",
     ),
-    "upstream-zephyr": ("https://github.com/zephyrproject-rtos/zephyr/%s", "%s"),
+    "upstream-zephyr": ("https://github.com/zephyrproject-rtos/%s", "%s"),
     "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
     "issue": ("https://warthogs.atlassian.net/browse/%s", "%s")
 }
@@ -406,6 +406,7 @@ _version_substitutions = f"""
 .. |workshop_project_prompt| replace:: workshop\\@{workshop_name}:/project$
 .. |workshop_zephyr_prompt| replace:: workshop\\@{workshop_name}:/project/zephyr$
 .. |workshop_info_command| replace:: :command:`workshop info {workshop_name}`
+.. |upstream_sdk_ng_link| replace:: :upstream-zephyr:`sdk-ng <sdk-ng/tree/v{_doc_versions["SDK_NG_VERSION"]}>`
 .. |manifest_tag_command| replace:: :command:`git -C {manifest_repository} describe --tags --exact-match`
 .. |workshop_sync_command| replace:: :command:`workshop run {workshop_name} -- sync`
 .. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
