@@ -66,16 +66,14 @@ Select the required source tag with the :option:`!--mr` option to
 :command:`west init`
 instead of initializing from a moving branch.
 
-When you run :command:`west update`
-from a workspace that uses Canonical's manifest,
-:program:`west` clones each project from the Zephyr RTOS Launchpad
-project.
-It checks out the revisions pinned by the manifest at the selected source tag.
-It does not move the Zephyr manifest repository to a different source tag.
+When you run :command:`west update` from a workspace that uses
+:canonical-zephyr:`Canonical's manifest <zephyr-manifest>`, :program:`west`
+clones each project from the Zephyr RTOS Launchpad project. It checks out the
+revisions pinned by the manifest at the selected source tag. It does not move
+the Zephyr manifest repository to a different source tag.
 
-Do not replace the manifest revisions with moving branch names.
-The pinned revisions define
-the tested |product_name| source set.
+Do not replace the manifest revisions with moving branch names. The pinned
+revisions define the tested |product_name| source set.
 
 
 See also
