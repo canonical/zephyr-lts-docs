@@ -95,7 +95,7 @@ without cloning anything:
 
 -m <url>, --manifest-url <url>
 
-   Manifest repository URL. Defaults to the upstream Zephyr :upstream-zephyr:`repository. <>`
+   Manifest repository URL. Defaults to the upstream Zephyr :upstream-zephyr:`repository. <zephyr>`
 
 --mr <rev>, --manifest-rev <rev>
 
@@ -480,7 +480,7 @@ Build, flash, and debug commands
 
 The following commands are Zephyr :zephyr-docs:`extension commands
 <develop/west/zephyr-cmds.html>`. They are defined in the Zephyr repository's
-:upstream-zephyr:`scripts/west_commands <tree/main/scripts/west_commands>`
+:upstream-zephyr:`scripts/west_commands <zephyr/tree/main/scripts/west_commands>`
 directory.
 
 west boards

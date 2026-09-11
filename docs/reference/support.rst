@@ -16,19 +16,34 @@ Technical problems
 
 Include this information in a technical report:
 
-* The source tag
-  from |manifest_tag_command|.
-* The Zephyr repository revision
-  from :command:`git -C zephyr rev-parse HEAD`.
-* The output of |workshop_info_command|.
+* The source tag:
+
+  .. code-block::
+     :substitutions:
+
+     $ git -C |manifest_repository| describe --tags --exact-match
+
+* The Zephyr repository revision:
+
+  .. code-block::
+     :substitutions:
+
+     $ git -C zephyr rev-parse HEAD
+
+* The output of :command:`workshop info`:
+
+  .. code-block::
+     :substitutions:
+
+     $ workshop info |workshop_name|
+
 * The board name and board revision.
 * The complete command that failed.
 * The complete error output as text.
 * A small application that reproduces the problem, when possible.
 
-Use the relevant project in the
-`Zephyr RTOS Launchpad project`_
-for public source defects.
+Use the relevant project in the `Zephyr RTOS Launchpad project`_ for public
+source defects.
 
 Security problems
 -----------------
