@@ -7,46 +7,69 @@
 Canonical's Zephyr distribution
 ================================
 
-|product_name| starts from the upstream Zephyr |upstream_release| LTS release.
-Canonical maintains a coordinated set
-of Zephyr and module repositories.
+To provide long term support, Canonical forks and maintains Zephyr, Zephyr
+module repositories, and any other repositories required to support or develop
+Zephyr |upstream_release|.
 
-The distribution stores its source in Launchpad.
-Each upstream repository has a port with the same name
-in the Zephyr RTOS Launchpad project.
-The Zephyr :program:`west` manifest
-records the tested revision of each port.
-Canonical publishes the manifest repository with an immutable source tag
-for each tested source set.
+The LTS distribution stores these sources in `Launchpad
+<https://code.launchpad.net/~arctic-tern>`__. Each upstream repository has a
+corresponding git repository with the same name in the Zephyr RTOS Launchpad
+project. For example, the upstream |upstream_sdk_ng_link| has a
+corresponding |product_name| sdk-ng
+:canonical-zephyr:`hosted <sdk-ng>` on Launchpad.
 
-This model preserves the standard multi-repository workflow
-and gives Canonical one source namespace
-for maintenance changes.
+The distribution diverges from upstream in the provided :canonical-zephyr:`west
+manifest <west-manifest>`, which is altered to target the distributions' forks.
+Canonical publishes the manifest repository with an immutable source tag for
+each tested source set.
+
+This model preserves the standard multi-repository workflow and yields one
+source namespace for maintenance changes.
 
 The role of the manifest
 ------------------------
 
-A Zephyr workspace contains many repositories.
-The manifest records their URLs, paths, groups, and revisions.
+A Zephyr workspace contains many repositories. The manifest records their URLs,
+paths, groups, and revisions.
 
-The manifest revisions form one tested source set.
-For this reason,
-:command:`west update` keeps repositories aligned,
-while a separate :command:`git pull`
-can move one repository outside the tested set.
-The source tag fixes the manifest repository itself to that tested set.
+The manifest revisions form a unified, tested, source set. The aforementioned
+source tag fixes the manifest repository to this tested set. This way
+:command:`west update` keeps repositories aligned, while still allowing one to
+:command:`git pull` to move one repository outside the tested set.
 
-Relationship with upstream
---------------------------
+Relationship and divergence with upstream
+-----------------------------------------
 
-Canonical keeps upstream project names and source structure.
-This structure preserves familiar upstream concepts,
-commands, and application layouts.
+Canonical keeps upstream project names and source structure. This structure
+preserves familiar upstream concepts, commands, and application layouts.
 
-Canonical can add maintenance patches to a port.
-The Canonical repository history identifies these changes.
-The release notes describe changes that affect users.
+Canonical can add maintenance patches to each forked repository in accordance
+with upstream and will continue to patch for the duration of the long term
+support offering. The Canonical repository history identifies these changes. The
+release notes describe changes that affect users.
 
+A central divergence with upstream is the use of a personal package archive
+(PPA), rather than a python package index, for python dependencies. The
+|zephyr-lts-ppa| provided by Canonical contains the python dependencies normally
+installed by ``pip`` during ``pip install -r requirements.txt``. However, using
+the PPA installs all python dependencies globally rather than in a ``venv``
+environment. This tradeoff is purposeful; the PPA provides Canonical's Security
+guarantees for each python dependency. We recommend user's to employ either
+`Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_
+containers to mitigate the cost of losing the python sandbox.
+
+.. todo::
+
+   Jeff: Once :issue:`RTOS-228 <RTOS-228>` closes. Show the banner here
+
+Another divergence with upstream is that Canonical's distribution patches the
+``VERSIONS`` file to match |product_release| rather than |upstream_release|.
+Similarly, we patch the boot banner to welcome our users to the Canonical
+distribution:
+
+.. code-block::
+
+   See above TODO
 
 See also
 --------

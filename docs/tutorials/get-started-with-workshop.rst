@@ -62,7 +62,8 @@ Add this content to the file:
 .. todo::
 
    Jeff: This pulls in 3.7/stable zephyr. We need this to be 24.04/stable.
-   @lincoln or setup the lts track that Dmitry recommended
+   :issue:`RTOS-226 <RTOS-226>`
+
 
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
