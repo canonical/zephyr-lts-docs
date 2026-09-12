@@ -14,6 +14,8 @@ and the basic Zephyr build workflow.
 You will create a workspace,
 build the Hello World sample,
 and run it in QEMU.
+Then you will connect a physical board
+and flash an application to it.
 
 Follow the sections of the tutorial in order.
 
@@ -21,3 +23,4 @@ Follow the sections of the tutorial in order.
    :maxdepth: 1
 
    Get started with Workshop <get-started-with-workshop>
+   Flash hardware from Workshop <workshop-flash-hardware>
