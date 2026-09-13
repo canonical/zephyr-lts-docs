@@ -36,6 +36,17 @@ that apply to this source and its development tools:
    Source repositories <repositories>
    Releases <releases>
 
+Supported Boards
+----------------
+
+This page lists the board that |product_name| supports and additional testing
+performed by Canonical.
+
+.. toctree::
+   :titlesonly:
+
+   Supported Boards <supported-boards>
+
 
 Support
 -------

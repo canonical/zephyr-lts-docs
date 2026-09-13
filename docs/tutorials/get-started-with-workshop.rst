@@ -201,7 +201,7 @@ Next steps
 
 You now have a working |product_name| development environment.
 
-To flash a physical board, follow :ref:`how_access_hardware_from_workshop`.
+To flash a physical board, follow :ref:`tut_flash_hardware`.
 
 To understand the files that Workshop manages, read
 :ref:`ref_workshop_environment`.
