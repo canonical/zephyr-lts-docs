@@ -4,11 +4,11 @@ sdks:
   - name: uv
     channel: latest/stable
   - name: zephyr
-    channel: 3.7/stable
+    channel: 4.4/stable
   - name: zephyr-sdk-ng
-    channel: 0.16.9/stable
+    channel: 1.0.1/stable
   - name: zephyr-amd64
-    channel: 0.16.9/stable
+    channel: 1.0.1/stable
 connections:
   - plug: zephyr:venv
     slot: uv:venv

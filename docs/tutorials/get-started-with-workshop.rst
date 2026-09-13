@@ -61,7 +61,7 @@ Add this content to the file:
 
 .. todo::
 
-   Jeff: This pulls in 3.7/stable zephyr. We need this to be 24.04/stable.
+   Jeff: This pulls in 4.4/stable zephyr. We need this to be 26.04/stable.
    :issue:`RTOS-226 <RTOS-226>`
 
 
