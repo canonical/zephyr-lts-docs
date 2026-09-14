@@ -198,7 +198,7 @@ For example, the manifest file in this tutorial defines ``sync``, ``build``, and
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
    :start-after: slot: zephyr-amd64:toolchain
-   :caption: .workshop/zephyr-24-04.yaml
+   :caption: .workshop/zephyr-26-04.yaml
 
 To update all repositories defined in the West manifest, run the ``sync`` action:
 
