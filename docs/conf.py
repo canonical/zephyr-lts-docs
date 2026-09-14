@@ -51,8 +51,7 @@ with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
 product_release = _doc_versions["DOC_VERSION"]
 upstream_release = _doc_versions["DOC_UPSTREAM_VERSION"].rsplit(".", 1)[0]
 upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
-sdk_ng_channel_ = _doc_versions["SDK_NG_CHANNEL"]
-sdk_ng_channel = f"{_doc_versions["SDK_NG_CHANNEL"]}"
+sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
 source_tag = _doc_versions["SOURCE_TAG"]
 
 # Keep docs/reference/workshop.yaml, the release-note filename and heading,
