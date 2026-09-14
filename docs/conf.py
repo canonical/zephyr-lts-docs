@@ -385,7 +385,7 @@ exclude_patterns = [
 # resolves substitutions in code blocks at parse time and would not see
 # epilog definitions.
 _version_substitutions = f"""
-.. |zephyr-lts-ppa| replace:: ``ppa:arctic-tern/zephyr-toolchain``
+.. |zephyr-lts-ppa| replace:: ``ppa:{_doc_versions["DOC_PPA_NAME"]}``
 .. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
 .. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
 .. |sdk-version| replace:: {_doc_versions["SDK_NG_VERSION"]}
