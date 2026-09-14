@@ -17,7 +17,18 @@ with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
         _line = _line.strip()
         if _line and not _line.startswith("#"):
             _key, _, _value = _line.partition("=")
-            _doc_versions[_key.strip()] = _value.strip()
+            _key = _key.strip()
+            _value = _value.strip()
+            # versions.env is also sourced by bash (via `make cram`), so
+            # values may reference earlier keys with shell-style
+            # "$NAME"/${NAME} syntax and be double-quoted. Mirror that
+            # expansion here so both consumers agree on the result.
+            _value = re.sub(
+                r"\$\{?(\w+)\}?",
+                lambda _m: _doc_versions.get(_m.group(1), _m.group(0)),
+                _value,
+            )
+            _doc_versions[_key] = _value.replace('"', "")
 
 # Configuration for the Sphinx documentation builder.
 # All configuration specific to your project should be done in this file.
@@ -40,7 +51,8 @@ with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
 product_release = _doc_versions["DOC_VERSION"]
 upstream_release = _doc_versions["DOC_UPSTREAM_VERSION"].rsplit(".", 1)[0]
 upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
-sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
+sdk_ng_channel_ = _doc_versions["SDK_NG_CHANNEL"]
+sdk_ng_channel = f"{sdk_ng_channel_}"
 source_tag = _doc_versions["SOURCE_TAG"]
 
 # Keep docs/reference/workshop.yaml, the release-note filename and heading,
