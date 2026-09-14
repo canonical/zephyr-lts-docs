@@ -55,19 +55,30 @@ Actions
 
 .. list-table::
    :header-rows: 1
+   :widths: 10 40 50
 
    * - Action
      - Purpose
      - Example
    * - :samp:`sync`
      - Synchronize all :program:`west` projects to the manifest revisions.
-     - |workshop_sync_command|
+     - .. code-block:: console
+          :substitutions:
+
+          $ workshop run |workshop_name| -- sync
    * - :samp:`build`
      - Run :command:`west build` from the Zephyr source directory.
-     - |workshop_build_command|
+     - .. code-block:: console
+          :substitutions:
+
+          $ workshop run |workshop_name| -- build \
+            -b qemu_x86 samples/hello_world
    * - :samp:`flash`
      - Run :command:`west flash` from the Zephyr source directory.
-     - |workshop_flash_command|
+     - .. code-block:: console
+          :substitutions:
+
+          $ workshop run |workshop_name| -- flash
 
 Host interfaces
 ---------------

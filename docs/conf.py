@@ -421,9 +421,6 @@ _version_substitutions = f"""
 .. |workshop_info_command| replace:: :command:`workshop info {workshop_name}`
 .. |upstream_sdk_ng_link| replace:: :upstream-zephyr:`sdk-ng <sdk-ng/tree/v{_doc_versions["SDK_NG_VERSION"]}>`
 .. |manifest_tag_command| replace:: :command:`git -C {manifest_repository} describe --tags --exact-match`
-.. |workshop_sync_command| replace:: :command:`workshop run {workshop_name} -- sync`
-.. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
-.. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
 """
 
