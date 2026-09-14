@@ -21,21 +21,25 @@ hygiene that Workshop provides, allows flashing without ``udev`` rules or
 Prerequisites
 -------------
 
-Before starting, ensure you have these requirements satisfied:
-
 * A launched |workshop_name_samp| Workshop with a synced workspace, as created
   in :ref:`tut_get_started_with_workshop`.
-* A development board connected to the host over USB.
-* The page for your board in the
-  :zephyr-docs:`supported boards <boards/index.html>` list.
+* A :zephyr-docs:`supported boards <boards/index.html>` connected to the host over USB.
 
-Identify the flash device class
--------------------------------
+Identify the board device class
+---------------------------------
 
-The flash runner decides which host device the board needs, but the device class
-varies between boards. The upstream board documentation names the runner and the
-tool that calls it. Find the runner on the upstream board page and read the
-matching row of this table.
+Before giving Workshop access to a board, determine which host device the board
+uses for flashing. 
+
+Start with the board name, for example
+``esp32c3_devkitm/esp32c3``, and follow these steps:
+
+ Find your board's page in the :zephyr-docs:`Supported Boards <boards/index.html>` list and open its page. 
+
+Go the **Programming and Debugging** section or, if it is absent, look up on the page for this section, search the board page for mentions of ``flash``, ``flashing``, or ``debug``. 
+
+Once you have the runner's name, check the table to find the board's device class:
+
 
 .. todo:
 
@@ -43,31 +47,35 @@ matching row of this table.
    and could not find ``pyocd` nor ``esp32`` for those boards. How is a user
    supposed to find the host device?
 
-   :issue:`RTOS-241 <RTOS-241>`
+
+.. todo:
+
+   Yana: Can you use `west flash --context` to identify the runner instead of looking up upstream documentation and try to flash in verbose mode to see what executable is actually triggered?
+   If the default runner does not match what we have in the board, should the user change the default runner? Also, is Canonical going to maintain and verify each entry in this table? If yes, should we skip sending users upstream at all and just give them the table that is is built from the tested source?
+
 
 .. list-table::
    :header-rows: 1
 
-   * - Board class
-     - Example board
-     - Default runner
+   * - Board name
+     - Default flash runner
+     - Board device class
      - Host device
-   * - USB serial bootloader
-     - ESP32-C3-DevKitM
-       (:samp:`esp32c3_devkitm/esp32c3`)
+   * - ESP32-C3-DevKitM (:samp:`esp32c3_devkitm/esp32c3`)
      - :samp:`esp32`
+     - USB serial bootloader
      - Serial node, such as :file:`/dev/ttyUSB0`
-   * - On-board J-Link probe
-     - Nordic nRF52840 DK (:samp:`nrf52840dk/nrf52840`)
+   * - Nordic nRF52840 DK (:samp:`nrf52840dk/nrf52840`)
      - :samp:`nrfjprog`
+     - On-board J-Link probe
      - USB probe
-   * - On-board CMSIS-DAP probe
-     - BBC micro:bit v2 (:samp:`bbc_microbit_v2/nrf52833`)
+   * - BBC micro:bit v2 (:samp:`bbc_microbit_v2/nrf52833`)
      - :samp:`pyocd`
+     - On-board CMSIS-DAP probe
      - USB probe
-   * - On-board ST-Link probe
-     - STM32 Nucleo-64 (:samp:`nucleo_l476rg/stm32l476xx`)
+   * - STM32 Nucleo-64 (:samp:`nucleo_l476rg/stm32l476xx`)
      - :samp:`openocd`
+     - On-board ST-Link probe
      - USB probe
 
 .. todo::
@@ -76,15 +84,25 @@ matching row of this table.
    flash device class for the ESP32-C3-DevKitM since that is the working example
    for this chapter
 
-For example, to flash a ESP32-C3-DevKitM the ...
+Find the device identifiers
+---------------------------
 
-Identify the host device
-------------------------
+Workshop uses device identifiers to grant access to the
+board's flashing interface.
 
-The device class determines the device used to interact with the board.
+The board device class identifies the flashing interface. When you connect the
+board, Linux host exposes that interface as a device: a USB serial bootloader
+appears as a serial device node, while an on-board debug probe, such as J-Link,
+appears as a USB device. 
 
-Serial adapter
-~~~~~~~~~~~~~~
+Finding the device identifiers depends on the host device type and the board's device class.
+
+USB serial bootloader
+~~~~~~~~~~~~~~~~~~~~~
+
+.. todo::
+   
+   Yana: What if there are multiples devices connected? Should the user turn the target device on and off to see which one is specifically associated with the board?
 
 A board with a serial bootloader exposes a USB serial adapter. First, find the
 device node:
@@ -116,6 +134,10 @@ The output for a CP2102 adapter, common on ESP32 kits, is similar to:
    ID_VENDOR_ID=10c4
    ID_MODEL_ID=ea60
 
+.. todo::
+
+   Yana: Isn't this already what we instruct users to do with run ls above? If we want to to clarify that a USB device can be exposed as either /dev/ttyUSB* or /dev/ttyACM*, let's move this sentence to be right after the ls command and to instruct users to just do a simple plug/unplug while monitoring with udev or smth to actually find the correct file. 
+
 Some boards use a different adapter chip or the USB controller built into the
 SoC. Those boards can expose :file:`/dev/ttyACM0` instead. Use the values
 reported for your device.
@@ -145,6 +167,10 @@ The output will show one line per device:
 The first hexadecimal value after :samp:`ID` is the vendor ID. The second value
 is the product ID. Record the values that correspond to your board; we will need
 them for the rest of the tutorial.
+
+Some debug probes also expose a serial console. If you need console access in
+Workshop, identify the additional serial device and declare a separate ``tty``
+plug for it.
 
 Create a device SDK
 -------------------
@@ -296,6 +322,9 @@ Check the tool for your runner:
    |workshop_project_prompt| command -v pyocd        # pyocd runner
    |workshop_project_prompt| command -v openocd      # openocd runner
 
+   .. todo::
+         Yana: If the tool is not installed, it prints what? Nothing? 
+
 If the command prints a path, the tool is ready. If the command prints then
 you'll have to install the tool into the Workshop container. In your Workshop
 shell you can use the standard python tools to install into the virtual
@@ -320,6 +349,12 @@ nRF Command Line Tools nor the SEGGER J-Link tools are part of the SDK or the
 Ubuntu archive. Follow the installation steps in the board documentation, for
 example the :zephyr-docs:`nRF52840 DK <boards/nordic/nrf52840dk/doc/index.html>`
 page.
+
+.. to-do::
+
+   Yana: IMO, make a small but an explicit heading instead of a note, e.g. "Make your SDK setup reproducible" or "Add an SDK setup script" or something similar. 
+
+   Also, if you do make it a separate heading, clarify that you need to leave the workshop shell to reinforce the mental model that separates the host environment from the Workshop container.
 
 .. note::
 
@@ -346,6 +381,10 @@ page.
    Be sure to list the device SDK after the :samp:`zephyr` SDK in the
    :samp:`sdks` list. Hooks run in list order, and the shared virtual
    environment must exist before the hook runs.
+
+.. todo::
+
+   Yana: Without knowing Workshop-specific terms, is it clear based on the heading what "connect" means here? As this is entry-level tutorial, headings should probably be more goal-oriented and using terms that a non-Workshop dev would get -- "Install and configure the target toolchain"? "Configure the toolchain"? "Select the compilers"? "Add a toolchain"? 
 
 Connect the target toolchain
 ----------------------------
@@ -444,10 +483,10 @@ is downloaded but not connected.
 Build the application
 ---------------------
 
-Build a sample for your board with the :samp:`build` action.
-Install and connect the toolchain SDK for the board architecture first,
-as described in the previous section.
-This example builds the synchronization sample for the ESP32-C3-DevKitM:
+Once, you have installed and configured the toolchain SDK for the board architecture, build a sample for your board with the :samp:`build` action.
+This example uses ``samples/synchronization`` because
+``samples/basic/blinky`` requires an ``led0`` alias that is not available on
+ESP32-C3 and ESP32-S3 devkits.
 
 .. code-block:: console
    :substitutions:
@@ -459,6 +498,10 @@ Replace the board target and the sample with the values for your board.
 
 Flash the board
 ---------------
+
+.. to-do::
+
+   Yana: Is there a reason to switch from building from out of shell with a workshop action in the "Build the application" above and then flashing from within the shell? I think we switch instructions multiple times: Verify the runner tool -- in shell, Connect the target toolchain -- host, Build the application -- host, Flash the board -- in shell, Remove device access -- host. Make sure these switches are documented as the first thing under each heading.
 
 Run :command:`west flash` from the Zephyr source directory
 inside the Workshop shell:
@@ -524,17 +567,6 @@ you can also flash from the host with the :samp:`flash` action:
 
 The runner reports success at the end of its output.
 Press the reset button on the board if the application does not start.
-
-.. note::
-
-   The :samp:`samples/basic/blinky` sample does not run on ESP32-C3 and ESP32-S3
-   devkits. The device trees of those boards have no :samp:`led0` alias. Use
-   :samp:`samples/synchronization` as a test instead.
-
-.. note::
-
-   Some probes also expose a serial console. Add a separate :samp:`tty` plug to
-   the device SDK if you need the console inside the Workshop.
 
 Remove device access
 --------------------
