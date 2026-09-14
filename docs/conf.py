@@ -52,7 +52,7 @@ product_release = _doc_versions["DOC_VERSION"]
 upstream_release = _doc_versions["DOC_UPSTREAM_VERSION"].rsplit(".", 1)[0]
 upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
 sdk_ng_channel_ = _doc_versions["SDK_NG_CHANNEL"]
-sdk_ng_channel = f"{sdk_ng_channel_}"
+sdk_ng_channel = f"{_doc_versions["SDK_NG_CHANNEL"]}"
 source_tag = _doc_versions["SOURCE_TAG"]
 
 # Keep docs/reference/workshop.yaml, the release-note filename and heading,
@@ -421,9 +421,6 @@ _version_substitutions = f"""
 .. |workshop_info_command| replace:: :command:`workshop info {workshop_name}`
 .. |upstream_sdk_ng_link| replace:: :upstream-zephyr:`sdk-ng <sdk-ng/tree/v{_doc_versions["SDK_NG_VERSION"]}>`
 .. |manifest_tag_command| replace:: :command:`git -C {manifest_repository} describe --tags --exact-match`
-.. |workshop_sync_command| replace:: :command:`workshop run {workshop_name} -- sync`
-.. |workshop_build_command| replace:: :command:`workshop run {workshop_name} -- build -b qemu_x86 samples/hello_world`
-.. |workshop_flash_command| replace:: :command:`workshop run {workshop_name} -- flash`
 .. |Workshop| replace:: **Workshop**
 """
 

@@ -378,15 +378,16 @@ Workshop as follows:
 
 .. code-block:: yaml
    :caption: |workshop_definition_file|
+   :substitutions:
 
    sdks:
      # Existing SDK entries...
      - name: zephyr-arm
-       channel: 0.16.9/stable
+       channel: |sdk_ng_channel|
      - name: zephyr-arm64
-       channel: 0.16.9/stable
+       channel: |sdk_ng_channel|
      - name: zephyr-riscv64
-       channel: 0.16.9/stable
+       channel: |sdk_ng_channel|
 
    connections:
      # Existing connections...
