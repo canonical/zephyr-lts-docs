@@ -67,7 +67,7 @@ Add this content to the file:
 
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
-   :caption: .workshop/zephyr-24-04.yaml
+   :caption: .workshop/zephyr-26-04.yaml
 
 Launch the development environment:
 

@@ -48,10 +48,6 @@ with upstream and will continue to patch for the duration of the long term
 support offering. The Canonical repository history identifies these changes. The
 release notes describe changes that affect users.
 
-.. todo::
-
-   Jeff: this PPA must point to the |product_name| public facing ppa
-
 A central divergence with upstream is the use of a personal package archive
 (PPA), rather than a python package index, for python dependencies. The
 |zephyr-lts-ppa| provided by Canonical contains the python dependencies normally
