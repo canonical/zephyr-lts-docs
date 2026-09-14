@@ -65,7 +65,7 @@ In this documentation
    * - **Source and releases**
      - :ref:`Source repositories <ref_repositories>` •
        :ref:`Releases <ref_releases>` •
-       :ref:`Zephyr 24.04 release notes <release_notes_24_04>`
+       :ref:`Zephyr 26.04 release notes <release_notes_26_04>`
 
    * - **Project**
      - :ref:`Canonical's Zephyr distribution <exp_canonical_distribution>` •
