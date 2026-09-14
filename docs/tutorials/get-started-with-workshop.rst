@@ -10,21 +10,19 @@ Get started with Workshop
 In this tutorial, you'll create a |product_name| workspace and build and run the
 Hello World sample.
 
-Workshop is the standard development environment for |product_name|. The
-Workshop definition combines the Zephyr source, Python environment, SDK bundle,
-and x86 toolchain.
-
-Install Workshop
-----------------
-
 Prerequisites
-~~~~~~~~~~~~~
-
-Before starting, ensure you have these requirements satisfied:
+-------------
 
 * A host running |ubuntu-base| or another Linux distribution that supports snaps.
 * Access to the internet.
 * Permission to use :command:`sudo` on the host.
+
+Install Workshop and LXD
+------------------------
+
+Workshop is the standard development environment for |product_name|. The
+Workshop definition contains the Zephyr source, Python environment, SDK bundle,
+and x86 toolchain. LXD is a container manager that Workshop uses to create and run its development environment.
 
 Install LXD 6 and Workshop:
 
@@ -33,31 +31,31 @@ Install LXD 6 and Workshop:
    $ sudo snap install --channel=6/stable lxd
    $ sudo snap install --classic workshop
 
-Add your user to the :samp:`lxd` group:
+To avoid using :command:`sudo` for every LXD operation, add your user to the :samp:`lxd` group:
 
 .. code-block:: console
 
    $ sudo usermod --append --groups lxd "$USER"
    $ newgrp lxd
 
-Create the project
-------------------
+Define a development environment
+--------------------------------
 
-Create a project directory:
+Create a directory for your project:
 
 .. code-block:: console
 
    $ mkdir zephyrproject
    $ cd zephyrproject
 
-Create the Workshop definition under :file:`.workshop/`:
+Create a Workshop environment definition under :file:`.workshop/`:
 
 .. parsed-literal::
 
    $ mkdir .workshop
    $ editor .workshop/|workshop_definition|
 
-Add this content to the file:
+Add the sample environment definition to the file:
 
 .. todo::
 
@@ -69,26 +67,33 @@ Add this content to the file:
    :language: yaml
    :caption: .workshop/zephyr-24-04.yaml
 
+This YAML file declares the base system, Zephyr SDKs, toolchains, and project actions:
+
+* ``name`` an identifier for the Workshop environment.
+* ``base`` an Ubuntu base image used to create the environment.
+* ``sdks`` a list of the SDKs that Workshop installs.  ``name`` selects an SDK    and its ``channel`` selects the version channel to use.
+* ``connections`` link the SDK components so that one component can use    another. A ``plug`` requests an interface, and a ``slot`` provides it, for    example, ``plug: zephyr:venv`` connects to ``slot: uv:venv`` so the Zephyr    environment can use the Python environment provided by ``uv``.
+* ``actions`` defines commands that Workshop can run from the host
+
 Launch the development environment:
 
 .. parsed-literal::
 
    $ workshop launch |workshop_name|
+   
+Workshop will read the definition, create the environment via LXD, and download the Ubuntu base image and SDKs. 
+The first launch may take several minutes.
 
-Workshop downloads the Ubuntu base and the SDKs in the definition.
-The first launch can take several minutes.
+Initialize and download the Zephyr source
+-----------------------------------------
 
-Download the source
--------------------
-
-Open a shell in the Workshop:
+Once the development environment is launched, start a Workshop shell:
 
 .. parsed-literal::
 
    $ workshop shell |workshop_name|
 
-Initialize a :program:`west` workspace from the |source_tag| source tag in
-Canonical's Zephyr manifest repository:
+Create a :program:`west` workspace using Canonical’s Zephyr manifest repository and selects the ``24.04.rc-1`` source tag.
 
 .. parsed-literal::
 
@@ -121,6 +126,8 @@ Export the Zephyr CMake package:
 
    |workshop_project_prompt| west zephyr-export
 
+Exporting the package registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
+
 Extract the SDK host tools
 --------------------------
 
@@ -143,7 +150,7 @@ Change to the Zephyr repository:
 
    |workshop_project_prompt| cd zephyr
 
-Build Hello World for the QEMU x86 board:
+Build Hello World for the `qemu_x86` board:
 
 .. todo::
 
@@ -156,7 +163,7 @@ Build Hello World for the QEMU x86 board:
     -DZEPHYR_TOOLCHAIN_VARIANT=cross-compile \
     -DCROSS_COMPILE=/var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/x86_64-zephyr-elf/bin/x86_64-zephyr-elf-
 
-Run the application in QEMU:
+Run the built application:
 
 .. parsed-literal::
 
@@ -170,16 +177,30 @@ The console should show output similar to:
    Hello World! qemu_x86
 
 Press :kbd:`Ctrl+A`, then press :kbd:`X` to stop QEMU.
-Run :command:`exit` to leave the Workshop shell.
 
-Use the project actions
------------------------
+Exit the Workshop shell:
 
-Instead of manually entering a workshop shell, you may also run ``actions`` from
-the host's project directory.
+.. code-block:: console
 
-For example, one can run the ``sync`` action to synchronize all manifest
-projects with the revisions selected by the source tag:
+   exit
+
+You will return to the host's terminal.
+
+Run Workshop actions from the host
+----------------------------------
+
+You do not have to enter the Workshop shell manually for every task. The
+``actions`` mapping in the workshop manifest file defines commands
+that Workshop can run from the host. 
+
+For example, the manifest file in this tutorial defines ``sync``, ``build``, and ``flash`` actions:
+
+.. literalinclude:: ../reference/workshop.yaml
+   :language: yaml
+   :start-after: slot: zephyr-amd64:toolchain
+   :caption: .workshop/zephyr-24-04.yaml
+
+To update all repositories defined in the West manifest, run the ``sync`` action:
 
 .. parsed-literal::
 
@@ -189,12 +210,26 @@ projects with the revisions selected by the source tag:
 
    Jeff: the following is not tested yet
 
-Build another application:
+Any arguments supplied after the action name are passed to the command
+defined for that action.
+
+For example, the following command runs the ``build`` action and passes
+the build options to ``west build`` through ``"$@"``:
 
 .. parsed-literal::
 
    $ workshop run |workshop_name| -- build -p always \
    -b qemu_x86 samples/basic/blinky
+
+The ``build`` action then runs two commands:
+
+.. code-block:: 
+
+   cd /project/zephyr
+   west build -p always -b qemu_x86 samples/basic/blinky
+
+You can define additional actions in the workshop manifest file to automate other tasks in a similar manner, see :workshop-docs:`Customize Workshop actions
+<how-to/customize-workshops/add-actions/>`.
 
 Next steps
 ----------
