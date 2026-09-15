@@ -50,7 +50,8 @@ Create a directory for your project:
 
 Create a Workshop environment definition under :file:`.workshop/`:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ mkdir .workshop
    $ editor .workshop/|workshop_definition|
@@ -77,11 +78,12 @@ This YAML file declares the base system, Zephyr SDKs, toolchains, and project ac
 
 Launch the development environment:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop launch |workshop_name|
-   
-Workshop will read the definition, create the environment via LXD, and download the Ubuntu base image and SDKs. 
+
+Workshop will read the definition, create the environment via LXD, and download the Ubuntu base image and SDKs.
 The first launch may take several minutes.
 
 Initialize and download the Zephyr source
@@ -89,13 +91,15 @@ Initialize and download the Zephyr source
 
 Once the development environment is launched, start a Workshop shell:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop shell |workshop_name|
 
 Create a :program:`west` workspace using Canonical’s Zephyr manifest repository and selects the ``24.04.rc-1`` source tag.
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| west init \
    -m |manifest_repository_url| \
@@ -104,7 +108,8 @@ Create a :program:`west` workspace using Canonical’s Zephyr manifest repositor
 The source tag identifies an immutable, tested |product_name| source set. Verify
 the selected tag:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| git -C |manifest_repository| \
    describe --tags --exact-match
@@ -113,7 +118,8 @@ the selected tag:
 
 Download the repositories from the |product_name| manifest:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| west update
 
@@ -122,7 +128,8 @@ the Zephyr RTOS Launchpad project.
 
 Export the Zephyr CMake package:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| west zephyr-export
 
@@ -136,7 +143,8 @@ Extract the SDK host tools
    Jeff: this section is needed until :issue:`RTOS-226 <RTOS-226>` and
    :issue:`RTOS-225 <RTOS-225>` are resolved.
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| sudo bash /var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d ~/hosttools -y -n
    |workshop_project_prompt| echo 'export PATH=~/hosttools/sysroots/x86_64-pokysdk-linux/usr/bin:$PATH' >> ~/.profile
@@ -146,7 +154,8 @@ Build and run Hello World
 
 Change to the Zephyr repository:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| cd zephyr
 
@@ -157,7 +166,8 @@ Build Hello World for the `qemu_x86` board:
    Jeff: these environment variables must be passed until :issue:`sdk issue
    RTOS-226 <RTOS-226>` and :issue:`RTOS-225 <RTOS-225>` are resolved.
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world -- \
     -DZEPHYR_TOOLCHAIN_VARIANT=cross-compile \
@@ -165,7 +175,8 @@ Build Hello World for the `qemu_x86` board:
 
 Run the built application:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_zephyr_prompt| west build -t run
 
@@ -191,7 +202,7 @@ Run Workshop actions from the host
 
 You do not have to enter the Workshop shell manually for every task. The
 ``actions`` mapping in the workshop manifest file defines commands
-that Workshop can run from the host. 
+that Workshop can run from the host.
 
 For example, the manifest file in this tutorial defines ``sync``, ``build``, and ``flash`` actions:
 
@@ -202,7 +213,8 @@ For example, the manifest file in this tutorial defines ``sync``, ``build``, and
 
 To update all repositories defined in the West manifest, run the ``sync`` action:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- sync
 
@@ -216,14 +228,15 @@ defined for that action.
 For example, the following command runs the ``build`` action and passes
 the build options to ``west build`` through ``"$@"``:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- build -p always \
    -b qemu_x86 samples/basic/blinky
 
 The ``build`` action then runs two commands:
 
-.. code-block:: 
+.. code-block::
 
    cd /project/zephyr
    west build -p always -b qemu_x86 samples/basic/blinky
