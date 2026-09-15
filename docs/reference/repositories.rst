@@ -18,19 +18,22 @@ URL format
 Each port keeps its upstream repository name.
 Repository pages use this URL format:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |launchpad_project_url|/+git/<repository>
 
 Git operations use this URL format:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |launchpad_git_base|/<repository>
 
 For example, clone the manifest repository with :command:`git clone`:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ git clone |manifest_repository_url|
 

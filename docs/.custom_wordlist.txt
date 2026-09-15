@@ -72,11 +72,13 @@ hygiene
 imgtool
 io
 ip
+jlink
 landscape
 lang
 lastmod
 latexmk
 mitigations
+mkdir
 npm
 openapi
 otf
@@ -84,6 +86,7 @@ plantuml
 preconfigured
 pymarkdown
 pymarkdownlnt
+pyocd
 reStructuredText
 readthedocs
 redeclare
@@ -102,6 +105,7 @@ spread_test_example
 subprocess
 subproject
 subprojects
+sudo
 tex
 texlive
 toctree

@@ -65,7 +65,8 @@ Install :program:`west`:
 Initialize the workspace from the |source_tag| source tag in Canonical's Zephyr
 manifest repository:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ west init -m |manifest_repository_url| \
    --mr |source_tag| ~/zephyrproject
