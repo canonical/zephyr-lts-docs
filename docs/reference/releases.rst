@@ -37,7 +37,8 @@ Updates
 Canonical publishes compatible tool updates to the |workshop_sdk_channel_samp|
 SDK channel. Apply an SDK update with :command:`workshop refresh`:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop refresh |workshop_name|
 
@@ -45,21 +46,24 @@ Each |product_name| source update has a new immutable tag. To move an existing
 workspace to a newer source tag, fetch and check out the tag in the manifest
 repository:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ git -C |manifest_repository| fetch origin tag <source-tag>
    $ git -C |manifest_repository| switch --detach <source-tag>
 
 Then synchronize the other projects with the revisions in that tagged manifest:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- sync
 
 To record a reproducible source identifier, query the manifest repository tag
 from the workspace root:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ git -C |manifest_repository| describe --tags --exact-match
 
