@@ -46,6 +46,8 @@ Workshop
 Xtensa
 YouTube
 Zephyr
+amd64
+arm64
 backend
 backends
 bindesc
@@ -73,6 +75,7 @@ imgtool
 io
 ip
 jlink
+json
 landscape
 lang
 lastmod
@@ -117,6 +120,7 @@ txt
 udev
 ulwazi
 uncomment(ing)?
+untrusted
 upstream('s)
 utils
 uv

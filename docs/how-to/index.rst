@@ -22,6 +22,17 @@ install the tools and source manually:
 
    How to install Zephyr manually <install-manually>
 
+Develop in VS Code
+------------------
+
+The Workshop extension for VS Code connects the editor
+to a running Workshop environment:
+
+.. toctree::
+   :titlesonly:
+
+   How to use Workshop from VS Code <use-workshop-from-vscode>
+
 
 Work with hardware
 ------------------
