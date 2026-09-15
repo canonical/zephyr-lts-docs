@@ -4,7 +4,7 @@ sdks:
   - name: uv
     channel: latest/stable
   - name: zephyr
-    channel: 4.4/stable
+    channel: 26.04/stable
   - name: zephyr-sdk-ng
     channel: 1.0.1/stable
   - name: zephyr-amd64
