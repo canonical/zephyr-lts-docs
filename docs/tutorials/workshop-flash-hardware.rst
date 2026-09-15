@@ -229,14 +229,16 @@ Apply the definition and connect the devices
 
 Apply the updated definition:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop refresh |workshop_name|
 
 Connect each plug to the system custom-device slot. Use the plug names you
 declared in the device SDK:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop connect |workshop_name|/board-devices:<PLUG> :custom-device
 
@@ -250,7 +252,8 @@ For the example plugs above:
 
    Jeff: show don't tell :issue:`RTOS-240 <RTOS-240>`
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop connect |workshop_name|/board-devices:esp32c3-serial :custom-device
    $ workshop connect |workshop_name|/board-devices:nrf5340-probe :custom-device
@@ -279,13 +282,15 @@ Check that the tool your runner calls is present.
 
 Open a shell in the Workshop:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop shell |workshop_name|
 
 Check the tool for your runner:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| command -v esptool.py   # esp32 runner
    |workshop_project_prompt| command -v pyocd        # pyocd runner
@@ -296,14 +301,16 @@ you'll have to install the tool into the Workshop container. In your Workshop
 shell you can use the standard python tools to install into the virtual
 environment:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| pip install esptool     # esp32 runner
    |workshop_project_prompt| pip install pyocd       # pyocd runner
 
 Similarly for the :samp:`openocd` runner:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| sudo apt update
    |workshop_project_prompt| sudo apt install openocd
@@ -417,13 +424,15 @@ Workshop as follows:
 
 Apply the updated definition:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop refresh |workshop_name|
 
 Verify that each toolchain is connected:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop connections |workshop_name|
 
@@ -440,7 +449,8 @@ Install and connect the toolchain SDK for the board architecture first,
 as described in the previous section.
 This example builds the synchronization sample for the ESP32-C3-DevKitM:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- build -p always -b \\
       esp32c3_devkitm samples/synchronization
@@ -453,7 +463,8 @@ Flash the board
 Run :command:`west flash` from the Zephyr source directory
 inside the Workshop shell:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_project_prompt| cd zephyr
    |workshop_zephyr_prompt| west flash
@@ -467,7 +478,8 @@ automatically.
 
 List the runners and options your board supports:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_zephyr_prompt| west flash --context
 
@@ -476,7 +488,8 @@ Some boards support more than one runner. Select a different runner with the
 If you installed the SEGGER tools instead of the nRF Command Line Tools, select
 the :samp:`jlink` runner:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_zephyr_prompt| west flash -r jlink
 
@@ -485,7 +498,8 @@ For example, on ESP32 boards where the runner does not find
 :command:`esptool.py` or the serial device automatically,
 pass both to the :samp:`esp32` runner:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    |workshop_zephyr_prompt| west flash -- \
    --esp-idf-path /project/zephyr \
@@ -499,7 +513,8 @@ The runner ignores the path value.
 When the runner needs no extra options,
 you can also flash from the host with the :samp:`flash` action:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- flash
 
@@ -526,7 +541,8 @@ Remove device access
 
 Disconnect a plug when you no longer need the device:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop disconnect |workshop_name|/board-devices:esp32c3-serial
 

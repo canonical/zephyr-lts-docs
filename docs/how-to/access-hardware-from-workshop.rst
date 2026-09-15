@@ -94,7 +94,8 @@ in |workshop_definition_file|:
 
 Apply the updated definition:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop refresh |workshop_name|
 
@@ -103,7 +104,8 @@ Connect the device
 
 Connect the plug to the system custom-device slot:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop connect \
        |workshop_name|/board-device:flash-device :custom-device
@@ -124,14 +126,16 @@ Flash the application
 Flash the application
 from the default :file:`/project/zephyr/build` directory:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- flash
 
 To use a different build directory,
 pass its path with the :option:`!-d` option:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop run |workshop_name| -- flash -d /project/path/to/build
 
@@ -146,7 +150,8 @@ Remove device access
 
 Disconnect the plug:
 
-.. parsed-literal::
+.. code-block:: console
+   :substitutions:
 
    $ workshop disconnect |workshop_name|/board-device:flash-device
 
