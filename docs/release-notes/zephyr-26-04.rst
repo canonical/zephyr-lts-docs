@@ -3,8 +3,8 @@
 .. meta::
    :description: Initial release notes for this Zephyr LTS distribution.
 
-Zephyr 24.04 release notes
-==========================
+Zephyr |product_release| release notes
+======================================
 
 |product_name| is Canonical's distribution of upstream Zephyr |upstream_release|
 LTS.

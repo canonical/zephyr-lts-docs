@@ -48,7 +48,8 @@ Create a directory for your project:
    $ mkdir zephyrproject
    $ cd zephyrproject
 
-Create a Workshop environment definition under :file:`.workshop/`:
+Now we must create a Workshop environment definition under :file:`.workshop/`.
+You may do that manually by copying the following template:
 
 .. code-block:: console
    :substitutions:
@@ -58,15 +59,20 @@ Create a Workshop environment definition under :file:`.workshop/`:
 
 Add the sample environment definition to the file:
 
-.. todo::
-
-   Jeff: This pulls in 4.4/stable zephyr. We need this to be 26.04/stable.
-   :issue:`RTOS-226 <RTOS-226>`
-
-
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
-   :caption: .workshop/zephyr-26-04.yaml
+   :caption: .workshop/|workshop_name|.yaml
+
+Or you may have Workshop initialize the |product_name| template for you on the
+command line:
+
+.. code-block::
+   :substitutions:
+
+   $ workshop init zephyr-|product_release| --sdks zephyr,zephyr-sdk-ng,zephyr-amd6 --base |workshop_base|
+
+But be sure to add the :samp:`sdks`, :samp:`connections` and :samp:`actions`
+from the aforementioned |workshop_name_samp| yaml file.
 
 This YAML file declares the base system, Zephyr SDKs, toolchains, and project actions:
 
@@ -96,7 +102,14 @@ Once the development environment is launched, start a Workshop shell:
 
    $ workshop shell |workshop_name|
 
-Create a :program:`west` workspace using Canonical’s Zephyr manifest repository and selects the ``24.04.rc-1`` source tag.
+.. todo::
+
+   Jeff: this ``|source_tag_samp|`` should not point to a release candidate at
+   launch.
+
+
+Create a :program:`west` workspace using Canonical’s Zephyr manifest repository
+and selects the |source_tag_samp| source tag.
 
 .. code-block:: console
    :substitutions:
@@ -114,6 +127,11 @@ the selected tag:
    |workshop_project_prompt| git -C |manifest_repository| \
    describe --tags --exact-match
 
+which should yield:
+
+.. code-block:: console
+   :substitutions:
+
    |source_tag|
 
 Download the repositories from the |product_name| manifest:
@@ -121,7 +139,7 @@ Download the repositories from the |product_name| manifest:
 .. code-block:: console
    :substitutions:
 
-   |workshop_project_prompt| west update
+   |workshop_project_prompt| west update --narrow -o=--depth=1
 
 The manifest pins each repository to a tested revision. It also directs west to
 the Zephyr RTOS Launchpad project.
@@ -134,20 +152,6 @@ Export the Zephyr CMake package:
    |workshop_project_prompt| west zephyr-export
 
 Exporting the package registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
-
-Extract the SDK host tools
---------------------------
-
-.. todo::
-
-   Jeff: this section is needed until :issue:`RTOS-226 <RTOS-226>` and
-   :issue:`RTOS-225 <RTOS-225>` are resolved.
-
-.. code-block:: console
-   :substitutions:
-
-   |workshop_project_prompt| sudo bash /var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/zephyr-sdk-x86_64-hosttools-standalone-0.9.sh -d ~/hosttools -y -n
-   |workshop_project_prompt| echo 'export PATH=~/hosttools/sysroots/x86_64-pokysdk-linux/usr/bin:$PATH' >> ~/.profile
 
 Build and run Hello World
 -------------------------
@@ -217,10 +221,6 @@ To update all repositories defined in the West manifest, run the ``sync`` action
    :substitutions:
 
    $ workshop run |workshop_name| -- sync
-
-.. todo::
-
-   Jeff: the following is not tested yet
 
 Any arguments supplied after the action name are passed to the command
 defined for that action.

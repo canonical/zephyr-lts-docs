@@ -14,4 +14,3 @@ Workshop SDK.
    :maxdepth: 1
 
    Zephyr 26.04 <zephyr-26-04>
-   Zephyr 24.04 <zephyr-24-04>
