@@ -76,6 +76,9 @@ This YAML file declares the base system, Zephyr SDKs, toolchains, and project ac
 * ``connections`` link the SDK components so that one component can use    another. A ``plug`` requests an interface, and a ``slot`` provides it, for    example, ``plug: zephyr:venv`` connects to ``slot: uv:venv`` so the Zephyr    environment can use the Python environment provided by ``uv``.
 * ``actions`` defines commands that Workshop can run from the host
 
+To see the other versions and channels an SDK publishes, follow
+:ref:`how_find_sdk_versions`.
+
 Launch the development environment:
 
 .. code-block:: console
@@ -250,6 +253,8 @@ Next steps
 You now have a working |product_name| development environment.
 
 To flash a physical board, follow :ref:`tut_flash_hardware`.
+
+To pin an SDK to a different version, follow :ref:`how_find_sdk_versions`.
 
 To understand the files that Workshop manages, read
 :ref:`ref_workshop_environment`.

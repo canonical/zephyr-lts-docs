@@ -23,6 +23,18 @@ install the tools and source manually:
    How to install Zephyr manually <install-manually>
 
 
+Choose SDK versions
+--------------------
+
+Each SDK entry in a Workshop definition pins one channel.
+Find other versions and channels an SDK publishes:
+
+.. toctree::
+   :titlesonly:
+
+   How to find other SDK versions <find-sdk-versions>
+
+
 Work with hardware
 ------------------
 
