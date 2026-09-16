@@ -157,9 +157,8 @@ Confirm the connected SDK now reports the channel you selected:
    $ workshop info |workshop_name|
 
 .. code-block:: text
-   :substitutions:
 
-   name:     zephyr-26-04
+   name:     zephyr-24-04
    base:     ubuntu@26.04
    project:  /home/user/hello-zephyr
    status:   ready
@@ -171,11 +170,11 @@ Confirm the connected SDK now reports the channel you selected:
        tracking:   latest/stable
        installed:  0.9.7  2026-09-01  (3)
      zephyr:
-       tracking:   26.04/stable
-       installed:  4.4.2  2026-08-20  (12)
+       tracking:   24.04/stable
+       installed:  3.7.2  2026-08-20  (12)
      zephyr-sdk-ng:
-       tracking:   1.0.1/stable
-       installed:  1.0.1  2026-09-16  (26)
+       tracking:   0.16.9/stable
+       installed:  0.16.9  2026-09-16  (26)
      zephyr-xtensa-espressif-esp32s2:
        tracking:   0.16.9/stable
        installed:  0.16.9  2026-09-16  (24)
