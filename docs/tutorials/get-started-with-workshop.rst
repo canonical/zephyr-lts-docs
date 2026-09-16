@@ -48,7 +48,8 @@ Create a directory for your project:
    $ mkdir zephyrproject
    $ cd zephyrproject
 
-Create a Workshop environment definition under :file:`.workshop/`:
+Now we must create a Workshop environment definition under :file:`.workshop/`.
+You may do that manually by copying the following template:
 
 .. code-block:: console
    :substitutions:
@@ -58,15 +59,20 @@ Create a Workshop environment definition under :file:`.workshop/`:
 
 Add the sample environment definition to the file:
 
-.. todo::
-
-   Jeff: This pulls in 3.7/stable zephyr. We need this to be 24.04/stable.
-   :issue:`RTOS-226 <RTOS-226>`
-
-
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
    :caption: .workshop/zephyr-24-04.yaml
+
+Or you may have Workshop initialize the |product_name| template for you on the
+command line:
+
+.. code-block::
+   :substitutions:
+
+   $ workshop init zephyr-|product_release| --sdks zephyr,zephyr-sdk-ng,zephyr-amd6 --base |workshop_base|
+
+But be sure to add the :samp:`actions` from the aforementioned
+:samp:`` file.
 
 This YAML file declares the base system, Zephyr SDKs, toolchains, and project actions:
 
