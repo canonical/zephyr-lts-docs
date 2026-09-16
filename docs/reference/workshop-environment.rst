@@ -38,6 +38,9 @@ SDK bundle, and x86 toolchain to the :samp:`zephyr` SDK.
 The Workshop project is mounted at :file:`/project`,
 and the writable Zephyr source is at :file:`/project/zephyr`.
 
+Each SDK entry pins one channel. To find other versions and channels an SDK
+publishes, follow :ref:`how_find_sdk_versions`.
+
 Definition
 ----------
 
@@ -105,6 +108,7 @@ Tutorial:
 How-to guides:
 
 - :ref:`how_access_hardware_from_workshop`
+- :ref:`how_find_sdk_versions`
 
 Explanation:
 
