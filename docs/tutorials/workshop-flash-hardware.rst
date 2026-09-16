@@ -348,11 +348,13 @@ Similarly, install :samp:`openocd` from the Ubuntu archive:
    |workshop_project_prompt| sudo apt update
    |workshop_project_prompt| sudo apt install openocd
 
-The :samp:`nrfjprog` and :samp:`jlink` runners need vendor tools. Neither the
-nRF Command Line Tools nor the SEGGER J-Link tools are part of the SDK or the
-Ubuntu archive. Follow the installation steps in the board documentation, for
-example the :zephyr-docs:`nRF52840 DK <boards/nordic/nrf52840dk/doc/index.html>`
-page.
+The :samp:`nrfjprog`, :samp:`jlink`, and :samp:`nrfutil` runners need vendor
+tools. Neither the nRF Command Line Tools, nRF Util, nor the SEGGER J-Link
+tools are part of the SDK or the Ubuntu archive. To package a vendor tool as
+a reproducible in-project SDK, follow :ref:`how_adding_vendor_tools_to_workshop`,
+which works through SEGGER J-Link and nRF Util as examples. For other vendor
+tools, follow the installation steps in the board documentation, for example
+the :zephyr-docs:`nRF52840 DK <boards/nordic/nrf52840dk/doc/index.html>` page.
 
 Make the runner tool installation reproducible
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -602,6 +604,9 @@ You now have a Workshop that can flash your board.
 
 For the full device access procedure and the connection reference, read
 :ref:`how_access_hardware_from_workshop`.
+
+To package a vendor tool as a reproducible in-project SDK, read
+:ref:`how_adding_vendor_tools_to_workshop`.
 
 To understand the files that Workshop manages, read
 :ref:`ref_workshop_environment`.

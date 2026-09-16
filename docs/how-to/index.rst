@@ -33,3 +33,15 @@ Connect the interface when you need to flash a physical board:
    :titlesonly:
 
    How to access hardware from Workshop <access-hardware-from-workshop>
+
+
+Install vendor flash tools
+---------------------------
+
+Some runners depend on vendor tools that are not part of the SDK
+or the Ubuntu archive. Package them in an in-project SDK:
+
+.. toctree::
+   :titlesonly:
+
+   How to add vendor tools to Workshop <adding-vendor-tools-to-workshop>
