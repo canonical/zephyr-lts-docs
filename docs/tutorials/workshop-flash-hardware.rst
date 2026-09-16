@@ -21,70 +21,82 @@ hygiene that Workshop provides, allows flashing without ``udev`` rules or
 Prerequisites
 -------------
 
-Before starting, ensure you have these requirements satisfied:
-
 * A launched |workshop_name_samp| Workshop with a synced workspace, as created
   in :ref:`tut_get_started_with_workshop`.
-* A development board connected to the host over USB.
-* The page for your board in the
-  :zephyr-docs:`supported boards <boards/index.html>` list.
+* A board from the :zephyr-docs:`supported boards <boards/index.html>` list,
+  connected to the host over USB.
 
-Identify the flash device class
+Identify the board device class
 -------------------------------
 
 The flash runner decides which host device the board needs, but the device class
-varies between boards. The upstream board documentation names the runner and the
-tool that calls it. Find the runner on the upstream board page and read the
-matching row of this table.
-
-.. todo:
-
-   Jeff: I followed this advice, went to the upstream page and cross referenced
-   and could not find ``pyocd` nor ``esp32`` for those boards. How is a user
-   supposed to find the host device?
-
-   :issue:`RTOS-241 <RTOS-241>`
+varies between boards. To find the runner for your board, open the page for your
+board in the :zephyr-docs:`supported boards <boards/index.html>` list and go to
+its **Programming and Debugging** section. If the page has no such section,
+search the page for mentions of ``flash``, ``flashing``, or ``debug``. That
+section names the default runner and the tool that the runner calls. Then read
+the matching row of this table.
 
 .. list-table::
    :header-rows: 1
 
-   * - Board class
-     - Example board
-     - Default runner
+   * - Board name
+     - Default flash runner
+     - Board device class
      - Host device
-   * - USB serial bootloader
-     - ESP32-C3-DevKitM
+   * - ESP32-C3-DevKitM
        (:samp:`esp32c3_devkitm/esp32c3`)
      - :samp:`esp32`
+     - USB serial bootloader
      - Serial node, such as :file:`/dev/ttyUSB0`
-   * - On-board J-Link probe
-     - Nordic nRF52840 DK (:samp:`nrf52840dk/nrf52840`)
+   * - Nordic nRF52840 DK (:samp:`nrf52840dk/nrf52840`)
      - :samp:`nrfjprog`
+     - On-board J-Link probe
      - USB probe
-   * - On-board CMSIS-DAP probe
-     - BBC micro:bit v2 (:samp:`bbc_microbit_v2/nrf52833`)
+   * - BBC micro:bit v2 (:samp:`bbc_microbit_v2/nrf52833`)
      - :samp:`pyocd`
+     - On-board CMSIS-DAP probe
      - USB probe
-   * - On-board ST-Link probe
-     - STM32 Nucleo-64 (:samp:`nucleo_l476rg/stm32l476xx`)
+   * - STM32 Nucleo-64 (:samp:`nucleo_l476rg/stm32l476xx`)
      - :samp:`openocd`
+     - On-board ST-Link probe
      - USB probe
 
-.. todo::
+For example, the page for the ESP32-C3-DevKitM
+(:zephyr-docs:`esp32c3_devkitm <boards/espressif/esp32c3_devkitm/doc/index.html>`)
+uses the :samp:`esp32` runner, which flashes over the USB serial bootloader with
+:samp:`esptool.py`. The board therefore needs a serial host device, such as
+:file:`/dev/ttyUSB0`.
 
-   Jeff: :issue:`RTOS-241 <RTOS-241>` walk the an example of identifying the
-   flash device class for the ESP32-C3-DevKitM since that is the working example
-   for this chapter
+If you already built an application for the board, you can also read the runner
+from the build directory instead of the upstream documentation:
 
-For example, to flash a ESP32-C3-DevKitM the ...
+.. parsed-literal::
 
-Identify the host device
-------------------------
+   |workshop_zephyr_prompt| west flash --context
 
-The device class determines the device used to interact with the board.
+The output lists the runners available for the build and the default runner:
 
-Serial adapter
-~~~~~~~~~~~~~~
+.. code-block:: text
+
+   available runners in runners.yaml:
+     openocd, esp32
+   default runner in runners.yaml:
+     esp32
+
+Find the device identifiers
+---------------------------
+
+Run these commands on the host.
+
+Workshop uses device identifiers to grant access to the flashing interface of
+the board. The board device class determines which device that interface uses.
+When you connect the board, the Linux host exposes the interface as a device. A
+USB serial bootloader appears as a serial device node. An on-board debug probe,
+such as a J-Link, appears as a USB device.
+
+USB serial bootloader
+~~~~~~~~~~~~~~~~~~~~~
 
 A board with a serial bootloader exposes a USB serial adapter. First, find the
 device node:
@@ -92,6 +104,21 @@ device node:
 .. code-block:: console
 
    $ ls /dev/ttyUSB* /dev/ttyACM*
+   ls: cannot access '/dev/ttyACM*': No such file or directory
+   /dev/ttyUSB0
+
+Here the board is :file:`/dev/ttyUSB0`. The error for :file:`/dev/ttyACM*` means
+that no device of that type is present. Boards that use a different adapter chip
+or the USB controller built into the SoC can expose :file:`/dev/ttyACM0`
+instead. Use the node reported for your device.
+
+If you connected several serial devices, unplug the board and run the command
+again: the node that disappears belongs to the board. You can also watch the
+node appear as you plug the board in:
+
+.. code-block:: console
+
+   $ udevadm monitor --udev --subsystem-match=tty
 
 Now query its subsystem, vendor ID, and product ID:
 
@@ -102,52 +129,47 @@ Now query its subsystem, vendor ID, and product ID:
        --property=ID_VENDOR_ID \
        --property=ID_MODEL_ID \
        /dev/ttyUSB0
-
-The output for a CP2102 adapter, common on ESP32 kits, is similar to:
-
-.. todo::
-
-   Jeff: Where did this information come from? Show the real example and the
-   output. That means show the output from the ``ls`` and from ``udevadm``.
-
-.. code-block:: text
-
    SUBSYSTEM=tty
-   ID_VENDOR_ID=10c4
    ID_MODEL_ID=ea60
+   ID_VENDOR_ID=10c4
 
-Some boards use a different adapter chip or the USB controller built into the
-SoC. Those boards can expose :file:`/dev/ttyACM0` instead. Use the values
-reported for your device.
+This output is from a CP2102 adapter, common on ESP32 kits. Record the
+:samp:`ID_VENDOR_ID` and :samp:`ID_MODEL_ID` values reported for your device.
+We will need them for the rest of the tutorial.
 
 USB probe
 ~~~~~~~~~
 
 A board with an on-board debug probe registers as a raw USB device, rather than
-a serial node. Thus the board will show as a USB device. List the USB devices:
+a serial node. List the USB devices:
 
 .. code-block:: console
 
    $ lsusb
+   Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+   Bus 002 Device 002: ID 0bda:0487 Realtek Semiconductor Corp. Dell dock
+   ...
+   Bus 003 Device 015: ID 10c4:ea60 Silicon Labs CP210x UART Bridge
+   ...
 
-.. todo::
+The output shows one line per device. The last line above is the CP2102 serial
+adapter of an ESP32-C3-DevKitM. A board with a J-Link probe shows a line such as
+:samp:`ID 1366:1061 SEGGER J-Link` instead. The first hexadecimal value after
+:samp:`ID` is the vendor ID, here :samp:`10c4`. The second value is the product
+ID, here :samp:`ea60`. Record the values that correspond to your board. We will
+need them for the rest of the tutorial.
 
-   Jeff: Show the real output without the metavariables. :issue:`RTOS-240
-   <RTOS-240>`. Then show the form you have here and say "you can see the
-   vendor_id is, product_id is..."
+If you connected several boards, unplug the target board and run the command
+again: the line that disappears belongs to the board.
 
-The output will show one line per device:
-
-.. code-block:: console
-
-   $ Bus 003 Device 012: ID <VENDOR_ID>:<PRODUCT_ID> SEGGER J-Link
-
-The first hexadecimal value after :samp:`ID` is the vendor ID. The second value
-is the product ID. Record the values that correspond to your board; we will need
-them for the rest of the tutorial.
+Some debug probes also expose a serial console. If you need console access in
+the Workshop, identify the additional serial device and declare a separate
+:samp:`tty` plug for it.
 
 Create a device SDK
 -------------------
+
+Make these edits and run these commands on the host.
 
 Now that we have the ``VENDOR_ID`` and ``PRODUCT_ID`` we can create a
 :workshop-docs:`Workshop SDK <reference/definition-files/sdk-definition>`. We'll
@@ -160,12 +182,7 @@ create an in-project SDK that declares one custom-device :workshop-docs:`plug
    $ editor .workshop/board-devices/sdk.yaml
 
 The :samp:`sdk.yaml` file defines the interfaces to your hardware and will be
-imported by the |workshop_definition_file| for the project. Here is an example
-:samp:`sdk.yaml` file:
-
-
-
-Each plug requires a
+imported by the |workshop_definition_file| for the project. Each plug requires a
 name, the :samp:`custom-device` interface, and at least one device filter. The
 :samp:`subsystem` filter selects the device class:
 
@@ -185,9 +202,9 @@ name, the :samp:`custom-device` interface, and at least one device filter. The
        vendorid: "<VENDOR ID>"
        productid: "<PRODUCT ID>"
 
-* If you hade a USB serial adapter then use :samp:`tty` for ``subsystem``. This
+* If you have a USB serial adapter, then use :samp:`tty` for ``subsystem``. This
   is the case for the console of an ESP32 board.
-* If you hade an on-board debug probe that displayed as a raw USB device, then
+* If you have an on-board debug probe that displayed as a raw USB device, then
   use :samp:`usb` for ``subsystem``. This is the case for a J-Link on a Nordic
   DK or the ST-Link on a Nucleo-64 board.
 
@@ -214,6 +231,11 @@ J-Link probe for an nRF5340 DK:
        subsystem: usb
        vendorid: "1366"
        productid: "1061"
+     nrf5340-console:
+       interface: custom-device
+       subsystem: tty
+       vendorid: "1366"
+       productid: "1061"
 
 Now we add the in-project SDK to the :samp:`sdks` list in
 |workshop_definition_file|:
@@ -226,6 +248,8 @@ Now we add the in-project SDK to the :samp:`sdks` list in
 
 Apply the definition and connect the devices
 ----------------------------------------------
+
+Run these commands on the host.
 
 Apply the updated definition:
 
@@ -242,35 +266,41 @@ declared in the device SDK:
 
    $ workshop connect |workshop_name|/board-devices:<PLUG> :custom-device
 
-.. todo::
-
-   Jeff: Show the connect output :issue:`RTOS-240 <RTOS-240>`
-
-For the example plugs above:
-
-.. todo::
-
-   Jeff: show don't tell :issue:`RTOS-240 <RTOS-240>`
+The command prints nothing on success. For the example plugs above:
 
 .. code-block:: console
    :substitutions:
 
    $ workshop connect |workshop_name|/board-devices:esp32c3-serial :custom-device
    $ workshop connect |workshop_name|/board-devices:nrf5340-probe :custom-device
+   $ workshop connect zephyr-26-04/board-devices:nrf5340-console :custom-device
+
 
 Verify the connections:
 
-.. todo::
+.. parsed-literal::
 
-   Jeff: show don't tell :issue:`RTOS-240 <RTOS-240>`
+   $ workshop connections |workshop_name|
+   **INTERFACE**      **PLUG**                                          **SLOT**                                          **NOTES**
+   custom-device  |workshop_name|/board-devices:esp32c3-serial     |workshop_name|/system:custom-device             manual
+   custom-device  |workshop_name|/board-devices:nrf5340-probe      |workshop_name|/system:custom-device             manual
+   custom-device  |workshop_name|/board-devices:nrf5340-console    |workshop_name|/system:custom-device             manual
+   ...
 
-.. code-block:: console
+Each connection must show :samp:`system:custom-device` in the :samp:`SLOT`
+column and :samp:`manual` in the :samp:`NOTES` column. A plug that is declared
+but not connected shows :samp:`-` in the :samp:`SLOT` column:
 
-   $ workshop connections --all
+.. parsed-literal::
+   $ workshop disconnect |workshop_name|/board-device:esp32c3-serial 
+   $ workshop connections |workshop_name|
+   **INTERFACE**      **PLUG**                                          **SLOT**                                          **NOTES**
+   custom-device  |workshop_name|/board-device:esp32c3-serial      -                                             -
+   ...
 
-Each connection must show :samp:`system:custom-device` in the slot column. The
-plug gives the Workshop access to the device node. Thus, you no longer need host
-udev rules or :command:`sudo` for flashing.
+The plug gives the
+Workshop access to the device node. You no longer need host udev rules or
+:command:`sudo` for flashing.
 
 Verify the runner tool
 ----------------------
@@ -280,12 +310,14 @@ such as CMake, Ninja, and west.
 They do not install every flash tool.
 Check that the tool your runner calls is present.
 
-Open a shell in the Workshop:
+Open a shell in the Workshop. Then activate the shared Python virtual
+environment of the Zephyr SDK:
 
 .. code-block:: console
    :substitutions:
 
    $ workshop shell |workshop_name|
+   |workshop_project_prompt| source /var/lib/workshop/sdk/zephyr/venv/bin/activate
 
 Check the tool for your runner:
 
@@ -294,12 +326,13 @@ Check the tool for your runner:
 
    |workshop_project_prompt| command -v esptool.py   # esp32 runner
    |workshop_project_prompt| command -v pyocd        # pyocd runner
+   /usr/bin/pyocd
    |workshop_project_prompt| command -v openocd      # openocd runner
 
-If the command prints a path, the tool is ready. If the command prints then
-you'll have to install the tool into the Workshop container. In your Workshop
-shell you can use the standard python tools to install into the virtual
-environment:
+If the command prints a path, such as
+:file:`/usr/bin/pyocd`, the tool is ready. If
+the command prints nothing, install the tool into the Workshop container.
+Install Python tools into the virtual environment with :command:`pip`:
 
 .. code-block:: console
    :substitutions:
@@ -307,7 +340,7 @@ environment:
    |workshop_project_prompt| pip install esptool     # esp32 runner
    |workshop_project_prompt| pip install pyocd       # pyocd runner
 
-Similarly for the :samp:`openocd` runner:
+Similarly, install :samp:`openocd` from the Ubuntu archive:
 
 .. code-block:: console
    :substitutions:
@@ -321,34 +354,44 @@ Ubuntu archive. Follow the installation steps in the board documentation, for
 example the :zephyr-docs:`nRF52840 DK <boards/nordic/nrf52840dk/doc/index.html>`
 page.
 
-.. note::
+Make the runner tool installation reproducible
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   Tools installed with :command:`pip` or :command:`apt` from a Workshop shell
-   do not survive :command:`workshop refresh`. The refresh rebuilds the Workshop
-   filesystem and restores only content installed by SDK :workshop-docs:`hooks
-   <explanation/sdks/runtime-hooks>`. To reinstall a Python runner tool
-   automatically, add it to the :file:`setup-project` hook of the device SDK:
+Tools installed with :command:`pip` or :command:`apt` from a Workshop shell do
+not survive :command:`workshop refresh`. The refresh rebuilds the Workshop
+filesystem and restores only content installed by SDK :workshop-docs:`hooks
+<explanation/sdks/runtime-hooks>`. To reinstall a Python runner tool
+automatically, add it to the :file:`setup-project` hook of the device SDK.
 
-   .. code-block:: console
-      :caption: create the hook
+The hook lives in the project directory on the host. Leave the Workshop shell,
+or open a second terminal on the host. Then create the hook:
 
-      $ touch .workshop/board-devices/hooks/setup-project
-      $ editor .workshop/board-devices/sdk.yaml
+.. code-block:: console
+   :caption: create the hook on the host
 
-   Now populate ``setup-project`` with:
+   $ touch .workshop/board-devices/hooks/setup-project
+   $ editor .workshop/board-devices/hooks/setup-project
 
-   .. code-block:: bash
-      :caption: .workshop/board-devices/hooks/setup-project
+Populate ``setup-project`` with:
 
-      source /var/lib/workshop/sdk/zephyr/venv/bin/activate
-      pip install esptool pyocd
+.. code-block:: bash
+   :caption: .workshop/board-devices/hooks/setup-project
 
-   Be sure to list the device SDK after the :samp:`zephyr` SDK in the
-   :samp:`sdks` list. Hooks run in list order, and the shared virtual
-   environment must exist before the hook runs.
+   source /var/lib/workshop/sdk/zephyr/venv/bin/activate
+   pip install esptool pyocd
 
-Connect the target toolchain
+List the device SDK after the :samp:`zephyr` SDK in the
+:samp:`sdks` list. Hooks run in list order, and the shared virtual environment
+must exist before the hook runs. Apply the change from the host:
+
+.. parsed-literal::
+
+   $ workshop refresh |workshop_name|
+
+Install the target toolchain
 ----------------------------
+
+Make these edits and run these commands on the host.
 
 The Zephyr SDK bundle contains no cross-compilers.
 Each target architecture is provided by a separate toolchain SDK.
@@ -391,8 +434,6 @@ Workshop as follows:
      # Existing SDK entries...
      - name: zephyr-arm
        channel: |sdk_ng_channel|
-     - name: zephyr-arm64
-       channel: |sdk_ng_channel|
      - name: zephyr-riscv64
        channel: |sdk_ng_channel|
 
@@ -400,27 +441,8 @@ Workshop as follows:
      # Existing connections...
      - plug: zephyr-sdk-ng:arm
        slot: zephyr-arm:toolchain
-     - plug: zephyr-sdk-ng:arm64
-       slot: zephyr-arm64:toolchain
      - plug: zephyr-sdk-ng:riscv64
        slot: zephyr-riscv64:toolchain
-
-.. important::
-
-   .. todo::
-
-      Jeff: ensure this is still the case after lincoln patches it.
-      :issue:`RTOS-222 <RTOS-222>`
-
-   Always install and connect :samp:`zephyr-arm64`,
-   even if no target board uses AArch64.
-   When the Zephyr SDK searches for its host tools,
-   it probes the first toolchain directory in alphabetical order.
-   That directory is :file:`aarch64-zephyr-elf`.
-   If no :samp:`zephyr-arm64` SDK is connected,
-   the directory stays empty.
-   Every build then fails with
-   "Zephyr was unable to find the toolchain".
 
 Apply the updated definition:
 
@@ -429,30 +451,46 @@ Apply the updated definition:
 
    $ workshop refresh |workshop_name|
 
-Verify that each toolchain is connected:
+Verify that each toolchain is connected. A connected toolchain shows the 
+toolchain SDK in the :samp:`SLOT` column:
 
-.. code-block:: console
-   :substitutions:
+.. parsed-literal::
 
    $ workshop connections |workshop_name|
+   **INTERFACE**      **PLUG**                                                 **SLOT**                                                    **NOTES**
+   ...
+   mount          |workshop_name|/zephyr-sdk-ng:arm                       |workshop_name|/zephyr-arm:toolchain                       -
+   mount          |workshop_name|/zephyr-sdk-ng:riscv64                   |workshop_name|/zephyr-riscv64:toolchain                   -
+   ...
 
-A connected toolchain shows the toolchain SDK slot
-in the :samp:`SLOT` column,
-while a toolchain SDK whose slot shows in the :samp:`PLUG` column
-is downloaded but not connected.
+A toolchain SDK that is downloaded but not connected shows
+:samp:`system:mount` in the :samp:`SLOT` column instead:
+
+.. parsed-literal::
+
+   $ workshop connections |workshop_name|
+   **INTERFACE**      **PLUG**                                                 **SLOT**                                                    **NOTES**
+   ...
+   mount          |workshop_name|/zephyr-sdk-ng:arm                       |workshop_name|/zephyr-arm:toolchain                       -
+   mount          |workshop_name|/zephyr-sdk-ng:riscv64                   |workshop_name|/system:mount                               -
+   ...
+
 
 Build the application
 ---------------------
 
-Build a sample for your board with the :samp:`build` action.
-Install and connect the toolchain SDK for the board architecture first,
-as described in the previous section.
-This example builds the synchronization sample for the ESP32-C3-DevKitM:
+Run this command on the host.
+
+Install and connect the toolchain SDK for the board architecture first, as
+described in the previous section. Then build a sample for your board with the
+:samp:`build` action. This example uses :samp:`samples/synchronization` because
+:samp:`samples/basic/blinky` requires an :samp:`led0` alias that the device
+trees of ESP32-C3 and ESP32-S3 devkits do not provide:
 
 .. code-block:: console
    :substitutions:
 
-   $ workshop run |workshop_name| -- build -p always -b \\
+   $ workshop run |workshop_name| -- build -p always -b \
       esp32c3_devkitm samples/synchronization
 
 Replace the board target and the sample with the values for your board.
@@ -460,8 +498,8 @@ Replace the board target and the sample with the values for your board.
 Flash the board
 ---------------
 
-Run :command:`west flash` from the Zephyr source directory
-inside the Workshop shell:
+Run these commands in the Workshop shell. Change to the Zephyr source directory
+and run :command:`west flash`:
 
 .. code-block:: console
    :substitutions:
@@ -517,27 +555,35 @@ you can also flash from the host with the :samp:`flash` action:
    :substitutions:
 
    $ workshop run |workshop_name| -- flash
+   -- west flash: rebuilding
+   ninja: no work to do.
+   -- west flash: using runner esp32
+   -- runners.esp32: reset after flashing requested
+   -- runners.esp32: Flashing esp32 chip on None (921600bps)
+   esptool v5.4.0
+   Connected to ESP32-C3 on /dev/ttyUSB0:
+   Chip type:          ESP32-C3 (QFN32) (revision v0.3)
+   Features:           Wi-Fi, BT 5 (LE), Single Core, 160MHz, Embedded Flash 4MB (XMC)
+   Crystal frequency:  40MHz
+   MAC:                10:91:a8:40:d7:d0
 
-.. todo::
+   Stub flasher running.
+   Changing baud rate to 921600...
+   Changed.
 
-   Jeff: Show the success report output. :issue:`RTOS-240 <RTOS-240>`
+   Configuring flash size...
+   Flash will be erased from 0x00000000 to 0x00020fff...
+   Wrote 133812 bytes at 0x00000000 in 2.1 seconds (504.0 kbit/s).
+   Hash of data verified.
 
-The runner reports success at the end of its output.
+   Hard resetting via RTS pin...
+
 Press the reset button on the board if the application does not start.
-
-.. note::
-
-   The :samp:`samples/basic/blinky` sample does not run on ESP32-C3 and ESP32-S3
-   devkits. The device trees of those boards have no :samp:`led0` alias. Use
-   :samp:`samples/synchronization` as a test instead.
-
-.. note::
-
-   Some probes also expose a serial console. Add a separate :samp:`tty` plug to
-   the device SDK if you need the console inside the Workshop.
 
 Remove device access
 --------------------
+
+Run this command on the host.
 
 Disconnect a plug when you no longer need the device:
 
