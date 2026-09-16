@@ -40,6 +40,7 @@ Sphinx
 Spread
 TOC
 URL
+Util
 VMs
 WCAG
 Workshop
@@ -60,6 +61,7 @@ docstrings?
 doctests?
 dvipng
 esptool
+filepath
 fonts
 forall
 freefont
@@ -80,6 +82,8 @@ latexmk
 mitigations
 mkdir
 npm
+nrfjprog
+nrfutil
 openapi
 otf
 plantuml
@@ -91,6 +95,7 @@ reStructuredText
 readthedocs
 redeclare
 rediraffe
+reinstalls
 renesas
 renode
 rerediraffe

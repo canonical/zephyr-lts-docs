@@ -94,6 +94,11 @@ Workshop does not connect custom-device plugs automatically
 because they grant access to host hardware.
 Follow :ref:`how_access_hardware_from_workshop` for the procedure.
 
+Some runners, such as :samp:`jlink` and :samp:`nrfutil`,
+also call a vendor tool that the SDK bundle does not provide.
+Package the tool in an in-project SDK,
+as described in :ref:`how_adding_vendor_tools_to_workshop`.
+
 
 See also
 --------
@@ -105,6 +110,7 @@ Tutorial:
 How-to guides:
 
 - :ref:`how_access_hardware_from_workshop`
+- :ref:`how_adding_vendor_tools_to_workshop`
 
 Explanation:
 
