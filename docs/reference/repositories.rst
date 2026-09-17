@@ -75,7 +75,7 @@ clones each project from the Zephyr RTOS Launchpad project. It checks out the
 revisions pinned by the manifest at the selected source tag. It does not move
 the Zephyr manifest repository to a different source tag.
 
-Do not replace the manifest revisions with moving branch names. The pinned
+Keep the manifest revisions pinned to specific commits or tags. The pinned
 revisions define the tested |product_name| source set.
 
 

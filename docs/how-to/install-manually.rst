@@ -7,7 +7,7 @@
 How to install |product_name| manually
 ======================================
 
-This guide installs |product_name| without the standard Workshop development
+This guide explains how to install |product_name| on your Ubuntu host without the  Workshop development
 environment. It follows the upstream Zephyr installation model but installs
 :program:`west` and its Python requirements from Ubuntu packages instead of
 :command:`pip` and a Python virtual environment.
@@ -31,9 +31,11 @@ To provide LTS guarantees, we encourage users to install :program:`west`, the
 Zephyr toolchains and Python dependencies through the |product_name| Personal
 Package Archive (PPA): |zephyr-lts-ppa|.
 
-This will add packages globally, ff this is not desirable the rest of this
-how-to can be run in a `Docker <https://snapcraft.io/docker>`_ or `LXD
-<https://snapcraft.io/lxd>`_ container.
+.. note::
+
+   `sudo add-apt-repository` installs the packages globally. You can install them in a in a `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_ container. This guide works in a container as well.
+
+Add the packages:
 
 .. code-block:: console
 
@@ -155,7 +157,7 @@ West reads :samp:`ZEPHYR_SDK_INSTALL_DIR` to find the SDK.
 
    The SDK toolchain packages do not include OpenOCD or its udev rules,
    unlike the upstream tarball. To flash real hardware, install OpenOCD
-   from the Ubuntu archive, which already provides the required udev
+   from the Ubuntu archive that provides the required udev
    rules:
 
    .. code-block:: console

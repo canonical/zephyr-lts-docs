@@ -1,4 +1,4 @@
-# Contribute to the Zephyr 24.04 documentation
+# Contribute to the Zephyr documentation
 
 Follow the [Ubuntu Code of Conduct](https://ubuntu.com/community/ethos/code-of-conduct).
 

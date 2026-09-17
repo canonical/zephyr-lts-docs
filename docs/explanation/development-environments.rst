@@ -28,13 +28,13 @@ as a separate tested unit.
 This design keeps tool updates separate from source updates.
 
 Hardware access is explicit.
-Workshop does not connect custom-device interfaces automatically.
+Workshop requires explicit connection of custom-device interfaces
 The developer grants access only when a board needs it.
 
 When to install manually
 ------------------------
 
-A manual installation is useful when Workshop cannot run on the host.
+A manual installation is useful on hosts where Workshop is unavailable.
 It is also useful when a developer must inspect each tool separately.
 
 The manual path has the same source manifest and west workflow.

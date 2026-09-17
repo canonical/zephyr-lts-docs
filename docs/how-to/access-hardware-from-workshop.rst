@@ -139,8 +139,7 @@ pass its path with the :option:`!-d` option:
 
    $ workshop run |workshop_name| -- flash -d /project/path/to/build
 
-Some boards expose more than one host device
-or require a board-specific runner and extra arguments.
+Some boards expose more than one host device, or they require a board-specific runner and additional arguments.
 Declare and connect one narrowly scoped plug for each required device.
 Use :command:`west flash --context`
 to list the available options.
