@@ -295,7 +295,7 @@ extensions = [
 # https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html
 #
 # Usage: :zephyr-docs:`West Manifests <develop/west/manifest.html>` links
-# to https://docs.zephyrproject.org/3.7.0/develop/west/manifest.html with the
+# to https://docs.zephyrproject.org/4.4.2/develop/west/manifest.html with the
 # link text "West Manifests". Omitting the "<...>" part uses the path itself
 # as the link text.
 # URLs are built from versions.env so links follow the documented
@@ -306,6 +306,10 @@ extlinks = {
         "%s",
     ),
     "upstream-zephyr": ("https://github.com/zephyrproject-rtos/%s", "%s"),
+    "upstream-zephyr-branch": (
+        f"https://github.com/zephyrproject-rtos/zephyr/tree/v{upstream_release}-branch/%s",
+        "%s",
+    ),
     "canonical-zephyr": (f"{_doc_versions['DOC_LP_ZEPHYR_URL']}/%s", "%s"),
     "issue": ("https://warthogs.atlassian.net/browse/%s", "%s"),
     "workshop-docs": ("https://ubuntu.com/workshop/docs/%s", "%s"),
@@ -390,7 +394,6 @@ _version_substitutions = f"""
 .. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
 .. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
 .. |sdk-version| replace:: {_doc_versions["SDK_NG_VERSION"]}
-.. |zephyr-upstream| replace:: Zephyr v{_doc_versions["DOC_UPSTREAM_VERSION"]}
 .. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
 .. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
 .. |ubuntu-base| replace:: Ubuntu {_doc_versions["UBUNTU_BASE_VERSION"]}
