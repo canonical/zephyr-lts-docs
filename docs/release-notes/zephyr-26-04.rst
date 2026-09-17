@@ -25,7 +25,7 @@ revisions. The current source set is published with the immutable
 Known limitations
 -----------------
 
-Workshop support requires an Ubuntu or snap-enabled Linux host. Use the manual
+Workshop support requires an Ubuntu or snap-enabled Linux host. Use the host system
 installation path on an |ubuntu-base| host that cannot run Workshop.
 
 

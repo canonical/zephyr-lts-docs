@@ -36,7 +36,7 @@ Python tools, and Zephyr dependencies for this release.
 Start with the :ref:`Workshop tutorial <tut_get_started_with_workshop>`.
 
 If Workshop is not suitable for your system,
-follow the :ref:`manual installation guide <how_install_manually>`.
+follow the :ref:`host system installation guide <how_install_on_host_system>`.
 
 ----
 
@@ -55,7 +55,7 @@ In this documentation
 
    * - **Development environments**
      - :ref:`Workshop environment <ref_workshop_environment>` •
-       :ref:`Manual installation <how_install_manually>` •
+       :ref:`Host system installation <how_install_on_host_system>` •
        :ref:`Development environment concepts <exp_development_environments>`
 
    * - **Hardware**
@@ -86,7 +86,7 @@ that takes you from a new development environment
 to a running Zephyr application.
 
 :doc:`How-to guides <how-to/index>`: Instructions for specific tasks,
-such as installing the toolchain manually
+such as installing the toolchain on your host system
 or connecting a physical board to Workshop.
 
 :doc:`Reference <reference/index>`: Technical details

@@ -1,7 +1,7 @@
 .. _how-to-guides:
 
 .. meta::
-   :description: Procedures for manual Zephyr setup and hardware access.
+   :description: Procedures for host system Zephyr setup and hardware access.
 
 How-to guides
 =============
@@ -14,12 +14,12 @@ Set up a development environment
 --------------------------------
 
 Workshop is the standard development path.
-For hosts where Workshop is unavailable, use the manual installation guide.
+For hosts where Workshop is unavailable, use the host system installation guide.
 
 .. toctree::
    :titlesonly:
 
-   install-manually
+   install-on-host-system
 
 The PPA publishes pinned packages that the Workshop does not install.
 Add them to a Workshop with the Canonical version preference:
