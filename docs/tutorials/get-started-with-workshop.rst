@@ -105,12 +105,6 @@ Once the development environment is launched, start a Workshop shell:
 
    $ workshop shell |workshop_name|
 
-.. todo::
-
-   Jeff: this ``|source_tag_samp|`` should not point to a release candidate at
-   launch.
-
-
 Create a :program:`west` workspace using Canonical’s Zephyr manifest repository
 and select the |source_tag_samp| source tag.
 
@@ -167,11 +161,6 @@ Change to the Zephyr repository:
    |workshop_project_prompt| cd zephyr
 
 Build Hello World for the `qemu_x86` board:
-
-.. todo::
-
-   Jeff: these environment variables must be passed until :issue:`sdk issue
-   RTOS-226 <RTOS-226>` and :issue:`RTOS-225 <RTOS-225>` are resolved.
 
 .. code-block:: console
    :substitutions:
