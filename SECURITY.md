@@ -2,7 +2,7 @@
 
 This repository is part of **Zephyr 24.04** — Canonical's downstream
 redistribution of the upstream
-[Zephyr RTOS](https://github.com/zephyrproject-rtos/zephyr) Long Term Support
+[Zephyr RTOS](https://github.com/zephyrproject-rtos/zephyr) Long-Term Support
 (LTS) v3.7 line.
 
 We take the security of our software seriously and appreciate your efforts to

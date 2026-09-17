@@ -8,8 +8,7 @@
 How to add vendor tools to Workshop
 ====================================
 
-Some west runners call a vendor-supplied tool that is not part of the Zephyr SDK
-bundle or the Ubuntu archive. Such tools can be packaged as an in-project SDK to
+Some west runners call vendor-supplied tools provided separately from the Zephyr SDK bundle and Ubuntu archive. Such tools can be packaged as an in-project SDK to
 be included in the Workshop environment via a :file:`setup-project` hook. This
 will lead :command:`workshop refresh` to install them automatically. This guide
 covers the general procedure, then works through it with two examples: `SEGGER
@@ -104,7 +103,7 @@ Apply the updated definition:
 
    $ workshop refresh |workshop_name|
 
-The hook only runs during the a refresh and will reinstall the tool every time
+The hook runs only during a refresh and will reinstall the tool every time
 the Workshop filesystem is rebuilt.
 
 Verify the tool
@@ -118,9 +117,7 @@ Open a shell in the Workshop and check that the tool is on the :envvar:`PATH`:
    $ workshop shell |workshop_name|
    |workshop_project_prompt| command -v <TOOL_BINARY>
 
-You should observe a filepath for the tool. If nothing is returned then the tool
-did not install successfully; review the hook and rerun :command:`workshop
-refresh`.
+You should observe a filepath for the tool. If nothing is returned, the tool is absent, you should review the hook and rerun :command:`workshop refresh`.
 
 The rest of this guide applies the procedure above to two Nordic vendor tools
 that share a single tool SDK, :samp:`nordic-tools`, because both are needed to
@@ -227,8 +224,7 @@ Append the download and the :samp:`device` command bundle to the hook:
    nrfutil install device --yes
 
 Replace :samp:`<NRFUTIL_LINUX_X64_URL>` with the link you copied. The
-:samp:`device` command bundle provides the flashing and device-management
-commands that the :samp:`nrfutil` runner calls.
+:samp:`device` command bundle includes the commands the :samp:`nrfutil` runner uses to flash and manage devices.
 
 If you have not already applied the :samp:`nordic-tools` SDK, add it to
 |workshop_definition_file| and refresh, as shown in the J-Link example.

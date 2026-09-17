@@ -112,7 +112,7 @@ Once the development environment is launched, start a Workshop shell:
 
 
 Create a :program:`west` workspace using Canonical’s Zephyr manifest repository
-and selects the |source_tag_samp| source tag.
+and select the |source_tag_samp| source tag.
 
 .. code-block:: console
    :substitutions:
@@ -154,7 +154,7 @@ Export the Zephyr CMake package:
 
    |workshop_project_prompt| west zephyr-export
 
-Exporting the package registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
+`west zephyr-export` exports the Zephyr package and registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
 
 Build and run Hello World
 -------------------------

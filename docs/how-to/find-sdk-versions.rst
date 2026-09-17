@@ -27,8 +27,7 @@ Run the host commands in this guide from that project directory.
 Install the sdk command
 -------------------------
 
-The :command:`sdk` command is part of the :samp:`workshop` snap, so no
-separate install is required if you already installed Workshop:
+Workshop snap includes :command:`sdk` by default:
 
 .. code-block:: console
 
