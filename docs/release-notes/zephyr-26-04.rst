@@ -27,7 +27,7 @@ Known limitations
 -----------------
 
 Workshop support requires an Ubuntu or snap-enabled Linux host. Use the manual
-installation path on supported Ubuntu hosts that cannot run Workshop.
+installation path on an |ubuntu-base| host that cannot run Workshop.
 
 
 See also
