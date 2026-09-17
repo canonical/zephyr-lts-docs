@@ -29,7 +29,7 @@ Development workflow
 --------------------
 
 Workshop supplies a managed environment,
-while the manual path follows the conventional upstream setup:
+while the host system path follows the conventional upstream setup:
 
 .. toctree::
    :titlesonly:
