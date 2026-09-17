@@ -1,4 +1,4 @@
-:relatedlinks: [Zephyr manifest](https://code.launchpad.net/~arctic-tern/zephyr-rtos/+git/zephyr-manifest), [Zephyr Project](https://www.zephyrproject.org/), [Workshop](https://documentation.ubuntu.com/workshop/)
+:relatedlinks: [Zephyr&#32;manifest](https://code.launchpad.net/~arctic-tern/zephyr-rtos/+git/zephyr-manifest), [Zephyr&#32;Project](https://www.zephyrproject.org/), [Workshop](https://documentation.ubuntu.com/workshop/)
 
 .. _home:
 
