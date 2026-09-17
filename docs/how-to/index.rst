@@ -21,6 +21,14 @@ For hosts where Workshop is unavailable, use the manual installation guide.
 
    install-manually
 
+The PPA publishes pinned packages that the Workshop does not install.
+Add them to a Workshop with the Canonical version preference:
+
+.. toctree::
+   :titlesonly:
+
+   How to install PPA dependencies in Workshop <install-ppa-dependencies>
+
 Develop in VS Code
 ------------------
 
