@@ -102,7 +102,7 @@ and the development environments available for |product_name|.
 Project and community
 ---------------------
 
-|product_name| is based on upstream Zephyr |upstream_release| LTS.
+|product_name| is based on upstream Zephyr |upstream_release|.
 Canonical maintains the distribution source
 and maintains its module revisions through a west manifest.
 
