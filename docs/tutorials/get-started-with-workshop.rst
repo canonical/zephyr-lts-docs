@@ -165,9 +165,7 @@ Build Hello World for the `qemu_x86` board:
 .. code-block:: console
    :substitutions:
 
-   |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world -- \
-    -DZEPHYR_TOOLCHAIN_VARIANT=cross-compile \
-    -DCROSS_COMPILE=/var/lib/workshop/sdk/zephyr/zephyr-sdk/zephyr-sdk/x86_64-zephyr-elf/bin/x86_64-zephyr-elf-
+    |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world
 
 Run the built application:
 
