@@ -65,6 +65,10 @@ distribution.
 See also
 --------
 
+How-to:
+
+- :ref:`how_install_ppa_dependencies`
+
 Reference:
 
 - :ref:`ref_repositories`
