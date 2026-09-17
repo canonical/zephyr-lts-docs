@@ -20,9 +20,9 @@ A west workspace has exactly one active manifest file, tracked by the
 ``manifest.path`` and ``manifest.file`` entries in the workspace
 ``.west/config`` file. By convention this file is named ``west.yml`` and lives
 at the root of the *manifest repository*, the Git repository that ``west init``
-clones first when setting up a workspace. Zephyr's own ``west.yml``, at the root
-of the `zephyr <https://github.com/zephyrproject-rtos/zephyr/tree/v3.7.3-rc1>`_
-repository is the manifest that assembles the mainline Zephyr workspace.
+clones first when setting up a workspace. Zephyr's own
+:upstream-zephyr-branch:`west.yml`, at the root of the upstream Zephyr
+repository, is the manifest that assembles the mainline Zephyr workspace.
 
 Any repository can act as a manifest repository; the manifest file itself
 has no fixed name requirement, but tooling and documentation across the
