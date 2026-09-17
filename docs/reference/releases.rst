@@ -27,7 +27,7 @@ Release identifiers
    * - Source tag
      - |source_tag_samp|
    * - Upstream base
-     - Zephyr |upstream_release| LTS
+     - Zephyr |upstream_release|
    * - Upstream SDK
      - |sdk-version|
 

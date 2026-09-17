@@ -16,7 +16,7 @@ fits with the standard Zephyr workflow.
 Distribution
 ------------
 
-|product_name| combines upstream Zephyr |upstream_release| LTS
+|product_name| combines upstream Zephyr |upstream_release|
 with a coordinated set of module repositories in Launchpad:
 
 .. toctree::
