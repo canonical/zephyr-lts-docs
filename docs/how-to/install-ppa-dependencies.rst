@@ -207,7 +207,7 @@ Tutorial:
 
 How-to:
 
-- :ref:`how_install_manually`
+- :ref:`how_install_on_host_system`
 
 Explanation:
 
