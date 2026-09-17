@@ -19,7 +19,7 @@ For hosts where Workshop is unavailable, use the manual installation guide.
 .. toctree::
    :titlesonly:
 
-   How to install Zephyr manually <install-manually>
+   install-manually
 
 Develop in VS Code
 ------------------
