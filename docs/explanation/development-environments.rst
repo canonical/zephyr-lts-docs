@@ -2,7 +2,7 @@
 
 .. meta::
    :description: Why Workshop is the standard Zephyr development path and when
-                 to use a manual installation.
+                 to use a host system installation.
 
 Development environments
 ========================
@@ -31,13 +31,13 @@ Hardware access is explicit.
 Workshop requires explicit connection of custom-device interfaces
 The developer grants access only when a board needs it.
 
-When to install manually
-------------------------
+When to install on your host system
+-----------------------------------
 
-A manual installation is useful on hosts where Workshop is unavailable.
+A host system installation is useful where Workshop is unavailable.
 It is also useful when a developer must inspect each tool separately.
 
-The manual path has the same source manifest and west workflow.
+The host system path has the same source manifest and west workflow.
 However, the developer maintains the host packages, Python environment,
 Zephyr SDK, and device permissions.
 
@@ -55,7 +55,7 @@ Tutorial:
 
 How-to guides:
 
-- :ref:`how_install_manually`
+- :ref:`how_install_on_host_system`
 
 Reference:
 

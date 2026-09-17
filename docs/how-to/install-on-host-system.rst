@@ -1,19 +1,19 @@
-.. _how_install_manually:
+.. _how_install_on_host_system:
 
 .. meta::
-   :description: Install the Zephyr source and development tools manually on
-                 Ubuntu without Workshop.
+   :description: Install the Zephyr source and development tools on your
+                 host system without Workshop.
 
-How to install |product_name| manually
-======================================
+How to install |product_name| on your host system
+=================================================
 
 This guide explains how to install |product_name| on your Ubuntu host without the  Workshop development
 environment. It follows the upstream Zephyr installation model but installs
 :program:`west` and its Python requirements from Ubuntu packages instead of
 :command:`pip` and a Python virtual environment.
 
-Workshop is the supported standard path. With a manual installation, you must
-maintain each host dependency.
+Workshop is the supported standard path. With a host system installation,
+you must maintain each host dependency.
 
 Prerequisites
 -------------
