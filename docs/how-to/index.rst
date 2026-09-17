@@ -14,8 +14,7 @@ Set up a development environment
 --------------------------------
 
 Workshop is the standard development path.
-If Workshop is not suitable for your host,
-install the tools and source manually:
+For hosts where Workshop is unavailable, use the manual installation guide.
 
 .. toctree::
    :titlesonly:

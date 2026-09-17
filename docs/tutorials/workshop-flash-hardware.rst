@@ -11,12 +11,7 @@ In this tutorial, you'll flash a Zephyr application to a physical board from a
 |product_name| Workshop.
 
 Flashing is an inherently unsafe process because it must interface with the host
-machine and the real world. To gain the benefits of Workshop and be able to
-flash hardware we must first identify the host device that the board's flash
-runner uses. Then we must encode access to that host device for Workshop and
-install the runner tool into our Workshop container. This preserves the security
-hygiene that Workshop provides, allows flashing without ``udev`` rules or
-``sudo``, and creates a reproducible and sandboxed working environment.
+machine and the real world. To gain the benefits of Workshop and to be able to flash hardware, first identify the host device that the board’s flash runner uses. Then grant Workshop access to that host device and install the runner tool in the Workshop container. This configuration preserves the security hygiene that Workshop provides, allows flashing without ``udev`` rules or ``sudo``, and creates a reproducible and sandboxed working environment.
 
 Prerequisites
 -------------
@@ -33,9 +28,8 @@ The flash runner decides which host device the board needs, but the device class
 varies between boards. To find the runner for your board, open the page for your
 board in the :zephyr-docs:`supported boards <boards/index.html>` list and go to
 its **Programming and Debugging** section. If the page has no such section,
-search the page for mentions of ``flash``, ``flashing``, or ``debug``. That
-section names the default runner and the tool that the runner calls. Then read
-the matching row of this table.
+search the page for mentions of ``flash``, ``flashing``, or ``debug``. Find the names of the default runner and the tool that the runner calls, then read
+the matching row in this table.
 
 .. list-table::
    :header-rows: 1
@@ -171,7 +165,7 @@ Create a device SDK
 
 Make these edits and run these commands on the host.
 
-Now that we have the ``VENDOR_ID`` and ``PRODUCT_ID`` we can create a
+Now that we have the ``VENDOR_ID`` and ``PRODUCT_ID`` values, we can create a
 :workshop-docs:`Workshop SDK <reference/definition-files/sdk-definition>`. We'll
 create an in-project SDK that declares one custom-device :workshop-docs:`plug
 <explanation/interfaces/plugs-and-slots/>` for each device your boards need:
@@ -202,11 +196,11 @@ name, the :samp:`custom-device` interface, and at least one device filter. The
        vendorid: "<VENDOR ID>"
        productid: "<PRODUCT ID>"
 
-* If you have a USB serial adapter, then use :samp:`tty` for ``subsystem``. This
-  is the case for the console of an ESP32 board.
-* If you have an on-board debug probe that displayed as a raw USB device, then
-  use :samp:`usb` for ``subsystem``. This is the case for a J-Link on a Nordic
-  DK or the ST-Link on a Nucleo-64 board.
+* If you have a USB serial adapter, use :samp:`tty` for ``subsystem``. This is
+  the case for the console of an ESP32 board.
+* If you have an on-board debug probe that appears as a raw USB device, use
+  :samp:`usb` for ``subsystem``. This is the case for a J-Link on a Nordic DK
+  or the ST-Link on a Nucleo-64 board.
 
 Add the :samp:`VENDOR_ID` and :samp:`PRODUCT_ID` values reported by the host to
 match your device. Always set :samp:`VENDOR_ID` for a :samp:`tty` plug. A
@@ -361,7 +355,7 @@ Make the runner tool installation reproducible
 
 Tools installed with :command:`pip` or :command:`apt` from a Workshop shell do
 not survive :command:`workshop refresh`. The refresh rebuilds the Workshop
-filesystem and restores only content installed by SDK :workshop-docs:`hooks
+filesystem and restores only the content that was installed by SDK :workshop-docs:`hooks
 <explanation/sdks/runtime-hooks>`. To reinstall a Python runner tool
 automatically, add it to the :file:`setup-project` hook of the device SDK.
 
@@ -397,13 +391,12 @@ Make these edits and run these commands on the host.
 
 The Zephyr SDK bundle contains no cross-compilers.
 Each target architecture is provided by a separate toolchain SDK.
-The get-started definition connects the host x86-64 toolchain only.
+The get-started definition connects only the host x86-64 toolchain.
 
-Adding a toolchain SDK to the :samp:`sdks` list only downloads it.
-A :samp:`connections` entry is required to mount the toolchain
-into the Zephyr SDK bundle.
-Each entry connects a plug of the :samp:`zephyr-sdk-ng` SDK
-to the :samp:`toolchain` slot of the toolchain SDK.
+Only the toolchain SDK is downloaded when it is added to the :samp:`sdks` list.
+A :samp:`connections` entry is still required to mount the toolchain into the
+Zephyr SDK bundle. Each entry connects a plug from the :samp:`zephyr-sdk-ng`
+SDK to the :samp:`toolchain` slot of the toolchain SDK.
 
 .. list-table::
    :header-rows: 1

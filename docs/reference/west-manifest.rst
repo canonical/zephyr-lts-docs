@@ -169,7 +169,7 @@ group-filter
 The ``group-filter`` field is a list of strings that enable or disable
 project groups declared with a project's ``groups`` key (see `projects`_).
 Each entry is a group name prefixed with ``+`` (enable) or ``-`` (disable).
-All groups are enabled by default, so ``+`` is only useful to re-enable a
+All groups are enabled by default, so ``+`` is useful only to re-enable a
 group that an imported manifest disabled.
 
 .. code-block:: yaml
@@ -178,9 +178,7 @@ group that an imported manifest disabled.
      group-filter: [-babblesim, -optional, -testing]
 
 A project whose ``groups`` are *all* disabled becomes inactive: ``west
-update`` skips it, and ``west list`` hides it by default. Group names may
-not contain commas, colons, or whitespace, and may not begin with ``-`` or
-``+``.
+update`` skips it, and ``west list`` hides it by default. Group names may not contain commas, colons, or whitespace, and they may not begin with "-" or "+".
 
 The workspace-level ``manifest.group-filter`` configuration option (set
 with ``west config manifest.group-filter``) is applied on top of this
