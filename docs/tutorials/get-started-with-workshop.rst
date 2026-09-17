@@ -224,10 +224,11 @@ the build options to ``west build`` through ``"$@"``:
    $ workshop run |workshop_name| -- build -p always \
    -b qemu_x86 samples/synchronization
 
-The ``build`` action then runs two commands:
+The ``build`` action then runs three commands:
 
 .. code-block::
 
+   source /var/lib/workshop/sdk/zephyr/venv/bin/activate
    cd /project/zephyr
    west build -p always -b qemu_x86 samples/synchronization
 
