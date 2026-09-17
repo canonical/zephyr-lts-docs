@@ -20,8 +20,10 @@ actions:
   sync: |
     west update "$@"
   build: |
+    source /var/lib/workshop/sdk/zephyr/venv/bin/activate
     cd /project/zephyr
     west build "$@"
   flash: |
+    source /var/lib/workshop/sdk/zephyr/venv/bin/activate
     cd /project/zephyr
     west flash "$@"
