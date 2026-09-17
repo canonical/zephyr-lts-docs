@@ -100,7 +100,7 @@ Install the |product_name| SDK
 ------------------------------
 
 The :canonical-zephyr:`sdk-ng repository <sdk-ng>` contains the LTS version of
-the |zephyr-upstream| SDK.
+the Zephyr |upstream_release| SDK.
 
 First, ensure that SDK version listed in :file:`zephyr/SDK_VERSION` match
 |sdk-version|:
