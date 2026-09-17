@@ -57,18 +57,10 @@ guarantees for each python dependency. We recommend users to employ either
 `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_
 containers to mitigate the cost of losing the python sandbox.
 
-.. todo::
-
-   Jeff: Once :issue:`RTOS-228 <RTOS-228>` closes. Show the banner here
-
 Another divergence with upstream is that Canonical's distribution patches the
 ``VERSIONS`` file to match |product_release| rather than |upstream_release|.
 Similarly, we patch the boot banner to welcome our users to the Canonical
-distribution:
-
-.. code-block::
-
-   See above TODO
+distribution.
 
 See also
 --------
