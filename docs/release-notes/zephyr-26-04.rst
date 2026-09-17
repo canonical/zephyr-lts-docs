@@ -6,8 +6,7 @@
 Zephyr |product_release| release notes
 ======================================
 
-|product_name| is Canonical's distribution of upstream Zephyr |upstream_release|
-LTS.
+|product_name| is Canonical's distribution of upstream Zephyr |upstream_release|.
 
 Development environment
 -----------------------

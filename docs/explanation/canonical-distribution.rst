@@ -2,7 +2,7 @@
 
 .. meta::
    :description: How Canonical creates and maintains its Zephyr LTS
-                 distribution from an upstream Zephyr LTS release.
+                 distribution from an upstream Zephyr release.
 
 Canonical's Zephyr distribution
 ================================
