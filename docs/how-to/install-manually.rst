@@ -33,13 +33,14 @@ Package Archive (PPA): |zephyr-lts-ppa|.
 
 .. note::
 
-   `sudo add-apt-repository` installs the packages globally. You can install them in a in a `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_ container. This guide works in a container as well.
+   `sudo add-apt-repository` installs the packages globally. You can install them in a `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_ container. This guide works in a container as well.
 
 Add the packages:
 
 .. code-block:: console
+   :substitutions:
 
-   $ sudo add-apt-repository ppa:arctic-tern/zephyr-toolchain
+   $ sudo add-apt-repository |zephyr-lts-ppa|
 
 Update the package index:
 
