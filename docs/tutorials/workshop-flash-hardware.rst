@@ -438,6 +438,16 @@ Workshop as follows:
        slot: zephyr-arm:toolchain
      - plug: zephyr-sdk-ng:riscv64
        slot: zephyr-riscv64:toolchain
+     - plug: zephyr-riscv64:venv
+       slot: uv:venv
+
+.. note::
+
+   The :samp:`zephyr-riscv64` SDK needs the extra
+   :file:`venv` connection in the example.
+   Its :file:`setup-project` hook installs ESP32 flashing tools,
+   such as :program:`esptool`,
+   into the Python virtual environment.
 
 Apply the updated definition:
 
