@@ -230,7 +230,7 @@ The ``build`` action then runs three commands:
 
    source /var/lib/workshop/sdk/zephyr/venv/bin/activate
    cd /project/zephyr
-   west build -p always -b qemu_x86 samples/synchronization
+   env -u ZEPHYR_MODULES west build -p always -b qemu_x86 samples/synchronization
 
 You can define additional actions in the workshop manifest file to automate other tasks in a similar manner, see :workshop-docs:`Customize Workshop actions
 <how-to/customize-workshops/add-actions/>`.
