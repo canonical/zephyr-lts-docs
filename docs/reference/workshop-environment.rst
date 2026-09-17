@@ -92,7 +92,7 @@ For example, a serial runner can use a :samp:`tty` device,
 while a debug probe can expose a different subsystem.
 
 Declare narrowly scoped custom-device plugs in an in-project SDK.
-Use the device subsystem and any vendor and product IDs reported by the host.
+Use the device subsystem along with any vendor and product IDs reported by the host.
 Workshop does not connect custom-device plugs automatically
 because they grant access to host hardware.
 Follow :ref:`how_access_hardware_from_workshop` for the procedure.

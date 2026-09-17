@@ -7,9 +7,8 @@
 Canonical's Zephyr distribution
 ================================
 
-To provide long term support, Canonical forks and maintains Zephyr, Zephyr
-module repositories, and any other repositories required to support or develop
-Zephyr |upstream_release|.
+To provide long-term support, Canonical forks Zephyr and maintains the Zephyr module repositories and any other repositories required to support or develop Zephyr |upstream_release|.
+
 
 The LTS distribution stores these sources in `Launchpad
 <https://code.launchpad.net/~arctic-tern>`__. Each upstream repository has a
@@ -19,7 +18,7 @@ corresponding |product_name| sdk-ng
 :canonical-zephyr:`hosted <sdk-ng>` on Launchpad.
 
 The distribution diverges from upstream in the provided :canonical-zephyr:`west
-manifest <west-manifest>`, which is altered to target the distributions' forks.
+manifest <west-manifest>`, which is altered to target the distribution's forks.
 Canonical publishes the manifest repository with an immutable source tag for
 each tested source set.
 
@@ -44,7 +43,7 @@ Canonical keeps upstream project names and source structure. This structure
 preserves familiar upstream concepts, commands, and application layouts.
 
 Canonical can add maintenance patches to each forked repository in accordance
-with upstream and will continue to patch for the duration of the long term
+with upstream and will continue to patch for the duration of the long-term
 support offering. The Canonical repository history identifies these changes. The
 release notes describe changes that affect users.
 
@@ -58,7 +57,7 @@ A central divergence with upstream is the use of a personal package archive
 installed by ``pip`` during ``pip install -r requirements.txt``. However, using
 the PPA installs all python dependencies globally rather than in a ``venv``
 environment. This tradeoff is purposeful; the PPA provides Canonical's Security
-guarantees for each python dependency. We recommend user's to employ either
+guarantees for each python dependency. We recommend users to employ either
 `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_
 containers to mitigate the cost of losing the python sandbox.
 

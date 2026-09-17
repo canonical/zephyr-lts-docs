@@ -26,7 +26,7 @@ Zephyr |zephyr-lts|
 
 
 |product_name| is Canonical's long-term support distribution
-of the Zephyr real-time operating system.
+of the Zephyr real-time operating system (RTOS).
 Canonical maintains Zephyr and its modules
 in the `Zephyr RTOS Launchpad project`_.
 
