@@ -62,22 +62,6 @@ uses the :samp:`esp32` runner, which flashes over the USB serial bootloader with
 :samp:`esptool.py`. The board therefore needs a serial host device, such as
 :file:`/dev/ttyUSB0`.
 
-If you already built an application for the board, you can also read the runner
-from the build directory instead of the upstream documentation:
-
-.. parsed-literal::
-
-   |workshop_zephyr_prompt| west flash --context
-
-The output lists the runners available for the build and the default runner:
-
-.. code-block:: text
-
-   available runners in runners.yaml:
-     openocd, esp32
-   default runner in runners.yaml:
-     esp32
-
 Find the device identifiers
 ---------------------------
 
@@ -503,13 +487,35 @@ Replace the board target and the sample with the values for your board.
 Flash the board
 ---------------
 
-Run these commands in the Workshop shell. Change to the Zephyr source directory
-and run :command:`west flash`:
+Run these commands in the Workshop shell. Change to the Zephyr source
+directory:
 
 .. code-block:: console
    :substitutions:
 
    |workshop_project_prompt| cd zephyr
+
+First list the runners and options your board supports:
+
+.. code-block:: console
+   :substitutions:
+
+   |workshop_zephyr_prompt| west flash --context
+
+The output lists the runners available for the build and the default runner:
+
+.. code-block:: text
+
+   available runners in runners.yaml:
+     openocd, esp32
+   default runner in runners.yaml:
+     esp32
+
+Then flash the board:
+
+.. code-block:: console
+   :substitutions:
+
    |workshop_zephyr_prompt| west flash
 
 The default runner of your board flashes the current :samp:`build` directory.
@@ -518,13 +524,6 @@ For example, the ESP32-C3-DevKitM flashes with the default
 :samp:`esp32` runner.
 The runner finds :command:`esptool.py` and the serial device
 automatically.
-
-List the runners and options your board supports:
-
-.. code-block:: console
-   :substitutions:
-
-   |workshop_zephyr_prompt| west flash --context
 
 Some boards support more than one runner. Select a different runner with the
 :option:`!-r` option. For example, the nRF52840 DK defaults to :samp:`nrfjprog`.
