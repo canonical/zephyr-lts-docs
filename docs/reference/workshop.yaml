@@ -22,8 +22,8 @@ actions:
   build: |
     source /var/lib/workshop/sdk/zephyr/venv/bin/activate
     cd /project/zephyr
-    west build "$@"
+    env -u ZEPHYR_MODULES west build "$@"
   flash: |
     source /var/lib/workshop/sdk/zephyr/venv/bin/activate
     cd /project/zephyr
-    west flash "$@"
+    env -u ZEPHYR_MODULES west flash "$@"
