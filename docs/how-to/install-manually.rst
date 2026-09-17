@@ -20,7 +20,7 @@ Prerequisites
 
 Before starting, ensure you have these requirements satisfied:
 
-* A supported Ubuntu host, we recommend |ubuntu-base|.
+* A host running |ubuntu-base| (the supported host release).
 * Access to the internet.
 * Permission to use :command:`sudo` on the host.
 
