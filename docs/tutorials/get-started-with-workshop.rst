@@ -69,7 +69,7 @@ command line:
 .. code-block::
    :substitutions:
 
-   $ workshop init zephyr-|product_release| --sdks zephyr,zephyr-sdk-ng,zephyr-amd64 --base |workshop_base|
+   $ workshop init zephyr-|product_release| --sdks uv/latest/stable,zephyr/|product_release|/stable,zephyr-sdk-ng/|sdk_ng_channel|,zephyr-amd64/|sdk_ng_channel| --base |workshop_base|
 
 But be sure to add the :samp:`sdks`, :samp:`connections` and :samp:`actions`
 from the aforementioned |workshop_name_samp| yaml file.
@@ -148,7 +148,7 @@ Export the Zephyr CMake package:
 
    |workshop_project_prompt| west zephyr-export
 
-`west zephyr-export` exports the Zephyr package and registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
+:command:`west zephyr-export` exports the Zephyr package and registers Zephyr with CMake, so plain CMake projects can locate the Zephyr build system without relying on West to set :envvar:`ZEPHYR_BASE`.
 
 Build and run Hello World
 -------------------------
@@ -178,8 +178,8 @@ The console should show output similar to:
 
 .. code-block:: text
 
-   *** Booting Zephyr OS LTS build ... ***
-   Hello World! qemu_x86
+   *** Booting Zephyr OS LTS build 2e4ba3e7c182 ***
+   Hello World! qemu_x86/atom
 
 Press :kbd:`Ctrl+A`, then press :kbd:`X` to stop QEMU.
 
@@ -195,10 +195,10 @@ Run Workshop actions from the host
 ----------------------------------
 
 You do not have to enter the Workshop shell manually for every task. The
-``actions`` mapping in the workshop manifest file defines commands
+``actions`` mapping in the workshop definition file defines commands
 that Workshop can run from the host.
 
-For example, the manifest file in this tutorial defines ``sync``, ``build``, and ``flash`` actions:
+For example, the workshop definition file in this tutorial defines ``sync``, ``build``, and ``flash`` actions:
 
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
@@ -232,7 +232,7 @@ The ``build`` action then runs three commands:
    cd /project/zephyr
    west build -p always -b qemu_x86 samples/synchronization
 
-You can define additional actions in the workshop manifest file to automate other tasks in a similar manner, see :workshop-docs:`Customize Workshop actions
+You can define additional actions in the workshop definition file to automate other tasks in a similar manner, see :workshop-docs:`Customize Workshop actions
 <how-to/customize-workshops/add-actions/>`.
 
 Next steps
