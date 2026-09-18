@@ -60,8 +60,9 @@ Create the :file:`setup-project` hook:
 
    $ editor .workshop/<TOOL_SDK_NAME>/hooks/setup-project
 
-Populate the hook with the commands that download and install the vendor tool,
-for example a :command:`curl` download followed by :command:`apt-get install`:
+Populate the hook with the commands that download and install the vendor
+tool, for example a :command:`curl` download followed by
+:command:`apt-get install`:
 
 .. code-block:: bash
    :caption: .workshop/<TOOL_SDK_NAME>/hooks/setup-project
@@ -69,15 +70,25 @@ for example a :command:`curl` download followed by :command:`apt-get install`:
    #!/bin/bash
    set -euo pipefail
 
-   # Download the tool from the vendor.
+   # Download the tool. The -f flag makes curl fail on HTTP errors
+   # instead of saving the error page as the download.
    tool_archive=/tmp/<TOOL_ARCHIVE>
-   curl -sSL -o "${tool_archive}" "<TOOL_DOWNLOAD_URL>"
+   curl -fsSL -o "${tool_archive}" "<TOOL_DOWNLOAD_URL>"
 
-   # Install it, for example as a Debian package...
+   # Check the downloaded file before installing it.
+   # For a Debian package, use dpkg-deb:
+   dpkg-deb -I "${tool_archive}"
+
+   # Install it as a Debian package.
    sudo apt-get update
    sudo apt-get install -y "${tool_archive}"
 
    rm -f "${tool_archive}"
+
+A hook that fails stops the refresh and rolls back the Workshop. The
+reported error may not name the real cause, such as a blocked download
+that saved an HTML error page. The :option:`!-f` flag and the check
+above make the hook fail on the download, with a clear message.
 
 Now make the hook executable on the host:
 
@@ -142,13 +153,26 @@ Create the tool SDK:
 
    name: nordic-tools
 
-Open the `J-Link downloads page <https://www.segger.com/downloads/jlink/>`_
-and find the current 64-bit Linux :samp:`.deb` package under **J-Link Software
-and Documentation Pack**. Note its file name; the package name changes with
-each J-Link release.
+SEGGER protects the download with the license agreement plus a web
+application firewall (WAF) that checks each request. An unattended hook
+can receive a CAPTCHA page instead of the package, and a browser
+User-Agent does not pass the check. Vendor the package instead of
+downloading it in the hook.
 
-Create the :file:`setup-project` hook, substituting the file name you noted
-above, and accepting the SEGGER license agreement non-interactively:
+Open the `J-Link downloads page <https://www.segger.com/downloads/jlink/>`_
+with a browser, or another method that passes the WAF check. Download
+the current 64-bit Linux :samp:`.deb` package under **J-Link Software
+and Documentation Pack**. The file name changes with each J-Link
+release. Copy the package into the project:
+
+.. code-block:: console
+
+   $ mkdir -p .workshop/nordic-tools/vendor
+   $ cp <DOWNLOAD_PATH>/JLink_Linux_V<VERSION>_x86_64.deb \
+       .workshop/nordic-tools/vendor/
+
+Create the :file:`setup-project` hook to install the package from the
+vendor directory:
 
 .. code-block:: bash
    :caption: .workshop/nordic-tools/hooks/setup-project
@@ -156,16 +180,38 @@ above, and accepting the SEGGER license agreement non-interactively:
    #!/bin/bash
    set -euo pipefail
 
+   jlink_deb=/project/.workshop/nordic-tools/vendor/JLink_Linux_V<VERSION>_x86_64.deb
+   dpkg-deb -I "${jlink_deb}"
+   sudo apt-get -o DPkg::Lock::Timeout=600 install -y "${jlink_deb}"
+
+The hook installs the package from the vendor directory on every
+refresh. Reinstalling the 60 MB package adds about three minutes to
+each refresh.
+
+If your network passes the WAF check without a browser, the hook can
+download the package instead. Replace :samp:`<PACKAGE_FILE_NAME>` with
+the current file name from the downloads page:
+
+.. code-block:: bash
+   :caption: alternative: .workshop/nordic-tools/hooks/setup-project
+
+   #!/bin/bash
+   set -euo pipefail
+
    jlink_deb=/tmp/JLink_Linux_x86_64_deb.deb
-   curl -sSL --data 'accept_license_agreement=accepted' \
+   curl -fsSL --data 'accept_license_agreement=accepted' \
        -o "${jlink_deb}" \
        "https://www.segger.com/downloads/jlink/<PACKAGE_FILE_NAME>"
+   dpkg-deb -I "${jlink_deb}"
    sudo apt-get update
    sudo apt-get install -y "${jlink_deb}"
    rm -f "${jlink_deb}"
 
-Replace :samp:`<PACKAGE_FILE_NAME>` with the file name from the downloads
-page, then make the hook executable:
+The :option:`!-f` flag stops curl from saving an error or CAPTCHA page
+as the package. The hook then fails during the download instead of at
+the install step.
+
+Make the hook executable:
 
 .. code-block:: console
 
@@ -219,7 +265,7 @@ Append the download and the :samp:`device` command bundle to the hook:
    :caption: .workshop/nordic-tools/hooks/setup-project
 
    nrfutil_bin=/usr/local/bin/nrfutil
-   sudo curl -sSL -o "${nrfutil_bin}" "<NRFUTIL_LINUX_X64_URL>"
+   sudo curl -fsSL -o "${nrfutil_bin}" "<NRFUTIL_LINUX_X64_URL>"
    sudo chmod +x "${nrfutil_bin}"
    nrfutil install device --yes
 
