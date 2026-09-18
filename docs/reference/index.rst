@@ -39,7 +39,7 @@ that apply to this source and its development tools:
 Supported Boards
 ----------------
 
-This page lists the board that |product_name| supports and additional testing
+This page lists the boards that |product_name| supports and additional testing
 performed by Canonical.
 
 .. toctree::

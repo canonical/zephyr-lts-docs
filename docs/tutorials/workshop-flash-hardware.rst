@@ -270,10 +270,11 @@ column and :samp:`manual` in the :samp:`NOTES` column. A plug that is declared
 but not connected shows :samp:`-` in the :samp:`SLOT` column:
 
 .. parsed-literal::
-   $ workshop disconnect |workshop_name|/board-device:esp32c3-serial 
+
+   $ workshop disconnect |workshop_name|/board-devices:esp32c3-serial 
    $ workshop connections |workshop_name|
    **INTERFACE**      **PLUG**                                          **SLOT**                                          **NOTES**
-   custom-device  |workshop_name|/board-device:esp32c3-serial      -                                             -
+   custom-device  |workshop_name|/board-devices:esp32c3-serial      -                                             -
    ...
 
 The plug gives the
