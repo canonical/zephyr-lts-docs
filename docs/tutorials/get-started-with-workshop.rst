@@ -178,8 +178,8 @@ The console should show output similar to:
 
 .. code-block:: text
 
-   *** Booting Zephyr OS LTS build 2e4ba3e7c182 ***
-   Hello World! qemu_x86/atom
+   *** Booting Zephyr OS build ... ***
+   Hello World! qemu_x86
 
 Press :kbd:`Ctrl+A`, then press :kbd:`X` to stop QEMU.
 

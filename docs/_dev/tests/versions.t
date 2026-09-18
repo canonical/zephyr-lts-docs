@@ -29,8 +29,8 @@ pages:
 The documented upstream Zephyr version matches the VERSION file at the
 root of the zephyr-rtos repository on Launchpad, on the DOC_VERSION
 branch — the file CMake reads to set the project's version, browsable
-at https://git.launchpad.net/zephyr-rtos/tree/VERSION?h=26.04 for
-DOC_VERSION=26.04. Only the major.minor pair is compared — patch-level
+at https://git.launchpad.net/zephyr-rtos/tree/VERSION?h=24.04 for
+DOC_VERSION=24.04. Only the major.minor pair is compared — patch-level
 bumps on the branch don't require a docs release, and EXTRAVERSION
 (e.g. rc1) is shown in the diagnostic but not asserted, since
 DOC_UPSTREAM_VERSION tracks the release, not the pre-release tag:
@@ -59,8 +59,8 @@ DOC_UPSTREAM_VERSION tracks the release, not the pre-release tag:
 The documented release exists as a branch of the manifest repository on
 Launchpad — the same tree the canonical-zephyr extlink points at,
 browsable at
-https://code.launchpad.net/~arctic-tern/zephyr-rtos/+git/zephyr-manifest/+ref/26.04
-for DOC_VERSION=26.04. The branch is what `west init -m
+https://code.launchpad.net/~arctic-tern/zephyr-rtos/+git/zephyr-manifest/+ref/24.04
+for DOC_VERSION=24.04. The branch is what `west init -m
 "$DOC_LP_ZEPHYR_URL/zephyr-manifest" --mr "$DOC_VERSION"` fetches, so
 this test failing means the init example in the reference documentation
 would fail for a reader:
