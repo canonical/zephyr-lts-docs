@@ -37,7 +37,7 @@ how-to can be run in a `Docker <https://snapcraft.io/docker>`_ or `LXD
 
 .. code-block:: console
 
-   $ sudo add-apt-repository ppa:arctic-tern/zephyr-toolchain
+   $ sudo add-apt-repository ppa:arctic-tern/zephyr-toolchain-26.04
 
 Update the package index:
 
