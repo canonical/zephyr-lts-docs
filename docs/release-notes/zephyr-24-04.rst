@@ -32,6 +32,13 @@ Workshop support requires an Ubuntu or snap-enabled Linux host.
 Use the manual installation path
 on an |ubuntu-base| host that cannot run Workshop.
 
+The upstream pip model (:command:`pip install -r requirements.txt`) does
+not work on a clean |ubuntu-base| image. It builds C extensions such as
+``ruamel-yaml-clib`` from source, which requires ``python3-dev``, a
+package that is not preinstalled. Install ``python3-dev`` or use the
+:ref:`host install guide <how_install_on_host_system>`, which installs
+the Python requirements as packages.
+
 
 See also
 --------
