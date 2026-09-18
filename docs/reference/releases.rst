@@ -34,7 +34,7 @@ Release identifiers
 Updates
 -------
 
-Canonical publishes compatible tool updates to the |workshop_sdk_channel_samp|
+Canonical publishes compatible tool updates to the |sdk_ng_channel_samp|
 SDK channel. Apply an SDK update with :command:`workshop refresh`:
 
 .. code-block:: console

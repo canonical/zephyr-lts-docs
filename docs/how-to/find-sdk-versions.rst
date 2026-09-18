@@ -136,11 +136,12 @@ to one of the channels reported by :command:`sdk info`:
 
 .. code-block:: yaml
    :caption: |workshop_definition_file|
+   :substitutions:
 
    sdks:
      # Existing SDK entries...
      - name: zephyr-xtensa-espressif-esp32s2
-       channel: 0.16.9/stable
+       channel: |sdk_ng_channel|
 
 Apply the updated definition with a :samp:`refresh`:
 
@@ -177,11 +178,11 @@ Confirm the connected SDK now reports the channel you selected:
        tracking:   26.04/stable
        installed:  4.4.2  2026-08-20  (12)
      zephyr-sdk-ng:
-       tracking:   1.0.1/stable
-       installed:  1.0.1  2026-09-16  (26)
+       tracking:   |sdk_ng_channel|
+       installed:  1.0.1  2026-09-17  (41)
      zephyr-xtensa-espressif-esp32s2:
-       tracking:   0.16.9/stable
-       installed:  0.16.9  2026-09-16  (24)
+       tracking:   |sdk_ng_channel|
+       installed:  1.0.1  2026-09-17  (34)
 
 Find the SDK name under the :samp:`sdks` key. Its :samp:`tracking` field must
 match the channel you set in |workshop_definition_file|, and
