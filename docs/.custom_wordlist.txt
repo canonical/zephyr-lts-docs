@@ -63,6 +63,7 @@ dialout
 debugserver
 docstrings?
 doctests?
+dpkg
 dvipng
 esac
 esptool
@@ -96,6 +97,7 @@ nrfutil
 openapi
 otf
 patool
+pipefail
 plantuml
 preconfigured
 pykwalify
