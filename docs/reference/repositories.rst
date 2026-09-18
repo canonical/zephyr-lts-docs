@@ -15,7 +15,7 @@ is the source of truth for repository revisions.
 URL format
 ----------
 
-Each port keeps its upstream repository name.
+Each repository keeps its upstream repository name.
 Repository pages use this URL format:
 
 .. code-block:: console
