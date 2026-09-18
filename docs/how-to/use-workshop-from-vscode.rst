@@ -77,16 +77,6 @@ The prompt shows a shell inside the Workshop:
 
    |workshop_project_prompt|
 
-The terminal inherits the :envvar:`ZEPHYR_MODULES` override
-from the container profile.
-With that value set, west cannot see the modules in the workspace,
-so clear it before building:
-
-.. code-block:: console
-   :substitutions:
-
-   |workshop_project_prompt| unset ZEPHYR_MODULES
-
 Build and run the Hello World sample to confirm
 that the toolchain is available:
 
