@@ -1,6 +1,6 @@
-# Zephyr 26.04 documentation
+# Zephyr 24.04 documentation
 
-This repository contains the documentation for Zephyr 26.04.
+This repository contains the documentation for Zephyr 24.04.
 
 Canonical maintains the Zephyr source and its modules in the [Zephyr RTOS
 Launchpad project](https://code.launchpad.net/~arctic-tern/zephyr-rtos).

@@ -1,4 +1,4 @@
-# This workflow tests the Zephyr 26.04 documentation.
+# This workflow tests the Zephyr 24.04 documentation.
 
 name: Test documentation
 

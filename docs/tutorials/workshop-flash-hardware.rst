@@ -283,7 +283,7 @@ Workshop access to the device node. You no longer need host udev rules or
 
 .. warning::
 
-   USB probe pass-through is a known issue in Workshop 26.04.
+   USB probe pass-through is a known issue in Workshop 24.04.
    A plug with :samp:`subsystem: usb` can pass the connection check above
    while the container gets no device node under :file:`/dev/bus/usb/`.
    Flashing then fails with ``LIBUSB_ERROR_NO_DEVICE``.

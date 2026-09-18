@@ -1,6 +1,6 @@
 # Security Policy
 
-This repository is part of **Zephyr 26.04** — Canonical's downstream
+This repository is part of **Zephyr 24.04** — Canonical's downstream
 redistribution of the upstream
 [Zephyr RTOS](https://github.com/zephyrproject-rtos/zephyr) Long-Term Support
 (LTS) v4.4 line.
@@ -33,17 +33,17 @@ from you. This product adopts that policy.
 ## Supported Versions
 
 Security maintenance follows the upstream Zephyr **v4.4 LTS** line as published
-for Zephyr 26.04.
+for Zephyr 24.04.
 
 | Version / track                     | Supported          |
 | ----------------------------------- | ------------------ |
-| Zephyr 26.04 (latest update)        | :white_check_mark: |
-| Older Zephyr 26.04 updates          | :x: (upgrade to the latest Zephyr 26.04 update) |
+| Zephyr 24.04 (latest update)        | :white_check_mark: |
+| Older Zephyr 24.04 updates          | :x: (upgrade to the latest Zephyr 24.04 update) |
 | Edge / non-LTS tracks               | :x:                |
-| Releases prior to 26.04             | :x:                |
+| Releases prior to 24.04             | :x:                |
 
-Only the **latest update of the Zephyr 26.04 release series** is actively
-maintained. Users are expected to track the latest Zephyr 26.04 update to
+Only the **latest update of the Zephyr 24.04 release series** is actively
+maintained. Users are expected to track the latest Zephyr 24.04 update to
 receive security fixes.
 
 ## Product Lifetime and Support Phases
@@ -54,7 +54,7 @@ receive security fixes.
   approximately 2.5 years of standard maintenance.
 - **Extended support.** Where upstream provides an extended maintenance window
   for v4.4, and/or where a customer or contractual Extended Security
-  Maintenance (ESM) commitment applies, the Zephyr 26.04 release series is
+  Maintenance (ESM) commitment applies, the Zephyr 24.04 release series is
   maintained for that longer period.
 - **End of life (EOL).** When the applicable maintenance window ends, the track
   stops receiving security updates. The authoritative maintenance window and
@@ -81,7 +81,7 @@ folded into routine rebuilds.
 
 ## How Fixes Are Delivered
 
-Security fixes are delivered as new revisions published for Zephyr 26.04.
+Security fixes are delivered as new revisions published for Zephyr 24.04.
 Users receive fixes by updating to the new revision. Fixes are announced
 through:
 

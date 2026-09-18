@@ -93,7 +93,7 @@ Install the Python packages that the Zephyr source tree requires:
 .. note::
 
    The upstream pip model (:command:`pip install -r requirements.txt`) is a
-   known issue in 26.04. It builds C extensions such as ``ruamel-yaml-clib``
+   known issue on |ubuntu-base|. It builds C extensions such as ``ruamel-yaml-clib``
    from source, which requires ``python3-dev``, a package that is not
    preinstalled on a clean |ubuntu-base| image. Install ``python3-dev`` or use
    the package install shown above.
