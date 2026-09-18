@@ -353,11 +353,11 @@ Where ``scripts/west-commands.yml`` might be:
 See also
 --------
 
-* :zephyr-docs:`West Manifests <develop/west/manifest.html>` — the upstream
+* :zephyr-docs:`West Manifests <develop/west/manifest.html>`: the upstream
   documentation on west manifest files.
-* :zephyr-docs:`west.manifest API  <develop/west/west-apis.html#module-west.manifest>` —
+* :zephyr-docs:`west.manifest API  <develop/west/west-apis.html#module-west.manifest>`:
   the Python API for parsing and resolving manifests.
-* :zephyr-docs:`Built-in Configuration Options  <develop/west/config.html#west-config-index>` —
+* :zephyr-docs:`Built-in Configuration Options  <develop/west/config.html#west-config-index>`:
   the ``manifest.path``, ``manifest.group-filter``, and
   ``manifest.project-filter`` workspace configuration options that
   interact with this file.
