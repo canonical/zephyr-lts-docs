@@ -54,6 +54,7 @@ upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
 sdk_ng_channel_ = _doc_versions["SDK_NG_CHANNEL"]
 sdk_ng_channel = f"{sdk_ng_channel_}"
 source_tag = _doc_versions["SOURCE_TAG"]
+docs_branch = f"{product_release}-branch"
 
 # Keep docs/reference/workshop.yaml, the release-note filename and heading,
 # toctree entries, page labels, and reST metadata descriptions aligned with the
@@ -405,6 +406,7 @@ _version_substitutions = f"""
 .. |sdk-version| replace:: {_doc_versions["SDK_NG_VERSION"]}
 .. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
 .. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}
+.. |docs_branch| replace:: {docs_branch}
 .. |ubuntu-base| replace:: Ubuntu {_doc_versions["UBUNTU_BASE_VERSION"]}
 .. |product_name| replace:: {product_name}
 .. |product_release| replace:: {product_release}
