@@ -267,7 +267,7 @@ Append the download and the :samp:`device` command bundle to the hook:
    nrfutil_bin=/usr/local/bin/nrfutil
    sudo curl -fsSL -o "${nrfutil_bin}" "<NRFUTIL_LINUX_X64_URL>"
    sudo chmod +x "${nrfutil_bin}"
-   nrfutil install device --yes
+   nrfutil install device
 
 Replace :samp:`<NRFUTIL_LINUX_X64_URL>` with the link you copied. The
 :samp:`device` command bundle includes the commands the :samp:`nrfutil` runner uses to flash and manage devices.
