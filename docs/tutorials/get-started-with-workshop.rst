@@ -160,6 +160,20 @@ Change to the Zephyr repository:
 
    |workshop_project_prompt| cd zephyr
 
+.. important::
+   By default, :envvar:`ZEPHYR_MODULES` points to the :samp:`zephyr` SDK's own
+   directory. With that value set, west cannot see the modules in the
+   workspace, and a build that needs a workspace module fails with a
+   missing-header error. Clear the value before building in the shell:
+
+   .. code-block:: console
+      :substitutions:
+
+      |workshop_zephyr_prompt| unset ZEPHYR_MODULES
+
+   The ``build`` and ``flash`` actions described below already clear the
+   value. For details, see :ref:`ref_workshop_environment`.
+
 Build Hello World for the `qemu_x86` board:
 
 .. code-block:: console
