@@ -165,7 +165,7 @@ Build Hello World for the `qemu_x86` board:
 .. code-block:: console
    :substitutions:
 
-    |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world
+   |workshop_zephyr_prompt| west build -p always -b qemu_x86 samples/hello_world
 
 Run the built application:
 
