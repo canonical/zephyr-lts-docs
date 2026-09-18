@@ -8,7 +8,7 @@ The **west** command-line tool exposes the following commands, each with its own
 set of options and flags.
 
 This page is split into two groups of commands. The first group is built into
-west itself. The second group are *extension commands*, provided by the
+west itself. The second group consists of *extension commands*, provided by the
 ``zephyr`` repository in the workspace.
 
 .. This doctest asserts that the installed west matches the minimum
@@ -95,7 +95,7 @@ without cloning anything:
 
 -m <url>, --manifest-url <url>
 
-   Manifest repository URL. Defaults to the upstream Zephyr :upstream-zephyr:`repository. <zephyr>`
+   Manifest repository URL. Defaults to the upstream Zephyr :upstream-zephyr:`repository <zephyr>`.
 
 --mr <rev>, --manifest-rev <rev>
 
@@ -658,8 +658,8 @@ Flash with J-Link, erasing the device first:
 -r <runner>, --runner <runner>
 
    Runner to use (one of: ``jlink``, ``openocd``, ``pyocd``, ``nrfjprog``). Run
-   ``west flash -H <context>`` or consult the board documentation for supported
-   runners.
+   ``west flash --context`` for runner-specific options, or consult the board
+   documentation for supported runners.
 
 --skip-rebuild
 

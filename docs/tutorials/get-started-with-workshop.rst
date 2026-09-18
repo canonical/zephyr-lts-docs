@@ -69,7 +69,7 @@ command line:
 .. code-block::
    :substitutions:
 
-   $ workshop init zephyr-|product_release| --sdks zephyr,zephyr-sdk-ng,zephyr-amd6 --base |workshop_base|
+   $ workshop init zephyr-|product_release| --sdks zephyr,zephyr-sdk-ng,zephyr-amd64 --base |workshop_base|
 
 But be sure to add the :samp:`sdks`, :samp:`connections` and :samp:`actions`
 from the aforementioned |workshop_name_samp| yaml file.

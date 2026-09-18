@@ -108,8 +108,7 @@ The installed west meets the documented minimum version (v1.0+):
   West version: v1.* (glob)
 ```
 
-Matching is line-for-line. You can filter output or match with regexex:
-output:
+Matching is line-for-line. You can filter output or match with regex:
 
 * **Filter at the command** (preferred): pipe through `grep` or `head`, then
   state the filtered output exactly, for example
@@ -157,11 +156,9 @@ tool that no longer matches the documented version fails.
 * Use doctest when asserting a property of the environment; such as a version, a
   config value, that a command exists.
 * Use a cram test when you want to document a command's output or a sequence of
-  commands and ensure that the output is an exact match to. You can write to a
+  commands and check that the output matches the transcript exactly. You can write to a
   cram transcript and import the text with a `literalinclude` in the page.
 
-
-## Requirements and limitations
 
 ## Contribute
 

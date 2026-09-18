@@ -13,10 +13,10 @@ Zephyr modules through the |zephyr-lts-ppa| Personal Package Archive (PPA).
 A Workshop container uses the Ubuntu archive by default, so packages it
 installs do not carry the Canonical version pin.
 
-This guide has two approaches. The ephemeral approach runs the commands
-in the container shell. The persistent approach installs the same
+This guide has two approaches. The persistent approach installs the same
 packages through an in-project SDK, which re-applies them on every
-rebuild and survives :command:`workshop refresh`.
+rebuild and survives :command:`workshop refresh`. The ephemeral approach
+runs the commands in the container shell.
 
 Prerequisites
 -------------
@@ -25,7 +25,81 @@ Before starting, ensure you have these requirements satisfied:
 
 * A running |workshop_name_samp| Workshop, as described in
   :ref:`tut_get_started_with_workshop`.
-* Permission to use :command:`sudo` in the Workshop container.
+
+Persistent install
+------------------
+
+The persistent approach places the same commands in an in-project SDK.
+Every Workshop build runs the SDK setup hooks, so the PPA and the pin
+survive :command:`workshop refresh`.
+
+On the host, create the in-project SDK directory and its files:
+
+.. code-block:: console
+   :substitutions:
+
+   $ mkdir -p .workshop/|workshop_name|-sdk/hooks
+   $ touch .workshop/|workshop_name|-sdk/sdk.yaml
+   $ touch .workshop/|workshop_name|-sdk/hooks/setup-base
+   $ touch .workshop/|workshop_name|-sdk/hooks/setup-project
+   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-base
+   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-project
+
+Paste the PPA setup into ``.workshop/|workshop_name|-sdk/hooks/setup-base``.
+The hook runs as root, so the commands need no :command:`sudo`:
+
+.. code-block:: shell
+   :substitutions:
+
+   # Add the PPA and its version pin.
+   add-apt-repository |zephyr-lts-ppa|
+   apt update
+   apt install -y |zephyr-ppa-pin|
+   # Install the base, build-test, and run-test dependencies.
+   apt install -y \
+     gcovr junitparser mypy openocd patool pykwalify reuse west \
+     python3-anytree python3-can python3-canopen python3-cbor python3-colorama \
+     python3-coverage python3-dotenv python3-intelhex python3-jsonschema \
+     python3-junitparser python3-mypy python3-natsort python3-numpy \
+     python3-numpy-dev python3-opencv python3-packaging python3-packaging-whl \
+     python3-ply python3-psutil python3-pyelftools python3-pykwalify \
+     python3-pylink-square python3-pyocd python3-pytest python3-pytest-subtests \
+     python3-requests python3-semver python3-serial python3-spdx-tools \
+     python3-tabulate python3-tqdm python3-yaml esptool
+   # Ensure hardware is detectable within the container.
+   usermod -a -G dialout workshop
+
+Paste the following into
+``.workshop/|workshop_name|-sdk/hooks/setup-project``:
+
+.. code-block:: shell
+
+   echo 'unset ZEPHYR_MODULES' >> ~/.profile
+
+Describe the SDK in ``.workshop/|workshop_name|-sdk/sdk.yaml``:
+
+.. code-block:: yaml
+   :substitutions:
+
+   name: |workshop_name|-sdk
+   summary: Zephyr |product_release| - PPA + venv
+
+Register the in-project SDK in |workshop_definition_file|:
+
+.. code-block:: yaml
+   :substitutions:
+
+   sdks:
+     ...  # existing SDKs
+     - name: project-|workshop_name|-sdk
+
+Refresh the Workshop, then enter the shell:
+
+.. code-block:: console
+   :substitutions:
+
+   $ workshop refresh |workshop_name|
+   $ workshop shell |workshop_name|
 
 Ephemeral install
 -----------------
@@ -127,81 +201,6 @@ Grant the container user access to serial devices:
    $ sudo usermod -a -G dialout workshop
 
 Exit the shell and re-enter it so the group change takes effect.
-
-Persistent install
-------------------
-
-The persistent approach places the same commands in an in-project SDK.
-Every Workshop build runs the SDK setup hooks, so the PPA and the pin
-survive :command:`workshop refresh`.
-
-On the host, create the in-project SDK directory and its files:
-
-.. code-block:: console
-   :substitutions:
-
-   $ mkdir -p .workshop/|workshop_name|-sdk/hooks
-   $ touch .workshop/|workshop_name|-sdk/sdk.yaml
-   $ touch .workshop/|workshop_name|-sdk/hooks/setup-base
-   $ touch .workshop/|workshop_name|-sdk/hooks/setup-project
-   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-base
-   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-project
-
-Paste the PPA setup into ``.workshop/|workshop_name|-sdk/hooks/setup-base``.
-The hook runs as root, so the commands need no :command:`sudo`:
-
-.. code-block:: shell
-   :substitutions:
-
-   # Add the PPA and its version pin.
-   add-apt-repository |zephyr-lts-ppa|
-   apt update
-   apt install -y |zephyr-ppa-pin|
-   # Install the base, build-test, and run-test dependencies.
-   apt install -y \
-     gcovr junitparser mypy openocd patool pykwalify reuse west \
-     python3-anytree python3-can python3-canopen python3-cbor python3-colorama \
-     python3-coverage python3-dotenv python3-intelhex python3-jsonschema \
-     python3-junitparser python3-mypy python3-natsort python3-numpy \
-     python3-numpy-dev python3-opencv python3-packaging python3-packaging-whl \
-     python3-ply python3-psutil python3-pyelftools python3-pykwalify \
-     python3-pylink-square python3-pyocd python3-pytest python3-pytest-subtests \
-     python3-requests python3-semver python3-serial python3-spdx-tools \
-     python3-tabulate python3-tqdm python3-yaml esptool
-   # Ensure hardware is detectable within the container.
-   usermod -a -G dialout workshop
-
-Paste the following into
-``.workshop/|workshop_name|-sdk/hooks/setup-project``:
-
-.. code-block:: shell
-
-   echo 'unset ZEPHYR_MODULES' >> ~/.profile
-
-Describe the SDK in ``.workshop/|workshop_name|-sdk/sdk.yaml``:
-
-.. code-block:: yaml
-   :substitutions:
-
-   name: |workshop_name|-sdk
-   summary: Zephyr |product_release| - PPA + venv
-
-Register the in-project SDK in |workshop_definition_file|:
-
-.. code-block:: yaml
-   :substitutions:
-
-   sdks:
-     ...  # existing SDKs
-     - name: project-|workshop_name|-sdk
-
-Refresh the Workshop, then enter the shell:
-
-.. code-block:: console
-   :substitutions:
-
-   $ workshop refresh |workshop_name|
-   $ workshop shell |workshop_name|
 
 See also
 --------
