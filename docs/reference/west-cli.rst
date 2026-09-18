@@ -82,7 +82,7 @@ the |zephyr-lts| release into the current directory:
 .. code-block:: console
    :substitutions:
 
-   $ west init -m |zephyr-lts-url|/zephyr-manifest --mr |doc-version|
+   $ west init -m |zephyr-lts-url|/zephyr-manifest --mr |source_tag|
 
 Create a workspace around a local manifest repository that's already present
 without cloning anything:
