@@ -15,7 +15,7 @@ installs do not carry the Canonical version pin.
 
 This guide has two approaches. The persistent approach installs the same
 packages through an in-project SDK, which re-applies them on every
-rebuild and survives :command:`workshop refresh`. The ephemeral approach
+refresh and survives :command:`workshop refresh`. The ephemeral approach
 runs the commands in the container shell.
 
 Prerequisites
@@ -30,8 +30,8 @@ Persistent install
 ------------------
 
 The persistent approach places the same commands in an in-project SDK.
-Every Workshop build runs the SDK setup hooks, so the PPA and the pin
-survive :command:`workshop refresh`.
+The SDK setup hooks run on every :command:`workshop refresh`, so the
+PPA and the pin survive.
 
 On the host, create the in-project SDK directory and its files:
 
@@ -51,6 +51,8 @@ The hook runs as root, so the commands need no :command:`sudo`:
 .. code-block:: shell
    :substitutions:
 
+   #!/bin/bash
+   set -euo pipefail
    # Add the PPA and its version pin.
    add-apt-repository |zephyr-lts-ppa|
    apt update
@@ -74,7 +76,8 @@ Paste the following into
 
 .. code-block:: shell
 
-   echo 'unset ZEPHYR_MODULES' >> ~/.profile
+   grep -q 'unset ZEPHYR_MODULES' ~/.profile || \
+     echo 'unset ZEPHYR_MODULES' >> ~/.profile
 
 Describe the SDK in ``.workshop/|workshop_name|-sdk/sdk.yaml``:
 
@@ -127,16 +130,17 @@ Install the version pin:
 .. code-block:: console
    :substitutions:
 
-   $ sudo apt install |zephyr-ppa-pin|
+   $ sudo apt install -y |zephyr-ppa-pin|
 
 The pin package |zephyr-ppa-pin_samp| sets the apt preference of the
 PPA to 1001, higher than the 500 of the Ubuntu archive. With the pin
 installed, apt selects the PPA version of a package whenever both
-sources publish it. To confirm the pin, check the policy of a package
-that both sources publish:
+sources publish it. Install :command:`west` to see the pin take
+effect, then check the policy:
 
 .. code-block:: console
 
+   $ sudo apt install -y west
    $ apt-cache policy west
 
 The PPA version must be the installed and candidate version,
@@ -150,13 +154,15 @@ at preference 1001:
      Candidate: 1.5.0-1+ppa20260916171518
      Version table:
     *** 1.5.0-1+ppa20260916171518 1001
-         1001 |ppa-content-url| resolute/main amd64 Packages
+          1001 |ppa-content-url| resolute/main amd64 Packages
+           100 /var/lib/dpkg/status
         1.5.0-1 500
-         500 http://archive.ubuntu.com/ubuntu resolute/universe amd64 Packages
+           500 http://archive.ubuntu.com/ubuntu resolute/universe amd64 Packages
 
 To install every package that the PPA publishes, including the Zephyr
-modules, install the package names from the downloaded PPA index.
-The index files are lz4-compressed, so install ``lz4`` first:
+modules and the full Zephyr SDK toolchains, install the package names
+from the downloaded PPA index. The install needs about 15 GB of free
+space. The index files are lz4-compressed, so install ``lz4`` first:
 
 .. code-block:: console
    :substitutions:
