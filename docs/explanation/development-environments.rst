@@ -28,7 +28,7 @@ as a separate tested unit.
 This design keeps tool updates separate from source updates.
 
 Hardware access is explicit.
-Workshop requires explicit connection of custom-device interfaces
+Workshop requires explicit connection of custom-device interfaces.
 The developer grants access only when a board needs it.
 
 When to install manually

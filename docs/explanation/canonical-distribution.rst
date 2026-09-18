@@ -57,7 +57,7 @@ A central divergence with upstream is the use of a personal package archive
 installed by ``pip`` during ``pip install -r requirements.txt``. However, using
 the PPA installs all python dependencies globally rather than in a ``venv``
 environment. This tradeoff is purposeful; the PPA provides Canonical's Security
-guarantees for each python dependency. We recommend users to employ either
+guarantees for each python dependency. We recommend that users employ either
 `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_
 containers to mitigate the cost of losing the python sandbox.
 

@@ -11,7 +11,7 @@ The Workshop extension for Visual Studio Code connects a VS Code window
 to a running Workshop environment.
 The editor, terminal, and debugger run inside the container,
 while the window stays on the host.
-Workshop provides the Zephyr SDKs and toolchains inside the development environment
+Workshop provides the Zephyr SDKs and toolchains inside the development environment.
 Each developer gets the same base and SDK channel,
 and VS Code keeps IDE features
 such as code completion and debugging.

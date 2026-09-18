@@ -117,7 +117,7 @@ Open a shell in the Workshop and check that the tool is on the :envvar:`PATH`:
    $ workshop shell |workshop_name|
    |workshop_project_prompt| command -v <TOOL_BINARY>
 
-You should observe a filepath for the tool. If nothing is returned, the tool is absent, you should review the hook and rerun :command:`workshop refresh`.
+You should observe a filepath for the tool. If nothing is returned, the tool is absent. You should review the hook and rerun :command:`workshop refresh`.
 
 The rest of this guide applies the procedure above to two Nordic vendor tools
 that share a single tool SDK, :samp:`nordic-tools`, because both are needed to
