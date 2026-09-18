@@ -6,9 +6,9 @@ sdks:
   - name: zephyr
     channel: 26.04/stable
   - name: zephyr-sdk-ng
-    channel: 1.0.1/stable
+    channel: 26.04.0/stable
   - name: zephyr-amd64
-    channel: 1.0.1/stable
+    channel: 26.04.0/stable
 connections:
   - plug: zephyr:venv
     slot: uv:venv
