@@ -64,7 +64,7 @@ workshop_definition = f"{workshop_name}.yaml"
 workshop_base = f"ubuntu@{product_release}"
 workshop_sdk_channel = f"{product_release}/stable"
 ppa_pin_package = f"zephyr-ppa-pin-{product_release.replace('.', '-')}"
-ppa_origin = f"LP-PPA-{_doc_versions['DOC_PPA_NAME'].replace('/', '-')}"
+ppa_archive = _doc_versions["DOC_PPA_NAME"].split("/")[-1]
 ppa_content_url = f"https://ppa.launchpadcontent.net/{_doc_versions['DOC_PPA_NAME']}/ubuntu"
 launchpad_git_base = _doc_versions["DOC_LP_ZEPHYR_URL"]
 launchpad_project_url = launchpad_git_base.replace(
@@ -397,7 +397,7 @@ _version_substitutions = f"""
 .. |zephyr-lts-ppa| replace:: ``ppa:{_doc_versions["DOC_PPA_NAME"]}``
 .. |zephyr-ppa-pin| replace:: {ppa_pin_package}
 .. |zephyr-ppa-pin_samp| replace:: :samp:`{ppa_pin_package}`
-.. |ppa-origin| replace:: {ppa_origin}
+.. |ppa-archive| replace:: {ppa_archive}
 .. |ppa-content-url| replace:: {ppa_content_url}
 .. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
 .. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
