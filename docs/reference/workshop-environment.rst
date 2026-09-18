@@ -35,7 +35,7 @@ SDK selection
 
 The definition connects the Python environment,
 SDK bundle, and x86 toolchain to the :samp:`zephyr` SDK.
-The Workshop project is mounted at :file:`/project`,
+The Workshop mounts the project at :file:`/project`,
 and the writable Zephyr source is at :file:`/project/zephyr`.
 
 Each SDK entry pins one channel. To find other versions and channels an SDK
