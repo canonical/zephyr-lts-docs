@@ -42,8 +42,7 @@ Include this information in a technical report:
 * The complete error output as text.
 * A small application that reproduces the problem, when possible.
 
-Use the relevant project in the `Zephyr RTOS Launchpad project`_ for public
-source defects.
+File public source defects in the `Zephyr RTOS Launchpad bug tracker`_.
 
 Security problems
 -----------------

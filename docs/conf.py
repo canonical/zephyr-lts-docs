@@ -70,6 +70,7 @@ launchpad_git_base = _doc_versions["DOC_LP_ZEPHYR_URL"]
 launchpad_project_url = launchpad_git_base.replace(
     "git.launchpad.net", "code.launchpad.net"
 ).removesuffix("/+git")
+launchpad_bug_url = f"https://bugs.launchpad.net/{launchpad_project_url.rsplit('/', 1)[-1]}"
 manifest_repository = "zephyr-manifest"
 manifest_repository_url = f"{launchpad_git_base}/{manifest_repository}"
 
@@ -442,6 +443,7 @@ _version_substitutions = f"""
 rst_epilog = f"""
 
 .. _Zephyr RTOS Launchpad project: {launchpad_project_url}
+.. _Zephyr RTOS Launchpad bug tracker: {launchpad_bug_url}
 .. _Zephyr manifest repository: {launchpad_project_url}/+git/{manifest_repository}
 .. _Zephyr source repository: {launchpad_project_url}/+git/zephyr
 .. _MCUboot repository: {launchpad_project_url}/+git/mcuboot
