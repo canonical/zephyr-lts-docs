@@ -81,11 +81,13 @@ at preference 1001:
          500 http://archive.ubuntu.com/ubuntu resolute/universe amd64 Packages
 
 To install every package that the PPA publishes, including the Zephyr
-modules, install the package names from the downloaded PPA index:
+modules, install the package names from the downloaded PPA index.
+The index files are lz4-compressed, so install ``lz4`` first:
 
 .. code-block:: console
    :substitutions:
 
+   $ sudo apt install -y lz4
    $ sudo apt install -y $(
      for index in /var/lib/apt/lists/*|ppa-archive|*_Packages*; do
        case "$index" in
@@ -142,6 +144,8 @@ On the host, create the in-project SDK directory and its files:
    $ touch .workshop/|workshop_name|-sdk/sdk.yaml
    $ touch .workshop/|workshop_name|-sdk/hooks/setup-base
    $ touch .workshop/|workshop_name|-sdk/hooks/setup-project
+   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-base
+   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-project
 
 Paste the PPA setup into ``.workshop/|workshop_name|-sdk/hooks/setup-base``.
 The hook runs as root, so the commands need no :command:`sudo`:
