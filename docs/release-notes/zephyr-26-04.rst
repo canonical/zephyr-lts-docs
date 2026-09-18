@@ -35,6 +35,13 @@ reports ``LIBUSB_ERROR_NO_DEVICE``. A :samp:`tty` plug for the same board is
 unaffected. See the pass-through warning in the
 :ref:`flash hardware tutorial <tut_flash_hardware>`.
 
+The upstream pip model (:command:`pip install -r requirements.txt`) does not
+work on a clean 26.04 image. It builds C extensions such as
+``ruamel-yaml-clib`` from source, which requires ``python3-dev``, a package
+that is not preinstalled. Install ``python3-dev`` or use the
+:ref:`host install guide <how_install_on_host_system>`, which installs the
+Python requirements as packages.
+
 
 See also
 --------
