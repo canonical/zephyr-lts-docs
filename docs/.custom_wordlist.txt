@@ -56,6 +56,7 @@ blinky
 bootloader
 cjk
 cmd
+chmod
 crypto
 cryptographically
 dialout
