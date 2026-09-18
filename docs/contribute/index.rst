@@ -20,8 +20,9 @@ Get the documentation source
 Clone the documentation repository from GitHub:
 
 .. code-block:: console
+   :substitutions:
 
-   $ git clone https://github.com/canonical/zephyr-lts-docs.git
+   $ git clone -b |docs_branch| https://github.com/canonical/zephyr-lts-docs.git
    $ cd zephyr-lts-docs
 
 Build the documentation
