@@ -48,17 +48,17 @@ support offering. The Canonical repository history identifies these changes. The
 release notes describe changes that affect users.
 
 A central divergence with upstream is the use of a personal package archive
-(PPA), rather than a python package index, for python dependencies. The
-|zephyr-lts-ppa| provided by Canonical contains the python dependencies normally
+(PPA), rather than a Python package index, for Python dependencies. The
+|zephyr-lts-ppa| provided by Canonical contains the Python dependencies normally
 installed by ``pip`` during ``pip install -r requirements.txt``. However, using
-the PPA installs all python dependencies globally rather than in a ``venv``
-environment. This tradeoff is purposeful; the PPA provides Canonical's Security
-guarantees for each python dependency. We recommend that users employ either
+the PPA installs all Python dependencies globally rather than in a ``venv``
+environment. This tradeoff is purposeful; the PPA provides Canonical's security
+guarantees for each Python dependency. We recommend that users employ either
 `Docker <https://snapcraft.io/docker>`_ or `LXD <https://snapcraft.io/lxd>`_
-containers to mitigate the cost of losing the python sandbox.
+containers to mitigate the cost of losing the Python sandbox.
 
 Another divergence with upstream is that Canonical's distribution patches the
-``VERSIONS`` file to match |product_release| rather than |upstream_release|.
+``VERSION`` file to match |product_release| rather than |upstream_release|.
 Similarly, we patch the boot banner to welcome our users to the Canonical
 distribution.
 

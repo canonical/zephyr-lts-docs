@@ -8,7 +8,7 @@ Supported Boards
 =================
 
 |product_name| claims support at the level of the silicon platform, rather than
-by board. A supported board is one that is built around a supported SoC As such,
+by board. A supported board is one that is built around a supported SoC. As such,
 to claim support for a silicon platform Canonical targets development kits,
 called *anchors*, that represent each platform to validate: the silicon, the
 hardware abstraction layer, and the driver stack.
@@ -56,8 +56,8 @@ hardware-in-the-loop.
    "ESP32-S3", "``esp32s3_devkitc``", "Xtensa", "Xtensa anchor |br| (ISA constraint)"
 
 Each platform and anchor in this set is supported and tested with real hardware
-with |product_name| in addition to testing down by upstream. All other supported
-targets Zephyr |upstream_release| are not validated with real hardware by
+with |product_name| in addition to testing done by upstream. All other supported
+targets in Zephyr |upstream_release| are not validated with real hardware by
 Canonical.
 
 Emulation and validation resilience

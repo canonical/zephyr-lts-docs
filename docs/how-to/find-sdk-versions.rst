@@ -9,7 +9,7 @@ How to find other SDK versions
 
 Every SDK entry in |workshop_definition_file| pins one :samp:`channel`, and a
 channel tracks one version at a time. Use the :command:`sdk` command, which
-ships as part of the |workshop_name_samp| snap, to see which versions an SDK
+ships as part of the ``workshop`` snap, to see which versions an SDK
 publishes, then edit the definition to select a different one.
 
 Prerequisites
