@@ -41,9 +41,7 @@ On the host, create the in-project SDK directory and its files:
    $ mkdir -p .workshop/|workshop_name|-sdk/hooks
    $ touch .workshop/|workshop_name|-sdk/sdk.yaml
    $ touch .workshop/|workshop_name|-sdk/hooks/setup-base
-   $ touch .workshop/|workshop_name|-sdk/hooks/setup-project
    $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-base
-   $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-project
 
 Paste the PPA setup into ``.workshop/|workshop_name|-sdk/hooks/setup-base``.
 The hook runs as root, so the commands need no :command:`sudo`:
@@ -70,14 +68,6 @@ The hook runs as root, so the commands need no :command:`sudo`:
      python3-tabulate python3-tqdm python3-yaml esptool
    # Ensure hardware is detectable within the container.
    usermod -a -G dialout workshop
-
-Paste the following into
-``.workshop/|workshop_name|-sdk/hooks/setup-project``:
-
-.. code-block:: shell
-
-   grep -q 'unset ZEPHYR_MODULES' ~/.profile || \
-     echo 'unset ZEPHYR_MODULES' >> ~/.profile
 
 Describe the SDK in ``.workshop/|workshop_name|-sdk/sdk.yaml``:
 
