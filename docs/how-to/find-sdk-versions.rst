@@ -27,7 +27,7 @@ Run the host commands in this guide from that project directory.
 Install the sdk command
 -------------------------
 
-Workshop snap includes :command:`sdk` by default:
+The :command:`workshop` snap includes :command:`sdk` by default:
 
 .. code-block:: console
 
@@ -74,9 +74,9 @@ different versions.
 Inspect the channels of an SDK
 -------------------------------
 
-To find other versions you can inspect the sdk with :samp:`info`. This command
-will produce a list of every channel an SDK publishes, and the version, build
-date, and revision:
+To find other versions, inspect the SDK with the :command:`sdk info` command.
+It lists every channel an SDK publishes, with the version, build date, and
+revision:
 
 .. code-block:: console
    :caption: Find all versions of zephyr-xtensa-espressif-esp32s2
@@ -100,15 +100,19 @@ date, and revision:
      latest/candidate   ↑
      latest/beta        ↑
      latest/edge        ↑
+     26.04.0/stable     1.0.1    2026-09-17  all    34  52.54MB
+     26.04.0/candidate  ↑
+     26.04.0/beta       ↑
+     26.04.0/edge       ↑
      24.04.0/stable     0.16.9   2026-09-16  all    23  56.91MB
      24.04.0/candidate  ↑
      24.04.0/beta       ↑
      24.04.0/edge       ↑
-     1.0.1/stable       1.0.1    2026-09-16  all    26  63.06MB
+     1.0.1/stable       1.0.1    2026-09-17  all    35  52.54MB
      1.0.1/candidate    ↑
      1.0.1/beta         ↑
      1.0.1/edge         ↑
-     0.17.4/stable      0.17.4   2026-09-15  all    20  61.31MB
+     0.17.4/stable      0.17.4   2026-09-16  all    28  61.31MB
      0.17.4/candidate   ↑
      0.17.4/beta        ↑
      0.17.4/edge        ↑
