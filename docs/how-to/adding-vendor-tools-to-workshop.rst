@@ -87,7 +87,7 @@ tool, for example a :command:`curl` download followed by
 
 A hook that fails stops the refresh and rolls back the Workshop. The
 reported error may not name the real cause, such as a blocked download
-that saved an HTML error page. The :option:`!-f` flag and the check
+that saved an HTML error page. The ``-f`` flag and the check
 above make the hook fail on the download, with a clear message.
 
 Now make the hook executable on the host:
@@ -207,7 +207,7 @@ the current file name from the downloads page:
    sudo apt-get install -y "${jlink_deb}"
    rm -f "${jlink_deb}"
 
-The :option:`!-f` flag stops curl from saving an error or CAPTCHA page
+The ``-f`` flag stops curl from saving an error or CAPTCHA page
 as the package. The hook then fails during the download instead of at
 the install step.
 
