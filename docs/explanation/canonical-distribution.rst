@@ -18,7 +18,7 @@ corresponding |product_name| sdk-ng
 :canonical-zephyr:`hosted <sdk-ng>` on Launchpad.
 
 The distribution diverges from upstream in the provided :canonical-zephyr:`west
-manifest <west-manifest>`, which is altered to target the distribution's forks.
+manifest <zephyr-manifest>`, which is altered to target the distribution's forks.
 Canonical publishes the manifest repository with an immutable source tag for
 each tested source set.
 
