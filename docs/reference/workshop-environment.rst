@@ -70,51 +70,18 @@ Actions
 
           $ workshop run |workshop_name| -- sync
    * - :samp:`build`
-     - Run :command:`west build` from the Zephyr source directory with
-       :envvar:`ZEPHYR_MODULES` cleared.
+     - Run :command:`west build` from the Zephyr source directory.
      - .. code-block:: console
           :substitutions:
 
           $ workshop run |workshop_name| -- build \
             -b qemu_x86 samples/hello_world
    * - :samp:`flash`
-     - Run :command:`west flash` from the Zephyr source directory with
-       :envvar:`ZEPHYR_MODULES` cleared.
+     - Run :command:`west flash` from the Zephyr source directory.
      - .. code-block:: console
           :substitutions:
 
           $ workshop run |workshop_name| -- flash
-
-ZEPHYR_MODULES override
------------------------
-
-The :samp:`zephyr` SDK adds the following line to :file:`~/.profile` during
-project setup:
-
-.. code-block:: console
-
-   export ZEPHYR_MODULES=/home/workshop/modules
-
-The path points to the SDK's own modules directory, not to the workspace.
-
-:command:`west build` treats :envvar:`ZEPHYR_MODULES` as the complete
-module list. When the variable is set, west does not read the workspace
-manifest and loads modules only from the named path. Boards that need
-headers from workspace modules then fail with a missing-header error.
-
-The ``build`` and ``flash`` actions in the reference definition clear the
-variable before calling west. You therefore do not need extra steps when
-you build with :command:`workshop run`.
-
-In an interactive shell, clear the variable before you build:
-
-.. code-block:: console
-
-   unset ZEPHYR_MODULES
-
-To clear the variable in every shell session, add the command to the
-:file:`hooks/setup-project` file of an in-project SDK. For a worked example,
-see :ref:`how_install_ppa_dependencies`.
 
 Host interfaces
 ---------------
