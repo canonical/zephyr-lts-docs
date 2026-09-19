@@ -413,6 +413,8 @@ _version_substitutions = f"""
 .. |upstream_release| replace:: {upstream_release}
 .. |upstream_docs_release| replace:: {upstream_docs_release}
 .. |workshop_name| replace:: {workshop_name}
+.. |workshop_hook_setup_base_path| replace:: ``.workshop/{workshop_name}-sdk/hooks/setup-base``
+.. |workshop_sdk_yaml_path| replace:: ``.workshop/{workshop_name}-sdk/sdk.yaml``
 .. |workshop_definition| replace:: {workshop_definition}
 .. |workshop_base| replace:: {workshop_base}
 .. |workshop_sdk_channel| replace:: {workshop_sdk_channel}
