@@ -2,7 +2,8 @@
 
 .. meta::
    :description: The platforms, anchor development kits, and selection
-                 criteria that define hardware support for |product_name|.
+                 criteria that define hardware support for this Zephyr LTS
+                 distribution.
 
 Supported Boards
 =================
