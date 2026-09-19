@@ -43,7 +43,7 @@ On the host, create the in-project SDK directory and its files:
    $ touch .workshop/|workshop_name|-sdk/hooks/setup-base
    $ chmod +x .workshop/|workshop_name|-sdk/hooks/setup-base
 
-Paste the PPA setup into ``.workshop/|workshop_name|-sdk/hooks/setup-base``.
+Paste the PPA setup into |workshop_hook_setup_base_path|.
 The hook runs as root, so the commands need no :command:`sudo`:
 
 .. code-block:: shell
@@ -69,7 +69,7 @@ The hook runs as root, so the commands need no :command:`sudo`:
    # Ensure hardware is detectable within the container.
    usermod -a -G dialout workshop
 
-Describe the SDK in ``.workshop/|workshop_name|-sdk/sdk.yaml``:
+Describe the SDK in |workshop_sdk_yaml_path|:
 
 .. code-block:: yaml
    :substitutions:
