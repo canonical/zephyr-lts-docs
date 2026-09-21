@@ -162,11 +162,14 @@ Add a mount plug to the device SDK:
        interface: mount
        workshop-target: /dev/bus/usb
 
-Connect the plug, then point it at the USB tree of the host:
+Apply the updated definition,
+connect the plug,
+then point it at the USB tree of the host:
 
 .. code-block:: console
    :substitutions:
 
+   $ workshop refresh |workshop_name|
    $ workshop connect |workshop_name|/board-device:usbfs :mount
    $ workshop remount |workshop_name|/board-device:usbfs /dev/bus/usb
 
@@ -174,15 +177,23 @@ The :command:`workshop remount` step is required.
 Without it the plug mounts an empty directory
 and the connection still reports as healthy.
 
+Identify the probe on the host:
+
+.. code-block:: console
+
+   $ lsusb
+   Bus 003 Device 017: ID 1366:1024 SEGGER J-Link
+
 A mounted device node keeps the ownership that it has on the host,
 which an unprivileged Workshop cannot map to its own user.
 Only the permissions of other users take effect.
 Grant them with a udev rule,
-replacing :samp:`{1366}` with the vendor ID of the probe:
+replacing :samp:`{1366}` and :samp:`{1024}`
+with the vendor and product IDs of the probe:
 
 .. code-block:: console
 
-   $ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1366", MODE="0666"' | \
+   $ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1366", ATTR{idProduct}=="1024", MODE="0666"' | \
        sudo tee /etc/udev/rules.d/99-zephyr-probes.rules
    $ sudo udevadm control --reload-rules
    $ sudo udevadm trigger
@@ -195,17 +206,20 @@ then check that the mode of its node is :samp:`crw-rw-rw-`:
 
    $ workshop shell |workshop_name|
    $ lsusb
-   Bus 003 Device 017: ID 1366:1024 SEGGER J-Link
-   $ ls -l /dev/bus/usb/003/017
-   crw-rw-rw- 1 nobody nogroup 189, 272 Sep 21 09:34 /dev/bus/usb/003/017
+   Bus 003 Device 018: ID 1366:1024 SEGGER J-Link
+   $ ls -l /dev/bus/usb/003/018
+   crw-rw-rw- 1 nobody nogroup 189, 273 Sep 21 09:34 /dev/bus/usb/003/018
 
 An owner of :samp:`nobody nogroup` is expected.
+Each probe model needs a rule of its own,
+and the device number changes whenever you reconnect the probe.
 
 .. warning::
 
    This rule makes the probe writable by every user of the host,
    and the mount exposes the whole USB tree of the host to the Workshop.
-   On a shared machine, pass the probe to the container on its own instead:
+   On a shared machine, pass the probe to the container on its own instead,
+   using the same two identifiers:
 
    .. code-block:: console
       :substitutions:
@@ -229,6 +243,16 @@ Disconnect the plug:
 
 Run :command:`workshop connections --all`
 to check that the plug is disconnected.
+
+If you followed :ref:`usb_probe_access`,
+disconnect the mount plug and remove the udev rule as well:
+
+.. code-block:: console
+   :substitutions:
+
+   $ workshop disconnect |workshop_name|/board-device:usbfs
+   $ sudo rm /etc/udev/rules.d/99-zephyr-probes.rules
+   $ sudo udevadm control --reload-rules
 
 
 See also
