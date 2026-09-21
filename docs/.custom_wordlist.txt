@@ -90,9 +90,11 @@ landscape
 lang
 lastmod
 latexmk
+lsusb
 mitigations
 mkdir
 mypy
+nogroup
 npm
 nrfjprog
 nrfutil

@@ -144,6 +144,79 @@ Declare and connect one narrowly scoped plug for each required device.
 Use :command:`west flash --context`
 to list the available options.
 
+.. _usb_probe_access:
+
+Access a USB debug probe
+------------------------
+
+A plug with :samp:`subsystem: usb` does not yet pass a device node
+into the Workshop.
+Until it does, mount the USB tree of the host instead.
+
+Add a mount plug to the device SDK:
+
+.. code-block:: yaml
+
+   plugs:
+     usbfs:
+       interface: mount
+       workshop-target: /dev/bus/usb
+
+Connect the plug, then point it at the USB tree of the host:
+
+.. code-block:: console
+   :substitutions:
+
+   $ workshop connect |workshop_name|/board-device:usbfs :mount
+   $ workshop remount |workshop_name|/board-device:usbfs /dev/bus/usb
+
+The :command:`workshop remount` step is required.
+Without it the plug mounts an empty directory
+and the connection still reports as healthy.
+
+A mounted device node keeps the ownership that it has on the host,
+which an unprivileged Workshop cannot map to its own user.
+Only the permissions of other users take effect.
+Grant them with a udev rule,
+replacing :samp:`{1366}` with the vendor ID of the probe:
+
+.. code-block:: console
+
+   $ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1366", MODE="0666"' | \
+       sudo tee /etc/udev/rules.d/99-zephyr-probes.rules
+   $ sudo udevadm control --reload-rules
+   $ sudo udevadm trigger
+
+Unplug and reconnect the probe,
+then check that the mode of its node is :samp:`crw-rw-rw-`:
+
+.. code-block:: console
+   :substitutions:
+
+   $ workshop shell |workshop_name|
+   $ lsusb
+   Bus 003 Device 017: ID 1366:1024 SEGGER J-Link
+   $ ls -l /dev/bus/usb/003/017
+   crw-rw-rw- 1 nobody nogroup 189, 272 Sep 21 09:34 /dev/bus/usb/003/017
+
+An owner of :samp:`nobody nogroup` is expected.
+
+.. warning::
+
+   This rule makes the probe writable by every user of the host,
+   and the mount exposes the whole USB tree of the host to the Workshop.
+   On a shared machine, pass the probe to the container on its own instead:
+
+   .. code-block:: console
+      :substitutions:
+
+      $ lxc config device add --project workshop.$(id -u) \
+          |workshop_name|-$(cat .workshop.lock) probe usb \
+          vendorid=1366 productid=1024 uid=1000 gid=1000 mode=0660
+
+   Disconnect the mount plug first, because the two cannot coexist,
+   and add the device again after :command:`workshop remove`.
+
 Remove device access
 --------------------
 

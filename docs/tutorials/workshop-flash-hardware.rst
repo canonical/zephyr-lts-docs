@@ -287,6 +287,7 @@ Workshop access to the device node. You no longer need host udev rules or
    A plug with :samp:`subsystem: usb` can pass the connection check above
    while the container gets no device node under :file:`/dev/bus/usb/`.
    Flashing then fails with ``LIBUSB_ERROR_NO_DEVICE``.
+   To flash over a USB debug probe, see :ref:`usb_probe_access`.
    A :samp:`tty` plug for the same board still works.
 
 Verify the runner tool
