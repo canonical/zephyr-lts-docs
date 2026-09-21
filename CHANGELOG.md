@@ -1,5 +1,6 @@
 # Zephyr 24.04 documentation changelog
 
+- Add a consent cookie banner for Google Analytics.
 - Fix `workshop init` command in the Get started with Workshop tutorial.
 
 ## Unreleased
