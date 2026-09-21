@@ -137,6 +137,7 @@ topdir
 triaged
 txt
 udev
+udevadm
 ulwazi
 uncomment(ing)?
 untrusted
