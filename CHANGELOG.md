@@ -1,5 +1,7 @@
 # Zephyr 26.04 documentation changelog
 
+- Fix `workshop init` command in the Get started with Workshop tutorial.
+
 ## Unreleased
 
 - Instantiate the Zephyr 26.04 documentation.
