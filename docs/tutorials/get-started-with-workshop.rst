@@ -66,7 +66,7 @@ Add the sample environment definition to the file:
 Or you may have Workshop initialize the |product_name| template for you on the
 command line:
 
-.. code-block::
+.. code-block:: console
    :substitutions:
 
    $ workshop init |workshop_name_samp| --sdks uv/latest/stable,zephyr/|product_release|/stable,zephyr-sdk-ng/|sdk_ng_channel|,zephyr-amd64/|sdk_ng_channel| --base |workshop_base|
