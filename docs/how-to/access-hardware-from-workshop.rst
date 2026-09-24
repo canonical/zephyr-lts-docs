@@ -182,43 +182,71 @@ Identify the probe on the host:
 .. code-block:: console
 
    $ lsusb
+
+The output for a debug probe is similar to:
+
+.. code-block:: text
+
    Bus 003 Device 017: ID 1366:1024 SEGGER J-Link
 
-A mounted device node keeps the ownership that it has on the host,
-which an unprivileged Workshop cannot map to its own user.
+The two values after :samp:`ID` are the vendor and product IDs.
+Use the values reported for your probe.
+Do not copy the example identifiers unless they match your hardware.
+
+A mounted device node keeps the ownership it has on the host.
+An unprivileged Workshop cannot map that ownership to its own user.
 Only the permissions of other users take effect.
-Grant them with a udev rule,
-replacing :samp:`{1366}` and :samp:`{1024}`
-with the vendor and product IDs of the probe:
+
+Grant those permissions with a udev rule
+that matches the vendor and product IDs of the probe:
 
 .. code-block:: console
 
    $ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1366", ATTR{idProduct}=="1024", MODE="0666"' | \
-       sudo tee /etc/udev/rules.d/99-zephyr-probes.rules
+       sudo tee /etc/udev/rules.d/99-zephyr-probe-1366-1024.rules
    $ sudo udevadm control --reload-rules
    $ sudo udevadm trigger
 
+Name the file after the same two identifiers.
+Each pair needs a rule of its own,
+and a shared file name overwrites the rule written for another probe.
+
 Unplug and reconnect the probe,
-then check that the mode of its node is :samp:`crw-rw-rw-`:
+then find it again from inside the Workshop:
 
 .. code-block:: console
    :substitutions:
 
    $ workshop shell |workshop_name|
    $ lsusb
+
+The output is similar to:
+
+.. code-block:: text
+
    Bus 003 Device 018: ID 1366:1024 SEGGER J-Link
+
+Check the node that the bus and device numbers point to:
+
+.. code-block:: console
+
    $ ls -l /dev/bus/usb/003/018
+
+The output is similar to:
+
+.. code-block:: text
+
    crw-rw-rw- 1 nobody nogroup 189, 273 Sep 21 09:34 /dev/bus/usb/003/018
 
-An owner of :samp:`nobody nogroup` is expected.
-Each probe model needs a rule of its own,
-and the device number changes whenever you reconnect the probe.
+Expect the mode to be :samp:`crw-rw-rw-`
+and the owner to be :samp:`nobody nogroup`.
+The device number changes whenever you reconnect the probe.
 
 .. warning::
 
    This rule makes the probe writable by every user of the host,
    and the mount exposes the whole USB tree of the host to the Workshop.
-   On a shared machine, pass the probe to the container on its own instead,
+   On a shared machine, pass only the probe to the container instead,
    using the same two identifiers:
 
    .. code-block:: console
@@ -228,8 +256,15 @@ and the device number changes whenever you reconnect the probe.
           |workshop_name|-$(cat .workshop.lock) probe usb \
           vendorid=1366 productid=1024 uid=1000 gid=1000 mode=0660
 
-   Disconnect the mount plug first, because the two cannot coexist,
-   and add the device again after :command:`workshop remove`.
+   Here :samp:`uid` and :samp:`gid` are the owner of the node
+   inside the container, where the Workshop user has UID 1000.
+   They are not the user and group IDs of the host.
+
+   Disconnect the mount plug before adding this device,
+   because a probe cannot be passed through both at once.
+   The device belongs to the container rather than to the SDK definition,
+   so :command:`workshop remove` destroys it with the container.
+   Add it again after you recreate the Workshop.
 
 Remove device access
 --------------------
@@ -251,9 +286,17 @@ disconnect the mount plug and remove the udev rule as well:
    :substitutions:
 
    $ workshop disconnect |workshop_name|/board-device:usbfs
-   $ sudo rm /etc/udev/rules.d/99-zephyr-probes.rules
+   $ sudo rm /etc/udev/rules.d/99-zephyr-probe-1366-1024.rules
    $ sudo udevadm control --reload-rules
 
+If you passed the probe through with :command:`lxc config device add`,
+remove that device instead:
+
+.. code-block:: console
+   :substitutions:
+
+   $ lxc config device remove --project workshop.$(id -u) \
+       |workshop_name|-$(cat .workshop.lock) probe
 
 See also
 --------
