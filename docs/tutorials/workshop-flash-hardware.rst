@@ -55,6 +55,19 @@ the matching row in this table.
      - :samp:`openocd`
      - On-board ST-Link probe
      - USB probe
+   * - NXP FRDM-RW612 (:samp:`frdm_rw612/rw612`)
+     - :samp:`jlink`
+     - On-board MCU-Link probe (J-Link firmware)
+     - USB probe
+   * - Renesas EK-RA8M1 (:samp:`ek_ra8m1/r7fa8m1ahecbd`)
+     - :samp:`jlink`
+     - On-board J-Link probe
+     - USB probe
+   * - ESP32-S3-DevKitC
+       (:samp:`esp32s3_devkitc/esp32s3/procpu`)
+     - :samp:`esp32`
+     - USB serial bootloader
+     - Serial node, such as :file:`/dev/ttyUSB0`
 
 For example, the page for the ESP32-C3-DevKitM
 (:zephyr-docs:`esp32c3_devkitm <boards/espressif/esp32c3_devkitm/doc/index.html>`)
