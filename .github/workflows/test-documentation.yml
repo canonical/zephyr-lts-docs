@@ -18,6 +18,9 @@ jobs:
         fetch-depth: 0
     - name: Build docs
       run: make -C docs html
+    - name: Doc version check
+      if: success() || failure()
+      run: make -C docs version-check
     - name: Run inclusive language check
       if: success() || failure()
       run: make -C docs woke CONFIRM_SUDO=y

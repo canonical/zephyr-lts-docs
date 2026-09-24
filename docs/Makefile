@@ -37,6 +37,7 @@ help:
 	@echo "* check spelling:                            make spelling"
 	@echo "* run in-page doctests (assert CLI output):  make doctest"
 	@echo "* run cram CLI transcript tests:             make cram"
+	@echo "* check for cross-version leakage:           make version-check"
 	@echo "* check spelling (without building again):   make spellcheck"
 	@echo "* check inclusive language:                  make woke"
 	@echo "* check accessibility:                       make pa11y"
@@ -49,7 +50,7 @@ help:
 .PHONY: help full-help html epub pdf linkcheck spelling spellcheck woke \
         vale pa11y run serve install pa11y-install   \
         vale-install pdf-prep pdf-prep-force clean clean-doc \
-        update lint-md doctest cram
+        update lint-md doctest cram version-check version-check-clean
 
 full-help: $(DOCS_VENVDIR)
 	@. $(DOCS_VENV); $(SPHINX_BUILD) -M help "$(DOCS_SOURCEDIR)" "$(DOCS_BUILDDIR)" $(SPHINX_OPTS) $(O)
@@ -177,6 +178,17 @@ doctest: install
 cram: install
 	. $(DOCS_VENV); set -a && . ./versions.env && set +a && \
 	$(DOCS_VENVDIR)/bin/cram $(DEV_DIR)/tests
+
+# Scans the built HTML in $(DOCS_BUILDDIR) for references to Ubuntu LTS style
+# versions other than DOC_VERSION (from versions.env), failing on any occurrence
+# not listed in $(DEV_DIR)/allowed-cross-version.txt. version-check only runs
+# the scan, matching CI (which calls it after its own `make html`); run
+# version-check-clean locally to rebuild from scratch first so the scan
+# reflects exactly what the current sources produce.
+version-check:
+	DOCS_BUILDDIR="$(DOCS_BUILDDIR)" $(DEV_DIR)/check_version_leak.sh
+
+version-check-clean: clean-doc html version-check
 
 pdf-prep: install
 	@for packageName in $(DOCS_PDFPACKAGES); do (dpkg-query -W -f='$${Status}' $$packageName 2>/dev/null | \

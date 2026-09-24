@@ -27,15 +27,16 @@ make -C docs run
 
 ## Testing the documentation
 
-Two complementary systems check that the commands and output shown in the docs
+These systems check that the commands and output shown in the docs
 match what the real tools do:
 
 | System | Command | Tests live in | Best for |
 | ------ | ------- | ------------- | -------- |
 | `sphinx.ext.doctest` | `make doctest` | hidden blocks inside the `.rst` pages | single assertions about a tool's state (versions, config values) |
 | Cram | `make cram` | `docs/_dev/tests/**/*.t` transcript files | command-plus-output transcripts, multi-command sessions |
+| Cross-version leak check | `make version-check` | `docs/_dev/allowed-cross-version.txt` | catching stray references to other LTS releases in the built HTML |
 
-Both are ordinary `make` targets (run from `docs/`) and exit non-zero when
+All are ordinary `make` targets (run from `docs/`) and exit non-zero when
 the docs and the tools disagree, so they slot straight into CI:
 
 ```shell
@@ -158,6 +159,34 @@ tool that no longer matches the documented version fails.
 * Use a cram test when you want to document a command's output or a sequence of
   commands and check that the output matches the transcript exactly. You can write to a
   cram transcript and import the text with a `literalinclude` in the page.
+
+### Cross-version leak check
+
+`make version-check` scans the built HTML in `docs/_build/` and fails if any
+`YY.MM` release token falls outside the current release family. The current
+family is `DOC_VERSION` (from `docs/versions.env`) plus any `DOC_VERSION.N`
+patch tag: for `DOC_VERSION=26.04`, the check accepts `26.04`, `26.04.0` (the
+current `SOURCE_TAG`), and future `26.04.1`, `26.04.2`, etc. Everything else is
+a failure: interim releases (`26.10`), other LTS releases (`24.04`, `28.04`), RC
+suffixes on the current release (`26.04-rc1`), and any `-rc`/patch variant of
+another release. The target only scans the existing build — run
+`make version-check-clean` locally to rebuild from scratch first so the scan
+reflects exactly what the current sources produce. CI calls plain
+`make version-check` right after its `make html` step, which is already a
+fresh build.
+
+Detection tokenises `YY.MM(.PATCH)?(-SUFFIX)?` with lookaround boundaries that
+reject decimals like `10.044`, sizes like `63.07MB`, and version fragments
+preceded by other digits. Months are filtered to `01`-`12`, which discards SVG
+coordinates like `19.78` or `15.42`, and tokens inside quoted HTML attributes
+(`y1="14.05"`) are dropped as well.
+
+Legitimate cross-family mentions — for example, `snap info` output that still
+lists an older release's SDK tracks, or a release note that deliberately refers
+to a prior version — belong in `docs/_dev/allowed-cross-version.txt`. Each entry
+pins one whole trimmed line to one built HTML path, so if the underlying content
+changes shape the check re-fires and forces the entry to be re-reviewed. The
+failure message tells you the exact line to add.
 
 
 ## Contribute
