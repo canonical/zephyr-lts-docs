@@ -51,8 +51,8 @@ the matching row in this table.
      - :samp:`pyocd`
      - On-board CMSIS-DAP probe
      - USB probe
-   * - STM32 Nucleo-64 (:samp:`nucleo_l476rg/stm32l476xx`)
-     - :samp:`openocd`
+   * - STM32 Nucleo-144 H753ZI (:samp:`nucleo_h753zi/stm32h753xx`)
+     - :samp:`stm32cubeprogrammer`
      - On-board ST-Link probe
      - USB probe
    * - NXP FRDM-RW612 (:samp:`frdm_rw612/rw612`)
