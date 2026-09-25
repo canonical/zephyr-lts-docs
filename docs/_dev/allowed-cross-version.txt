@@ -1,0 +1,30 @@
+# Cross-version reference allowlist for check-version-leak.
+#
+# Each entry pins one legitimate mention of a YY.MM release version
+# outside the current release family (DOC_VERSION and DOC_VERSION.N,
+# from versions.env) to one built HTML page. The check scans
+# docs/_build/ after `make html` and fails on any un-allowlisted hit.
+# "Version" here means any YY.MM token with month 01-12; interim
+# releases (26.10), other LTS releases (24.04), and RC/patch-suffixed
+# variants (26.04-rc1, 24.04.1) are all in scope.
+#
+# Format: <relative-html-path>:<trimmed-line-content>
+#   * paths are relative to docs/_build/
+#   * blank lines and lines starting with # (after optional
+#     whitespace) are ignored; entry content may contain '#' freely
+#   * whole-trimmed-line match, so if the underlying rendered content
+#     changes shape the check re-fires and forces this list to be
+#     re-reviewed
+#
+# When the referenced release is eventually retired upstream (e.g. the
+# 24.04 SDK tracks are dropped from the zephyr-sdk-ng snap), the
+# matching entries below become stale and should be removed together
+# with the prose that produced them.
+
+# `snap info zephyr-sdk-ng` in how-to/find-sdk-versions.rst still lists
+# 24.04.0 tracks because the SDK snap continues to publish them for the
+# previous LTS. These lines are literal transcript output.
+how-to/find-sdk-versions/index.html:24.04.0/stable     0.16.9   2026-09-16  all    23  56.91MB
+how-to/find-sdk-versions/index.html:24.04.0/candidate  ↑
+how-to/find-sdk-versions/index.html:24.04.0/beta       ↑
+how-to/find-sdk-versions/index.html:24.04.0/edge       ↑
