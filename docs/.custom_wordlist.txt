@@ -3,6 +3,7 @@ CMSIS
 CMake
 Canonical('s)?
 Charmcraft
+devkits
 Diátaxis
 Furo
 GPG
@@ -16,6 +17,7 @@ LaTeX
 Launchpad
 MCUboot('s)?
 Makefiles?
+metapackage
 Microcontroller
 Multipass
 MyST
