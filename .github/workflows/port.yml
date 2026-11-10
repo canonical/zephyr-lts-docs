@@ -12,6 +12,9 @@
 # ported; anything else is dropped with a warning. This guards against
 # shell injection, since the reusable workflow interpolates branch names
 # directly into its scripts.
+#
+# Requires the PR_PORT_TOKEN secret: a fine-grained PAT with Pull requests
+# read/write on this repo, used to reopen the generated PRs so checks run.
 name: Forward-Port from Main
 
 on:
@@ -59,3 +62,28 @@ jobs:
     uses: canonical/sdkcraft-actions/.github/workflows/forward-port.yml@main
     with:
       long-term-branches: ${{ needs.branches-from-labels.outputs.branches }}
+
+  # The reusable workflow opens PRs with GITHUB_TOKEN, which does not trigger
+  # pull_request workflows. Reopening them with a PAT fires a `reopened` event
+  # so the repository's checks run.
+  trigger-checks:
+    needs: [branches-from-labels, forward-port]
+    if: >
+      !cancelled() &&
+      needs.branches-from-labels.outputs.branches != '[]'
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - name: Reopen forward-port PRs
+        env:
+          GH_TOKEN: ${{ secrets.PR_PORT_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BRANCHES: ${{ needs.branches-from-labels.outputs.branches }}
+        run: |
+          jq -r '.[]' <<< "$BRANCHES" | while IFS= read -r branch; do
+            pr=$(gh pr list --head main --base "$branch" --json number --jq '.[0].number')
+            [ -n "$pr" ] || { echo "::warning::No open forward-port PR for $branch"; continue; }
+            echo "Reopening #$pr ($branch)"
+            gh pr close "$pr"
+            gh pr reopen "$pr"
+          done
