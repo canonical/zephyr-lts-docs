@@ -1,0 +1,61 @@
+# Opens forward-port PRs from main into release-line branches based on the
+# labels of a merged PR.
+#
+#   port-to:26.04  -> forward-port main into 26.04-branch
+#   port-to:all    -> forward-port main into every *-branch
+#
+# Failure case: a `port-to:X` label where `X-branch` does not exist (e.g.
+# `port-to:22.04` with no `22.04-branch`) makes the forward-port job for that
+# branch fail. Other target branches are unaffected.
+#
+# Only branch names matching <major>.<minor>-branch (e.g. 26.04-branch) are
+# ported; anything else is dropped with a warning. This guards against
+# shell injection, since the reusable workflow interpolates branch names
+# directly into its scripts.
+name: Forward-Port from Main
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  branches-from-labels:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.labels.outputs.branches }}
+    steps:
+      - id: labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+        run: |
+          if jq -e 'index("port-to:all")' <<< "$LABELS" > /dev/null; then
+            candidates=$(gh api --paginate "repos/${GITHUB_REPOSITORY}/branches" --jq '.[].name' \
+              | jq -R -s -c 'split("\n") | map(select(endswith("-branch")))')
+          else
+            candidates=$(jq -c '[.[] | select(startswith("port-to:")) | sub("^port-to:"; "") + "-branch"]' <<< "$LABELS")
+          fi
+          # The reusable workflow interpolates branch names into shell scripts,
+          # so only allow shell-safe release-line names such as 26.04-branch.
+          safe='^[0-9]+\.[0-9]+-branch$'
+          jq -r --arg re "$safe" '.[] | select(test($re) | not)' <<< "$candidates" \
+            | while IFS= read -r rejected; do
+                echo "::warning::Ignoring unsafe or invalid branch name: ${rejected@Q}"
+              done
+          branches=$(jq -c --arg re "$safe" 'map(select(test($re)))' <<< "$candidates")
+          echo "Target branches: $branches"
+          echo "branches=$branches" >> "$GITHUB_OUTPUT"
+
+  forward-port:
+    needs: branches-from-labels
+    if: needs.branches-from-labels.outputs.branches != '[]'
+    uses: canonical/sdkcraft-actions/.github/workflows/forward-port.yml@main
+    with:
+      long-term-branches: ${{ needs.branches-from-labels.outputs.branches }}
