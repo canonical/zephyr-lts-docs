@@ -1,6 +1,9 @@
 # Zephyr 26.10 documentation changelog
 
 - Set version.env to 26.10.0-rc1
+- Add a Security overview to Explanation, with System overview, Risks, Security of data, and Security support pages.
+- Add how-to guides to harden an application, get security updates, and report a security vulnerability.
+- Rename the Support and security reference page to Support.
 
 # Zephyr 26.04 documentation changelog
 

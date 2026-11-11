@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 330" width="1000" height="330" role="img" aria-labelledby="title desc">
+  <title id="title">Zephyr LTS supply chain</title>
+  <desc id="desc">Source, modules, toolchain sources, and vendor binaries flow from upstream projects and SoC vendors to Canonical across boundary A. Canonical delivers source tags, development tools, and security fixes to the device maker across boundary B. The device maker builds, signs, and deploys firmware to devices in the field across boundary C. Vulnerability reports flow from reporters to Canonical.</desc>
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333333"/>
+    </marker>
+    <style>
+      text { font-family: Ubuntu, Arial, sans-serif; fill: #111111; }
+      .title { font-size: 15px; font-weight: bold; }
+      .label { font-size: 13px; }
+      .small { font-size: 12px; fill: #333333; }
+      .upstream { fill: #f5f5f5; stroke: #666666; stroke-width: 1.5; }
+      .canonical { fill: #fbe9e1; stroke: #a8411a; stroke-width: 1.5; }
+      .maker { fill: #d6e4f2; stroke: #33557a; stroke-width: 1.5; }
+      .devices { fill: #dcebd3; stroke: #4d7a3a; stroke-width: 1.5; }
+      .tb { stroke: #e95420; stroke-width: 2.5; stroke-dasharray: 8 5; fill: none; }
+      .flow { stroke: #333333; stroke-width: 1.6; fill: none; marker-end: url(#arrow2); }
+      .num circle { fill: #e95420; stroke: #ffffff; stroke-width: 1.5; }
+      .num text { fill: #ffffff; font-size: 13px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <rect class="upstream" x="20" y="60" width="210" height="130" rx="8"/>
+  <text class="title" x="125" y="88" text-anchor="middle">Upstream and vendors</text>
+  <text class="small" x="125" y="114" text-anchor="middle">Zephyr Project source</text>
+  <text class="small" x="125" y="134" text-anchor="middle">west modules</text>
+  <text class="small" x="125" y="154" text-anchor="middle">toolchain sources</text>
+  <text class="small" x="125" y="174" text-anchor="middle">SoC vendor binaries</text>
+
+  <rect class="canonical" x="290" y="60" width="230" height="130" rx="8"/>
+  <text class="title" x="405" y="88" text-anchor="middle">Canonical</text>
+  <text class="small" x="405" y="114" text-anchor="middle">Launchpad repositories</text>
+  <text class="small" x="405" y="134" text-anchor="middle">pinned west manifest</text>
+  <text class="small" x="405" y="154" text-anchor="middle">immutable source tags</text>
+  <text class="small" x="405" y="174" text-anchor="middle">Workshop SDKs and PPA</text>
+
+  <rect class="maker" x="580" y="60" width="200" height="130" rx="8"/>
+  <text class="title" x="680" y="88" text-anchor="middle">Device maker</text>
+  <text class="small" x="680" y="114" text-anchor="middle">configures and builds</text>
+  <text class="small" x="680" y="134" text-anchor="middle">signs firmware</text>
+  <text class="small" x="680" y="154" text-anchor="middle">deploys updates</text>
+
+  <rect class="devices" x="840" y="60" width="140" height="130" rx="8"/>
+  <text class="title" x="910" y="120" text-anchor="middle">Devices</text>
+  <text class="small" x="910" y="142" text-anchor="middle">in the field</text>
+
+  <rect class="upstream" x="20" y="235" width="210" height="60" rx="8"/>
+  <text class="label" x="125" y="270" text-anchor="middle">Vulnerability reporters</text>
+
+  <!-- Boundaries -->
+  <line class="tb" x1="260" y1="40" x2="260" y2="210"/>
+  <line class="tb" x1="550" y1="40" x2="550" y2="210"/>
+  <line class="tb" x1="810" y1="40" x2="810" y2="210"/>
+
+  <!-- Flows -->
+  <line class="flow" x1="230" y1="125" x2="288" y2="125"/>
+  <text class="small" x="260" y="30" text-anchor="middle">source and binaries</text>
+  <line class="flow" x1="520" y1="125" x2="578" y2="125"/>
+  <text class="small" x="550" y="30" text-anchor="middle">releases and fixes</text>
+  <line class="flow" x1="780" y1="125" x2="838" y2="125"/>
+  <text class="small" x="810" y="30" text-anchor="middle">signed firmware</text>
+  <path class="flow" d="M230,265 L405,265 L405,192"/>
+  <text class="small" x="317" y="257" text-anchor="middle">private reports</text>
+
+  <g class="num"><circle cx="260" cy="125" r="11"/><text x="260" y="130" text-anchor="middle">A</text></g>
+  <g class="num"><circle cx="550" cy="125" r="11"/><text x="550" y="130" text-anchor="middle">B</text></g>
+  <g class="num"><circle cx="810" cy="125" r="11"/><text x="810" y="130" text-anchor="middle">C</text></g>
+</svg>

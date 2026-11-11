@@ -1,7 +1,8 @@
 .. _how-to-guides:
 
 .. meta::
-   :description: Procedures for host system Zephyr setup and hardware access.
+   :description: Procedures for development environment setup, hardware access,
+                 and application security.
 
 How-to guides
 =============
@@ -75,3 +76,17 @@ or the Ubuntu archive. Package them in an in-project SDK:
    :titlesonly:
 
    How to add vendor tools to Workshop <adding-vendor-tools-to-workshop>
+
+
+Security
+--------
+
+Harden firmware before you ship it, keep it up to date,
+and report vulnerabilities privately:
+
+.. toctree::
+   :titlesonly:
+
+   How to harden an application for production <harden-an-application>
+   How to get security updates <get-security-updates>
+   How to report a security vulnerability <report-a-vulnerability>

@@ -51,9 +51,9 @@ performed by Canonical.
 Support
 -------
 
-Use the support reference when you report a technical or security problem:
+Use the support reference when you report a technical problem:
 
 .. toctree::
    :titlesonly:
 
-   Support and security <support>
+   Support <support>
