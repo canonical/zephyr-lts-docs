@@ -1,15 +1,18 @@
 .. _ref_support:
 
 .. meta::
-   :description: Support and security reporting information for Zephyr LTS.
+   :description: Where to report Zephyr LTS problems and the information to
+                 include in a report.
 
-Support and security
-====================
+Support
+=======
 
 Search this documentation before you report a problem.
 When you open a report,
 include enough information
 for another developer to reproduce the problem.
+If the problem affects security, don't report it in a public bug:
+follow :ref:`how_report_a_vulnerability` instead.
 
 Technical problems
 ------------------
@@ -44,20 +47,17 @@ Include this information in a technical report:
 
 File public source defects in the `Zephyr RTOS Launchpad bug tracker`_.
 
-Security problems
------------------
-
-Do not report a security problem in a public bug.
-Email `security@ubuntu.com <mailto:security@ubuntu.com>`__.
-
-Include the affected revision, reproduction steps,
-and known mitigations in the message.
-Read the `Ubuntu security disclosure policy
-<https://ubuntu.com/security/disclosure-policy>`_ for more information.
-
 
 See also
 --------
+
+Explanation:
+
+- :ref:`exp_security_support`
+
+How-to guides:
+
+- :ref:`how_report_a_vulnerability`
 
 Reference:
 
