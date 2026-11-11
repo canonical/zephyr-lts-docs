@@ -7,7 +7,8 @@
 Explanation
 ===========
 
-These explanatory articles cover the distribution
+These explanatory articles cover the distribution,
+security maintenance,
 and development environment choices for |product_name|.
 Read them to understand how Canonical's source model
 fits with the standard Zephyr workflow.
@@ -23,6 +24,18 @@ with a coordinated set of module repositories in Launchpad:
    :titlesonly:
 
    Canonical's Zephyr distribution <canonical-distribution>
+
+
+Security
+--------
+
+The security overview describes the trust boundaries, controls, and risks
+of |product_name|, and the security support that Canonical provides:
+
+.. toctree::
+   :titlesonly:
+
+   Security overview <security/index>
 
 
 Development workflow

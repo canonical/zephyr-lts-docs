@@ -5,6 +5,7 @@ Canonical('s)?
 Charmcraft
 devkits
 Diátaxis
+Espressif
 Furo
 GPG
 GitHub
@@ -16,7 +17,9 @@ LTS
 LaTeX
 Launchpad
 MCUboot('s)?
+MCUmgr('s)?
 Makefiles?
+Mbed
 metapackage
 Microcontroller
 Multipass
@@ -38,6 +41,7 @@ SDKs?
 SHAs
 STM32
 SVG
+SoC('s)?
 Sphinx
 Spread
 TOC
@@ -59,6 +63,7 @@ bootloader
 cjk
 cmd
 chmod
+coredumps?
 crypto
 cryptographically
 dialout
@@ -76,6 +81,7 @@ freefont
 github
 gcovr
 gyre
+hardenconfig
 hotfix(es)?
 html
 https
@@ -91,10 +97,12 @@ lang
 lastmod
 latexmk
 lsusb
+[Mm]isconfigur(ation|ing)
 mitigations
 mkdir
 mypy
 nogroup
+nonces?
 npm
 nrfjprog
 nrfutil
@@ -102,6 +110,7 @@ openapi
 otf
 patool
 pipefail
+plaintext
 plantuml
 preconfigured
 pykwalify
@@ -128,6 +137,7 @@ subprocess
 subproject
 subprojects
 sudo
+sysbuild
 tex
 texlive
 toctree
