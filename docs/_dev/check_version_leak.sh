@@ -3,12 +3,15 @@
 # version outside the current release family, unless the mention is
 # listed in _dev/allowed-cross-version.txt.
 #
-# The current release family is `DOC_VERSION` (from versions.env) and any
-# `DOC_VERSION.N` patch tag (26.04 accepts 26.04, 26.04.0, 26.04.1, ...). Every
-# other YY.MM token in the built HTML is a failure. For example, interim
-# releases (26.10), other LTS releases (24.04, 28.04), RC suffixes on the
-# current release (26.04-rc1), and RC/patch-suffixed variants of any other
-# release.
+# The current release family is `DOC_VERSION` (from versions.env), any
+# `DOC_VERSION.N` patch tag (26.04 accepts 26.04, 26.04.0, 26.04.1, ...), the
+# `DOC_VERSION-branch` docs branch, and the exact `SOURCE_TAG`, even when it is
+# a release candidate (26.04.0-rc1). `UBUNTU_BASE_VERSION` is accepted only as
+# "Ubuntu X" or "ubuntu@X", the forms the docs use to name the host and
+# Workshop base. Every other YY.MM token in the built HTML is a failure. For
+# example, interim releases (26.10), other LTS releases (24.04, 28.04), RC
+# suffixes on the current release other than SOURCE_TAG (26.04.0-rc2), and
+# RC/patch-suffixed variants of any other release.
 #
 # This script scans the rendered artifact rather than the .rst sources, so
 # text introduced via substitutions, extlinks, include:: directives, or
@@ -70,8 +73,17 @@ fi
 #     that shape.
 #
 #
-version_regex='(?<![.0-9A-Za-z-])[0-9]{2}\.[0-9]{2}(?:\.[0-9]+)?(?:-[a-z0-9]+)?(?![.0-9A-Za-z-])'
-current_family_regex="^${DOC_VERSION//./\\.}(\\.[0-9]+)?$"
+# UBUNTU_BASE_VERSION names the host and Workshop base rather than a release.
+# A token equal to it is skipped when it directly follows "Ubuntu " or
+# "ubuntu@" (which docutils writes as "ubuntu&#64;" outside code blocks);
+# anywhere else it is still a candidate leak.
+base_exclusion=''
+if [ -n "${UBUNTU_BASE_VERSION:-}" ]; then
+    base_exclusion="(?!(?<=Ubuntu |ubuntu@|ubuntu&#64;)${UBUNTU_BASE_VERSION//./\\.}(?![.0-9A-Za-z-]))"
+fi
+version_regex='(?<![.0-9A-Za-z-])'"$base_exclusion"'[0-9]{2}\.[0-9]{2}(?:\.[0-9]+)?(?:-[a-z0-9]+)?(?![.0-9A-Za-z-])'
+doc_re=${DOC_VERSION//./\\.}
+current_family_regex="^(${doc_re}(\\.[0-9]+)?|${doc_re}-branch${SOURCE_TAG:+|${SOURCE_TAG//./\\.}})$"
 mapfile -t other_versions < <(
     grep -rhoP "$version_regex" "$build_dir" \
         --include='*.html' \
@@ -99,7 +111,7 @@ pattern_body=$(printf '%s\n' "${other_versions[@]}" \
     | sed 's/\./\\./g' \
     | awk '{ print length($0), $0 }' | sort -rn | cut -d' ' -f2- \
     | paste -sd'|' -)
-pattern="(?<![.0-9A-Za-z-])(?:${pattern_body})(?![.0-9A-Za-z-])"
+pattern="(?<![.0-9A-Za-z-])${base_exclusion}(?:${pattern_body})(?![.0-9A-Za-z-])"
 
 # Extract candidate hits as "<relative-path>:<trimmed-line>". Matching
 # and allowlisting on the trimmed line ignores incidental HTML indent
@@ -192,7 +204,7 @@ detected=$(printf '%s\n' "$unallowed" \
     printf '%s\n' "$unallowed" | sed 's/^/    /'
     echo
     echo "  Every YY.MM in the built HTML must be in the current release"
-    echo "  family (DOC_VERSION or DOC_VERSION.N). If a hit is legitimate"
+    echo "  family (DOC_VERSION, DOC_VERSION.N or SOURCE_TAG). If a hit is legitimate"
     echo "  (for example, real 'snap info' output showing older release"
     echo "  tracks that are still published, or release notes deliberately"
     echo "  referring to a prior release), add it to:"

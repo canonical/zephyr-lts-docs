@@ -100,15 +100,23 @@ revision:
      latest/candidate   ↑
      latest/beta        ↑
      latest/edge        ↑
-     26.04.0/stable     1.0.1    2026-09-17  all    34  52.54MB
+     26.10.0/stable     1.0.1    2026-11-10  all    50  52.53MB
+     26.10.0/candidate  ↑
+     26.10.0/beta       ↑
+     26.10.0/edge       ↑
+     26.10/stable       1.0.1    2026-11-11  all    53  52.53MB
+     26.10/candidate    ↑
+     26.10/beta         ↑
+     26.10/edge         ↑
+     26.04.0/stable     1.0.1    2026-11-10  all    51  52.54MB
      26.04.0/candidate  ↑
      26.04.0/beta       ↑
      26.04.0/edge       ↑
-     24.04.0/stable     0.16.9   2026-09-16  all    23  56.91MB
+     24.04.0/stable     0.16.9   2026-09-25  all    45  56.91MB
      24.04.0/candidate  ↑
      24.04.0/beta       ↑
      24.04.0/edge       ↑
-     1.0.1/stable       1.0.1    2026-09-17  all    35  52.54MB
+     1.0.1/stable       1.0.1    2026-11-10  all    52  52.54MB
      1.0.1/candidate    ↑
      1.0.1/beta         ↑
      1.0.1/edge         ↑
@@ -116,7 +124,7 @@ revision:
      0.17.4/candidate   ↑
      0.17.4/beta        ↑
      0.17.4/edge        ↑
-     0.16.9/stable      0.16.9   2026-09-16  all    24  56.91MB
+     0.16.9/stable      0.16.9   2026-11-10  all    46  56.91MB
      0.16.9/candidate   ↑
      0.16.9/beta        ↑
      0.16.9/edge        ↑
@@ -163,8 +171,8 @@ Confirm the connected SDK now reports the channel you selected:
 .. code-block:: text
    :substitutions:
 
-   name:     zephyr-26-04
-   base:     ubuntu@26.04
+   name:     |workshop_name|
+   base:     |workshop_base|
    project:  /home/user/hello-zephyr
    status:   ready
    notes:    -
@@ -175,14 +183,14 @@ Confirm the connected SDK now reports the channel you selected:
        tracking:   latest/stable
        installed:  0.9.7  2026-09-01  (3)
      zephyr:
-       tracking:   26.04/stable
-       installed:  4.4.2  2026-08-20  (12)
+       tracking:   |workshop_sdk_channel|
+       installed:  |upstream_docs_release|  2026-08-20  (12)
      zephyr-sdk-ng:
        tracking:   |sdk_ng_channel|
-       installed:  1.0.1  2026-09-17  (41)
+       installed:  |sdk-version|  2026-09-17  (41)
      zephyr-xtensa-espressif-esp32s2:
        tracking:   |sdk_ng_channel|
-       installed:  1.0.1  2026-09-17  (34)
+       installed:  |sdk-version|  2026-09-17  (34)
 
 Find the SDK name under the :samp:`sdks` key. Its :samp:`tracking` field must
 match the channel you set in |workshop_definition_file|, and

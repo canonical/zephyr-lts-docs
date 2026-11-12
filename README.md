@@ -165,11 +165,15 @@ tool that no longer matches the documented version fails.
 `make version-check` scans the built HTML in `docs/_build/` and fails if any
 `YY.MM` release token falls outside the current release family. The current
 family is `DOC_VERSION` (from `docs/versions.env`) plus any `DOC_VERSION.N`
-patch tag: for `DOC_VERSION=26.04`, the check accepts `26.04`, `26.04.0` (the
-current `SOURCE_TAG`), and future `26.04.1`, `26.04.2`, etc. Everything else is
-a failure: interim releases (`26.10`), other LTS releases (`24.04`, `28.04`), RC
-suffixes on the current release (`26.04-rc1`), and any `-rc`/patch variant of
-another release. The target only scans the existing build — run
+patch tag, the `DOC_VERSION-branch` docs branch, and the exact `SOURCE_TAG`,
+even when it is a release candidate: for `DOC_VERSION=26.04` and
+`SOURCE_TAG=26.04.0-rc1`, the check accepts `26.04`, `26.04.0`, `26.04-branch`,
+`26.04.0-rc1`, and future `26.04.1`, `26.04.2`, etc. `UBUNTU_BASE_VERSION` is
+accepted only as `Ubuntu <version>` or `ubuntu@<version>`, the forms the docs
+use to name the host and Workshop base. Everything else is a failure: interim
+releases (`26.10`), other LTS releases (`24.04`, `28.04`), RC suffixes other
+than `SOURCE_TAG` (`26.04.0-rc2`), and any `-rc`/patch variant of another
+release. The target only scans the existing build — run
 `make version-check-clean` locally to rebuild from scratch first so the scan
 reflects exactly what the current sources produce. CI calls plain
 `make version-check` right after its `make html` step, which is already a
