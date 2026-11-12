@@ -78,61 +78,23 @@ To find other versions, inspect the SDK with the :command:`sdk info` command.
 It lists every channel an SDK publishes, with the version, build date, and
 revision:
 
+..
+   This sdk info is populated by running `make transcripts`
+
 .. code-block:: console
    :caption: Find all versions of zephyr-xtensa-espressif-esp32s2
 
    $ sdk info zephyr-xtensa-espressif-esp32s2
 
-.. code-block:: text
-
-   name:       zephyr-xtensa-espressif-esp32s2
-   publisher:  Lincoln Wallace (locnnil)
-   license:    Apache-2.0
-   website:    https://github.com/canonical/zephyr-xtensa-espressif-esp32s2-sdk
-
-   This SDK provides the cross-compiler toolchain for building Zephyr firmware
-   targeting the xtensa-espressif_esp32s2_zephyr-elf target triple. Use this SDK
-   alongside the zephyr base SDK.
-
-   CHANNELS
-     CHANNEL            VERSION  BUILD       BASE  REV     SIZE
-     latest/stable      1.0.1    2026-07-15  all     4  63.07MB
-     latest/candidate   ↑
-     latest/beta        ↑
-     latest/edge        ↑
-     26.10.0/stable     1.0.1    2026-11-10  all    50  52.53MB
-     26.10.0/candidate  ↑
-     26.10.0/beta       ↑
-     26.10.0/edge       ↑
-     26.10/stable       1.0.1    2026-11-11  all    53  52.53MB
-     26.10/candidate    ↑
-     26.10/beta         ↑
-     26.10/edge         ↑
-     26.04.0/stable     1.0.1    2026-11-10  all    51  52.54MB
-     26.04.0/candidate  ↑
-     26.04.0/beta       ↑
-     26.04.0/edge       ↑
-     24.04.0/stable     0.16.9   2026-09-25  all    45  56.91MB
-     24.04.0/candidate  ↑
-     24.04.0/beta       ↑
-     24.04.0/edge       ↑
-     1.0.1/stable       1.0.1    2026-11-10  all    52  52.54MB
-     1.0.1/candidate    ↑
-     1.0.1/beta         ↑
-     1.0.1/edge         ↑
-     0.17.4/stable      0.17.4   2026-09-16  all    28  61.31MB
-     0.17.4/candidate   ↑
-     0.17.4/beta        ↑
-     0.17.4/edge        ↑
-     0.16.9/stable      0.16.9   2026-11-10  all    46  56.91MB
-     0.16.9/candidate   ↑
-     0.16.9/beta        ↑
-     0.16.9/edge        ↑
+.. literalinclude:: /_dev/transcripts/sdk-info.txt
+   :language: text
+   :lines: 1-25
 
 Each row of the :samp:`CHANNELS` table is one :samp:`<track>/<risk>` channel. An
 arrow (:samp:`↑`) means that risk level publishes the same revision as the row
-above it. Here the :samp:`0.16.9/stable`, :samp:`0.17.4/stable`, and
-:samp:`1.0.1/stable` tracks each pin a different version with the same level of
+above it. The example shows the start of the output; the full table also lists
+tracks such as :samp:`0.16.9/stable`, :samp:`0.17.4/stable`, and
+:samp:`1.0.1/stable`, which each pin a different version with the same level of
 risk.
 
 

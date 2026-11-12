@@ -133,6 +133,17 @@ Because a `.t` file is a tested transcript, you can show it in a page via a
    :end-before: built-in workspace commands
 ```
 
+### Generated examples: `make transcripts`
+
+Some pages show real command output that changes too often to assert exactly,
+such as the SDK Store channels that `sdk info` lists. `make transcripts` runs
+those commands through `docs/_dev/update_transcripts.sh` and writes the output
+to `docs/_dev/transcripts/`, and the pages include the files with a
+`literalinclude`. Only the refresh needs the tools (the `sdk` CLI comes from the
+`workshop` snap) and network access; the docs build just reads the committed
+files. After a refresh, run `make version-check-clean`, because the new output
+can change lines pinned in the cross-version allowlist.
+
 ### Documented versions: one source of truth
 
 The versions this documentation describes are defined once in
@@ -159,6 +170,8 @@ tool that no longer matches the documented version fails.
 * Use a cram test when you want to document a command's output or a sequence of
   commands and check that the output matches the transcript exactly. You can write to a
   cram transcript and import the text with a `literalinclude` in the page.
+* Use `make transcripts` to show real output that changes too often to assert,
+  such as SDK Store listings.
 
 ### Cross-version leak check
 
@@ -185,12 +198,13 @@ preceded by other digits. Months are filtered to `01`-`12`, which discards SVG
 coordinates like `19.78` or `15.42`, and tokens inside quoted HTML attributes
 (`y1="14.05"`) are dropped as well.
 
-Legitimate cross-family mentions — for example, `snap info` output that still
+Legitimate cross-family mentions — for example, `sdk info` output that still
 lists an older release's SDK tracks, or a release note that deliberately refers
 to a prior version — belong in `docs/_dev/allowed-cross-version.txt`. Each entry
 pins one whole trimmed line to one built HTML path, so if the underlying content
 changes shape the check re-fires and forces the entry to be re-reviewed. The
-failure message tells you the exact line to add.
+failure message tells you the exact line to add. If a hit is in a generated
+example, run `make transcripts` first; the failure message says so too.
 
 
 ## Contribute

@@ -24,7 +24,7 @@
 # changes shape the check re-fires and forces a review.
 #
 # Exit status:
-#   0  no un-allowlisted hits
+#   0  no un-allowlisted hits (prints a one-line PASS summary)
 #   1  usage / setup error
 #   2  hits found (details printed)
 
@@ -51,6 +51,17 @@ if [ -z "${DOC_VERSION:-}" ]; then
     echo "check-version-leak: DOC_VERSION not set by $versions_env" >&2
     exit 1
 fi
+
+# Pages scanned, using the same --include/--exclude filters as the scans below.
+page_count=$(find "$build_dir" -name '*.html' ! -name 'search.html' ! -name 'genindex.html' \
+    | wc -l | tr -d ' ')
+
+# Reports a passing run and exits. $1 is the number of allowlisted hits.
+pass() {
+    echo "PASS: check-version-leak found 0 cross-version references" \
+        "(DOC_VERSION=$DOC_VERSION, pages scanned: $page_count, allowlisted: $1)"
+    exit 0
+}
 
 # Definition of a leak or failure
 #
@@ -96,7 +107,7 @@ mapfile -t other_versions < <(
 )
 
 if [ "${#other_versions[@]}" -eq 0 ]; then
-    exit 0
+    pass 0
 fi
 
 # Build a PCRE alternation like
@@ -166,7 +177,7 @@ fi
 unallowed=$(sort -u "$tmp" | grep -Fxv -f "$allowed" || true)
 
 if [ -z "$unallowed" ]; then
-    exit 0
+    pass "$(sort -u "$tmp" | wc -l | tr -d ' ')"
 fi
 
 # Emphatic failure banner. Colors only when stderr is a terminal, so
@@ -204,10 +215,15 @@ detected=$(printf '%s\n' "$unallowed" \
     printf '%s\n' "$unallowed" | sed 's/^/    /'
     echo
     echo "  Every YY.MM in the built HTML must be in the current release"
-    echo "  family (DOC_VERSION, DOC_VERSION.N or SOURCE_TAG). If a hit is legitimate"
-    echo "  (for example, real 'snap info' output showing older release"
-    echo "  tracks that are still published, or release notes deliberately"
-    echo "  referring to a prior release), add it to:"
+    echo "  family (DOC_VERSION, DOC_VERSION.N or SOURCE_TAG)."
+    echo
+    echo "  Command-output examples in _dev/transcripts/ are generated. If a"
+    echo "  hit is in one, regenerate them from the live tools and check again:"
+    echo "    make transcripts && make version-check-clean"
+    echo
+    echo "  If a hit is legitimate (for example, real 'sdk info' output showing"
+    echo "  older release tracks that are still published, or release notes"
+    echo "  deliberately referring to a prior release), add it to:"
     echo "    $allowlist"
     echo "  One entry per line, format: <relative-html-path>:<trimmed-line>"
     echo
