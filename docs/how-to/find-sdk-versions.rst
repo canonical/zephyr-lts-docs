@@ -88,14 +88,12 @@ revision:
 
 .. literalinclude:: /_dev/transcripts/sdk-info.txt
    :language: text
-   :lines: 1-25
 
 Each row of the :samp:`CHANNELS` table is one :samp:`<track>/<risk>` channel. An
 arrow (:samp:`↑`) means that risk level publishes the same revision as the row
-above it. The example shows the start of the output; the full table also lists
-tracks such as :samp:`0.16.9/stable`, :samp:`0.17.4/stable`, and
-:samp:`1.0.1/stable`, which each pin a different version with the same level of
-risk.
+above it. The example shows only the :samp:`latest` track, the tracks for this
+release, and the |sdk-version| track, which pins that SDK version. The full
+table also lists tracks for other releases and other SDK versions.
 
 
 Select a different channel

@@ -29,7 +29,7 @@ Workshop support requires an Ubuntu or snap-enabled Linux host. Use the host sys
 installation path on an |ubuntu-base| host that cannot run Workshop.
 
 Probe-based flashing over a USB debug probe does not work in the
-|product_name| Workshop.
+26.04 Workshop.
 A custom-device plug with :samp:`subsystem: usb` can show as connected while the
 container receives no :file:`/dev/bus/usb/` device node. The flash tool then
 reports ``LIBUSB_ERROR_NO_DEVICE``. A :samp:`tty` plug for the same board is

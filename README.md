@@ -141,8 +141,10 @@ those commands through `docs/_dev/update_transcripts.sh` and writes the output
 to `docs/_dev/transcripts/`, and the pages include the files with a
 `literalinclude`. Only the refresh needs the tools (the `sdk` CLI comes from the
 `workshop` snap) and network access; the docs build just reads the committed
-files. After a refresh, run `make version-check-clean`, because the new output
-can change lines pinned in the cross-version allowlist.
+files. The script keeps only the channels for the versions in
+`docs/versions.env`, so the examples follow a version bump and never need
+cross-version allowlist entries: after bumping `versions.env`, run
+`make transcripts`, then `make version-check-clean`.
 
 ### Documented versions: one source of truth
 

@@ -59,10 +59,10 @@ sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
 source_tag = _doc_versions["SOURCE_TAG"]
 docs_branch = f"{product_release}-branch"
 
-# The release-note filename (release-notes/zephyr-YY-MM.rst) and reST metadata
-# descriptions are consumed outside reST substitution processing, so keep them
-# aligned with the profile by hand. docs/reference/workshop.yaml is a template
-# rendered through the literalinclude :substitutions: option defined below.
+# reST metadata descriptions are consumed outside reST substitution processing,
+# so keep them aligned with the profile by hand. docs/reference/workshop.yaml is
+# a template rendered through the literalinclude :substitutions: option defined
+# below.
 product_name = f"Zephyr {product_release} LTS"
 workshop_name = f"zephyr-{product_release.replace('.', '-')}"
 workshop_definition = f"{workshop_name}.yaml"
