@@ -71,8 +71,27 @@ from the workspace root:
 Previous Releases
 -----------------
 
-|product_name| is Canonical's inaugural Zephyr LTS release! Future releases will
-list `Release Identifiers`_ here.
+All previous releases publish their source tags in the manifest repository
+|manifest_repository_url_samp|.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Product release
+     - Workshop SDK channel
+     - Source tag
+     - Upstream base
+     - Upstream SDK
+   * - Zephyr 26.04 LTS
+     - ``26.04/stable``
+     - ``26.04.0``
+     - Zephyr 4.4
+     - 1.0.1
+   * - Zephyr 24.04 LTS
+     - ``24.04/stable``
+     - ``24.04.0``
+     - Zephyr 3.7
+     - 0.16.9
 
 See also
 --------
