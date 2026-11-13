@@ -1,8 +1,9 @@
 # Zephyr 26.04 documentation changelog
 
-- Update Google Tag Manager
+- Update Google Tag Manager.
 - Add a consent cookie banner for Google Analytics.
 - Fix `workshop init` command in the Get started with Workshop tutorial.
+- Add `make transcripts` dev command.
 
 ## Unreleased
 
