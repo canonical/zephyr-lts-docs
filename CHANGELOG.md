@@ -1,3 +1,7 @@
+# Zephyr 26.10 documentation changelog
+
+- Set version.env to 26.10.0-rc1
+
 # Zephyr 26.04 documentation changelog
 
 - Update Google Tag Manager.

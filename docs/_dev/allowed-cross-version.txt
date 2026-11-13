@@ -22,4 +22,13 @@
 # with the prose that produced them.
 
 # for the bug in 26.04 workshop
-tutorials/workshop-flash-hardware/index.html:<p>USB probe pass-through is a known issue in the 26.04 Workshop.
+release-notes/zephyr-current/index.html:26.04 Workshop.
+tutorials/workshop-flash-hardware/index.html:<p>USB probe pass-through is a known issue in 26.04 Workshop.
+
+# previous release identifiers table in reference/releases.rst
+reference/releases/index.html:<tr class="row-even"><td><p>Zephyr 26.04 LTS</p></td>
+reference/releases/index.html:<tr class="row-odd"><td><p>Zephyr 24.04 LTS</p></td>
+reference/releases/index.html:<td><p><code class="docutils literal notranslate"><span class="pre">26.04/stable</span></code></p></td>
+reference/releases/index.html:<td><p><code class="docutils literal notranslate"><span class="pre">24.04/stable</span></code></p></td>
+reference/releases/index.html:<td><p><code class="docutils literal notranslate"><span class="pre">26.04.0</span></code></p></td>
+reference/releases/index.html:<td><p><code class="docutils literal notranslate"><span class="pre">24.04.0</span></code></p></td>
