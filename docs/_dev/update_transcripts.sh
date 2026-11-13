@@ -37,10 +37,24 @@ fi
 tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT
 
+# The SDK Store publishes release tracks (26.10.0) but no release-candidate
+# tracks, so SOURCE_TAG and SDK_NG_CHANNEL are looked up without an -rcN
+# suffix: 26.10.0-rc1/stable -> 26.10.0/stable. This also keeps release-candidate
+# tags out of the transcripts.
+without_rc() {
+    if [[ $1 =~ ^(.+)-rc[0-9]+(/.*)?$ ]]; then
+        printf '%s%s\n' "${BASH_REMATCH[1]}" "${BASH_REMATCH[2]}"
+    else
+        printf '%s\n' "$1"
+    fi
+}
+source_tag=$(without_rc "${SOURCE_TAG:-}")
+channel=$(without_rc "$SDK_NG_CHANNEL")
+
 # Channel tracks to keep besides DOC_VERSION and its DOC_VERSION.N patch
 # tracks: latest (which names no version), the track of SDK_NG_CHANNEL, the
 # source tag, and the SDK version.
-keep_tracks="latest ${SDK_NG_CHANNEL%%/*} ${SOURCE_TAG:-} ${SDK_NG_VERSION:-}"
+keep_tracks="latest ${channel%%/*} $source_tag ${SDK_NG_VERSION:-}"
 
 # sdk_info FILE SDK CHANNEL writes `sdk info SDK` to FILE as a terminal shows
 # it, with only the channel rows for the tracks above. CHANNEL is the channel
@@ -77,6 +91,6 @@ sdk_info() {
 }
 
 mkdir -p "$out_dir"
-sdk_info sdk-info.txt zephyr-xtensa-espressif-esp32s2 "$SDK_NG_CHANNEL"
+sdk_info sdk-info.txt zephyr-xtensa-espressif-esp32s2 "$channel"
 
 echo "Run 'make version-check-clean' to check the refreshed transcripts."
