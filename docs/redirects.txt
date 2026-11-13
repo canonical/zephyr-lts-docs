@@ -6,3 +6,5 @@
 # The old path must be a file that does not exist in the source. The current path must be
 # a file that does exist in the source.
 
+"release-notes/zephyr-26-04.rst" "release-notes/zephyr-current.rst"
+

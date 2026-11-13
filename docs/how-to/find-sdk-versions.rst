@@ -78,54 +78,22 @@ To find other versions, inspect the SDK with the :command:`sdk info` command.
 It lists every channel an SDK publishes, with the version, build date, and
 revision:
 
+..
+   This sdk info is populated by running `make transcripts`
+
 .. code-block:: console
    :caption: Find all versions of zephyr-xtensa-espressif-esp32s2
 
    $ sdk info zephyr-xtensa-espressif-esp32s2
 
-.. code-block:: text
-
-   name:       zephyr-xtensa-espressif-esp32s2
-   publisher:  Lincoln Wallace (locnnil)
-   license:    Apache-2.0
-   website:    https://github.com/canonical/zephyr-xtensa-espressif-esp32s2-sdk
-
-   This SDK provides the cross-compiler toolchain for building Zephyr firmware
-   targeting the xtensa-espressif_esp32s2_zephyr-elf target triple. Use this SDK
-   alongside the zephyr base SDK.
-
-   CHANNELS
-     CHANNEL            VERSION  BUILD       BASE  REV     SIZE
-     latest/stable      1.0.1    2026-07-15  all     4  63.07MB
-     latest/candidate   ↑
-     latest/beta        ↑
-     latest/edge        ↑
-     26.04.0/stable     1.0.1    2026-09-17  all    34  52.54MB
-     26.04.0/candidate  ↑
-     26.04.0/beta       ↑
-     26.04.0/edge       ↑
-     24.04.0/stable     0.16.9   2026-09-16  all    23  56.91MB
-     24.04.0/candidate  ↑
-     24.04.0/beta       ↑
-     24.04.0/edge       ↑
-     1.0.1/stable       1.0.1    2026-09-17  all    35  52.54MB
-     1.0.1/candidate    ↑
-     1.0.1/beta         ↑
-     1.0.1/edge         ↑
-     0.17.4/stable      0.17.4   2026-09-16  all    28  61.31MB
-     0.17.4/candidate   ↑
-     0.17.4/beta        ↑
-     0.17.4/edge        ↑
-     0.16.9/stable      0.16.9   2026-09-16  all    24  56.91MB
-     0.16.9/candidate   ↑
-     0.16.9/beta        ↑
-     0.16.9/edge        ↑
+.. literalinclude:: /_dev/transcripts/sdk-info.txt
+   :language: text
 
 Each row of the :samp:`CHANNELS` table is one :samp:`<track>/<risk>` channel. An
 arrow (:samp:`↑`) means that risk level publishes the same revision as the row
-above it. Here the :samp:`0.16.9/stable`, :samp:`0.17.4/stable`, and
-:samp:`1.0.1/stable` tracks each pin a different version with the same level of
-risk.
+above it. The example shows only the :samp:`latest` track, the tracks for this
+release, and the |sdk-version| track, which pins that SDK version. The full
+table also lists tracks for other releases and other SDK versions.
 
 
 Select a different channel
@@ -163,8 +131,8 @@ Confirm the connected SDK now reports the channel you selected:
 .. code-block:: text
    :substitutions:
 
-   name:     zephyr-26-04
-   base:     ubuntu@26.04
+   name:     |workshop_name|
+   base:     |workshop_base|
    project:  /home/user/hello-zephyr
    status:   ready
    notes:    -
@@ -175,14 +143,14 @@ Confirm the connected SDK now reports the channel you selected:
        tracking:   latest/stable
        installed:  0.9.7  2026-09-01  (3)
      zephyr:
-       tracking:   26.04/stable
-       installed:  4.4.2  2026-08-20  (12)
+       tracking:   |workshop_sdk_channel|
+       installed:  |upstream_docs_release|  2026-08-20  (12)
      zephyr-sdk-ng:
        tracking:   |sdk_ng_channel|
-       installed:  1.0.1  2026-09-17  (41)
+       installed:  |sdk-version|  2026-09-17  (41)
      zephyr-xtensa-espressif-esp32s2:
        tracking:   |sdk_ng_channel|
-       installed:  1.0.1  2026-09-17  (34)
+       installed:  |sdk-version|  2026-09-17  (34)
 
 Find the SDK name under the :samp:`sdks` key. Its :samp:`tracking` field must
 match the channel you set in |workshop_definition_file|, and

@@ -38,6 +38,7 @@ help:
 	@echo "* run in-page doctests (assert CLI output):  make doctest"
 	@echo "* run cram CLI transcript tests:             make cram"
 	@echo "* check for cross-version leakage:           make version-check"
+	@echo "* regenerate command-output examples:        make transcripts"
 	@echo "* check spelling (without building again):   make spellcheck"
 	@echo "* check inclusive language:                  make woke"
 	@echo "* check accessibility:                       make pa11y"
@@ -50,7 +51,8 @@ help:
 .PHONY: help full-help html epub pdf linkcheck spelling spellcheck woke \
         vale pa11y run serve install pa11y-install   \
         vale-install pdf-prep pdf-prep-force clean clean-doc \
-        update lint-md doctest cram version-check version-check-clean
+        update lint-md doctest cram version-check version-check-clean \
+        transcripts
 
 full-help: $(DOCS_VENVDIR)
 	@. $(DOCS_VENV); $(SPHINX_BUILD) -M help "$(DOCS_SOURCEDIR)" "$(DOCS_BUILDDIR)" $(SPHINX_OPTS) $(O)
@@ -189,6 +191,12 @@ version-check:
 	DOCS_BUILDDIR="$(DOCS_BUILDDIR)" $(DEV_DIR)/check_version_leak.sh
 
 version-check-clean: clean-doc html version-check
+
+# Regenerates the command-output examples in $(DEV_DIR)/transcripts that pages
+# show with literalinclude, by running the real commands. Needs the sdk CLI and
+# network access; the docs build itself only reads the committed files.
+transcripts:
+	$(DEV_DIR)/update_transcripts.sh
 
 pdf-prep: install
 	@for packageName in $(DOCS_PDFPACKAGES); do (dpkg-query -W -f='$${Status}' $$packageName 2>/dev/null | \

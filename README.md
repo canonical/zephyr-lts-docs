@@ -133,6 +133,19 @@ Because a `.t` file is a tested transcript, you can show it in a page via a
    :end-before: built-in workspace commands
 ```
 
+### Generated examples: `make transcripts`
+
+Some pages show real command output that changes too often to assert exactly,
+such as the SDK Store channels that `sdk info` lists. `make transcripts` runs
+those commands through `docs/_dev/update_transcripts.sh` and writes the output
+to `docs/_dev/transcripts/`, and the pages include the files with a
+`literalinclude`. Only the refresh needs the tools (the `sdk` CLI comes from the
+`workshop` snap) and network access; the docs build just reads the committed
+files. The script keeps only the channels for the versions in
+`docs/versions.env`, so the examples follow a version bump and never need
+cross-version allowlist entries: after bumping `versions.env`, run
+`make transcripts`, then `make version-check-clean`.
+
 ### Documented versions: one source of truth
 
 The versions this documentation describes are defined once in
@@ -159,17 +172,23 @@ tool that no longer matches the documented version fails.
 * Use a cram test when you want to document a command's output or a sequence of
   commands and check that the output matches the transcript exactly. You can write to a
   cram transcript and import the text with a `literalinclude` in the page.
+* Use `make transcripts` to show real output that changes too often to assert,
+  such as SDK Store listings.
 
 ### Cross-version leak check
 
 `make version-check` scans the built HTML in `docs/_build/` and fails if any
 `YY.MM` release token falls outside the current release family. The current
 family is `DOC_VERSION` (from `docs/versions.env`) plus any `DOC_VERSION.N`
-patch tag: for `DOC_VERSION=26.04`, the check accepts `26.04`, `26.04.0` (the
-current `SOURCE_TAG`), and future `26.04.1`, `26.04.2`, etc. Everything else is
-a failure: interim releases (`26.10`), other LTS releases (`24.04`, `28.04`), RC
-suffixes on the current release (`26.04-rc1`), and any `-rc`/patch variant of
-another release. The target only scans the existing build — run
+patch tag, the `DOC_VERSION-branch` docs branch, and the exact `SOURCE_TAG`,
+even when it is a release candidate: for `DOC_VERSION=26.04` and
+`SOURCE_TAG=26.04.0-rc1`, the check accepts `26.04`, `26.04.0`, `26.04-branch`,
+`26.04.0-rc1`, and future `26.04.1`, `26.04.2`, etc. `UBUNTU_BASE_VERSION` is
+accepted only as `Ubuntu <version>` or `ubuntu@<version>`, the forms the docs
+use to name the host and Workshop base. Everything else is a failure: interim
+releases (`26.10`), other LTS releases (`24.04`, `28.04`), RC suffixes other
+than `SOURCE_TAG` (`26.04.0-rc2`), and any `-rc`/patch variant of another
+release. The target only scans the existing build — run
 `make version-check-clean` locally to rebuild from scratch first so the scan
 reflects exactly what the current sources produce. CI calls plain
 `make version-check` right after its `make html` step, which is already a
@@ -181,12 +200,13 @@ preceded by other digits. Months are filtered to `01`-`12`, which discards SVG
 coordinates like `19.78` or `15.42`, and tokens inside quoted HTML attributes
 (`y1="14.05"`) are dropped as well.
 
-Legitimate cross-family mentions — for example, `snap info` output that still
+Legitimate cross-family mentions — for example, `sdk info` output that still
 lists an older release's SDK tracks, or a release note that deliberately refers
 to a prior version — belong in `docs/_dev/allowed-cross-version.txt`. Each entry
 pins one whole trimmed line to one built HTML path, so if the underlying content
 changes shape the check re-fires and forces the entry to be re-reviewed. The
-failure message tells you the exact line to add.
+failure message tells you the exact line to add. If a hit is in a generated
+example, run `make transcripts` first; the failure message says so too.
 
 
 ## Contribute

@@ -48,7 +48,8 @@ Use this definition for a |product_name| workspace:
 
 .. literalinclude:: workshop.yaml
    :language: yaml
-   :caption: .workshop/zephyr-26-04.yaml
+   :caption: .workshop/|workshop_name|.yaml
+   :substitutions:
 
 Store the definition in the project repository.
 Do not store :file:`.workshop.lock` in the repository.

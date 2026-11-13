@@ -12,5 +12,6 @@ Workshop SDK.
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
-   Zephyr 26.04 <zephyr-26-04>
+   zephyr-*
