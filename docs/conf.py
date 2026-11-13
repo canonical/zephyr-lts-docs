@@ -63,7 +63,18 @@ docs_branch = f"{product_release}-branch"
 # so keep them aligned with the profile by hand. docs/reference/workshop.yaml is
 # a template rendered through the literalinclude :substitutions: option defined
 # below.
-product_name = f"Zephyr {product_release} LTS"
+_release_type = _doc_versions.get("DOC_RELEASE_TYPE")
+if _release_type not in ("lts", "interim"):
+    raise ValueError(
+        f"versions.env: DOC_RELEASE_TYPE must be 'lts' or 'interim', got {_release_type!r}"
+    )
+is_lts = _release_type == "lts"
+product_release_label = f"{product_release} LTS" if is_lts else product_release
+product_name = f"Zephyr {product_release_label}"
+distribution_kind = "long-term support" if is_lts else "interim"
+release_kind = "LTS" if is_lts else "interim"
+# Sphinx injects `tags` into conf.py; enables `.. only:: lts` / `.. only:: interim`.
+tags.add(_release_type)
 workshop_name = f"zephyr-{product_release.replace('.', '-')}"
 workshop_definition = f"{workshop_name}.yaml"
 workshop_base = f"ubuntu@{_doc_versions['UBUNTU_BASE_VERSION']}"
@@ -219,7 +230,7 @@ rediraffe_dir_only = True
 # <first sentence of home page>".
 llms_txt_description = textwrap.dedent(
     f"""\
-    This is the documentation for {product_name}, Canonical's long-term support
+    This is the documentation for {product_name}, Canonical's {distribution_kind}
     distribution of the Zephyr real-time operating system.
     """
 )
@@ -408,7 +419,9 @@ _version_substitutions = f"""
 .. |ppa-archive| replace:: {ppa_archive}
 .. |ppa-content-url| replace:: {ppa_content_url}
 .. |zephyr-lts-url| replace:: {_doc_versions["DOC_LP_ZEPHYR_URL"]}
-.. |zephyr-lts| replace:: {_doc_versions["DOC_VERSION"]} LTS
+.. |zephyr-lts| replace:: {product_release_label}
+.. |release_kind| replace:: {release_kind}
+.. |distribution_kind| replace:: {distribution_kind}
 .. |sdk-version| replace:: {_doc_versions["SDK_NG_VERSION"]}
 .. |west-min-version| replace:: v{_doc_versions["DOC_WEST_MIN_VERSION"]}
 .. |doc-version| replace:: {_doc_versions["DOC_VERSION"]}

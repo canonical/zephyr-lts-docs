@@ -4,6 +4,7 @@
 - Add a consent cookie banner for Google Analytics.
 - Fix `workshop init` command in the Get started with Workshop tutorial.
 - Add `make transcripts` dev command.
+- Add toggle to set LTS version or Interim version.
 
 ## Unreleased
 
