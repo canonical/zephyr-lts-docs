@@ -3,6 +3,10 @@ import os
 import re
 import textwrap
 
+from docutils import nodes
+from docutils.parsers.rst import directives
+from sphinx.directives.code import LiteralInclude
+
 #####################
 # Documented versions
 #####################
@@ -55,13 +59,14 @@ sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
 source_tag = _doc_versions["SOURCE_TAG"]
 docs_branch = f"{product_release}-branch"
 
-# Keep docs/reference/workshop.yaml, the release-note filename and heading,
-# toctree entries, page labels, and reST metadata descriptions aligned with the
-# profile. These are consumed outside normal reST substitution processing.
+# reST metadata descriptions are consumed outside reST substitution processing,
+# so keep them aligned with the profile by hand. docs/reference/workshop.yaml is
+# a template rendered through the literalinclude :substitutions: option defined
+# below.
 product_name = f"Zephyr {product_release} LTS"
 workshop_name = f"zephyr-{product_release.replace('.', '-')}"
 workshop_definition = f"{workshop_name}.yaml"
-workshop_base = f"ubuntu@{product_release}"
+workshop_base = f"ubuntu@{_doc_versions['UBUNTU_BASE_VERSION']}"
 workshop_sdk_channel = f"{product_release}/stable"
 ppa_pin_package = f"zephyr-ppa-pin-{product_release.replace('.', '-')}"
 ppa_archive = _doc_versions["DOC_PPA_NAME"].split("/")[-1]
@@ -496,6 +501,37 @@ rst_prolog = (
 """
      + _version_substitutions
 )
+
+#########################################
+# literalinclude :substitutions: option
+#########################################
+
+# sphinx_substitution_extensions adds :substitutions: to code-block only. Add
+# the same option to literalinclude so included files, such as
+# reference/workshop.yaml, can use the |name| substitutions defined above.
+class SubstitutionLiteralInclude(LiteralInclude):
+    option_spec = {**LiteralInclude.option_spec, "substitutions": directives.flag}
+
+    def run(self):
+        result = super().run()
+        if "substitutions" not in self.options:
+            return result
+        substitutions = {
+            name: definition.astext()
+            for name, definition in self.state.document.substitution_defs.items()
+        }
+        for node in result:
+            for block in node.findall(nodes.literal_block):
+                text = block.astext()
+                for name, value in substitutions.items():
+                    text = text.replace(f"|{name}|", value)
+                block.rawsource = text
+                block[:] = [nodes.Text(text)]
+        return result
+
+
+def setup(app):
+    app.add_directive("literalinclude", SubstitutionLiteralInclude, override=True)
 
 # Configuration for Intersphinx projects
 #

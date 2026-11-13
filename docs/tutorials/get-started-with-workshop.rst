@@ -62,6 +62,7 @@ Add the sample environment definition to the file:
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
    :caption: .workshop/|workshop_name|.yaml
+   :substitutions:
 
 Or you may have Workshop initialize the |product_name| template for you on the
 command line:
@@ -203,7 +204,8 @@ For example, the workshop definition file in this tutorial defines ``sync``, ``b
 .. literalinclude:: ../reference/workshop.yaml
    :language: yaml
    :start-after: slot: zephyr-amd64:toolchain
-   :caption: .workshop/zephyr-26-04.yaml
+   :caption: .workshop/|workshop_name|.yaml
+   :substitutions:
 
 To update all repositories defined in the West manifest, run the ``sync`` action:
 

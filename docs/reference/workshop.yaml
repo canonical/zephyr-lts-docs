@@ -1,14 +1,14 @@
-name: zephyr-26-04
-base: ubuntu@26.04
+name: |workshop_name|
+base: |workshop_base|
 sdks:
   - name: uv
     channel: latest/stable
   - name: zephyr
-    channel: 26.04/stable
+    channel: |workshop_sdk_channel|
   - name: zephyr-sdk-ng
-    channel: 26.04.0/stable
+    channel: |sdk_ng_channel|
   - name: zephyr-amd64
-    channel: 26.04.0/stable
+    channel: |sdk_ng_channel|
 connections:
   - plug: zephyr:venv
     slot: uv:venv
