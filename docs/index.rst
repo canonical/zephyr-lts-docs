@@ -3,7 +3,7 @@
 .. _home:
 
 .. meta::
-   :description: Documentation for Canonical's Zephyr LTS distribution,
+   :description: Documentation for Canonical's Zephyr distribution,
                  including setup, source repositories, and support.
 
 Zephyr |zephyr-lts|
@@ -25,7 +25,7 @@ Zephyr |zephyr-lts|
    Contribute <contribute/index>
 
 
-|product_name| is Canonical's long-term support distribution
+|product_name| is Canonical's |distribution_kind| distribution
 of the Zephyr real-time operating system (RTOS).
 Canonical maintains Zephyr and its modules
 in the `Zephyr RTOS Launchpad project`_.

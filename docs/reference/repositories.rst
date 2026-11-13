@@ -2,7 +2,7 @@
 
 .. meta::
    :description: URL rules and important Launchpad repositories for Canonical's
-                 Zephyr LTS distribution.
+                 Zephyr distribution.
 
 Source repositories
 ===================

@@ -1,7 +1,7 @@
 .. _release-notes:
 
 .. meta::
-   :description: Release notes for Canonical's Zephyr LTS distribution.
+   :description: Release notes for Canonical's Zephyr distribution.
 
 Release notes
 =============

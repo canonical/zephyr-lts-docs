@@ -1,16 +1,18 @@
 .. _exp_canonical_distribution:
 
 .. meta::
-   :description: How Canonical creates and maintains its Zephyr LTS
+   :description: How Canonical creates and maintains its Zephyr
                  distribution from an upstream Zephyr release.
 
 Canonical's Zephyr distribution
 ================================
 
-To provide long-term support, Canonical forks Zephyr and maintains the Zephyr module repositories and any other repositories required to support or develop Zephyr |upstream_release|.
+To provide long-term support, Canonical forks Zephyr and maintains the Zephyr
+module repositories and any other repositories required to support or develop
+Zephyr |upstream_release|.
 
 
-The LTS distribution stores these sources in `Launchpad
+The |release_kind| distribution stores these sources in `Launchpad
 <https://code.launchpad.net/~arctic-tern>`__. Each upstream repository has a
 corresponding git repository with the same name in the Zephyr RTOS Launchpad
 project. For example, the upstream |upstream_sdk_ng_link| has a

@@ -1,7 +1,7 @@
 .. _contribute:
 
 .. meta::
-   :description: How to build, test, and propose changes to the Zephyr LTS
+   :description: How to build, test, and propose changes to the Zephyr
                  documentation.
 
 Contribute

@@ -2,13 +2,14 @@
 
 .. meta::
    :description: Release naming, update channels, and source identification for
-                 Canonical's Zephyr LTS distribution.
+                 Canonical's Zephyr distribution.
 
 Releases
 ========
 
-Canonical uses an Ubuntu-style year and month for Zephyr LTS releases. The
-product name |product_release_samp| identifies this LTS release series.
+Canonical uses an Ubuntu-style year and month for Zephyr LTS and interim
+releases. The product name |product_release_samp| identifies this |release_kind|
+release series.
 
 Release identifiers
 -------------------
