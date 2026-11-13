@@ -27,9 +27,17 @@ Before starting, ensure you have these requirements satisfied:
 Install host packages and the Package Index
 -------------------------------------------
 
-To provide LTS guarantees, we encourage users to install :program:`west`, the
-Zephyr toolchains and Python dependencies through the |product_name| Personal
-Package Archive (PPA): |zephyr-lts-ppa|.
+.. only:: lts
+
+   To provide LTS guarantees, we encourage users to install :program:`west`,
+   the Zephyr toolchains and Python dependencies through the |product_name|
+   Personal Package Archive (PPA): |zephyr-lts-ppa|.
+
+.. only:: interim
+
+   To get the versions tested with this release, we encourage users to install
+   :program:`west`, the Zephyr toolchains and Python dependencies through the
+   |product_name| Personal Package Archive (PPA): |zephyr-lts-ppa|.
 
 .. note::
 
@@ -108,8 +116,8 @@ Export the Zephyr CMake package:
 Install the |product_name| SDK
 ------------------------------
 
-The :canonical-zephyr:`sdk-ng repository <sdk-ng>` contains the LTS version of
-the Zephyr |upstream_release| SDK.
+The :canonical-zephyr:`sdk-ng repository <sdk-ng>` contains the latest
+compatible version of the Zephyr |upstream_release| SDK.
 
 First, ensure that SDK version listed in :file:`zephyr/SDK_VERSION` match
 |sdk-version|:

@@ -1,7 +1,7 @@
 .. _ref_support:
 
 .. meta::
-   :description: Support and security reporting information for Zephyr LTS.
+   :description: Support and security reporting information for Canonical's Zephyr distribution.
 
 Support and security
 ====================

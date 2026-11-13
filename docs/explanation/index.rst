@@ -1,7 +1,7 @@
 .. _explanation:
 
 .. meta::
-   :description: Explanations of Canonical's Zephyr LTS distribution and its
+   :description: Explanations of Canonical's Zephyr distribution and its
                  development environment choices.
 
 Explanation

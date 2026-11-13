@@ -1,7 +1,7 @@
 .. _release_notes_current:
 
 .. meta::
-   :description: Initial release notes for this Zephyr LTS distribution.
+   :description: Initial release notes for this Zephyr distribution.
 
 Zephyr |product_release| release notes
 ======================================
