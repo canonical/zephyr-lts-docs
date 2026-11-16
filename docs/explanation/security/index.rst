@@ -47,7 +47,7 @@ In this section
    and the risks that remain outside Zephyr's control.
 
 :ref:`exp_security_data`
-   Where a device stores data, how deletion works,
+   Where a device stores data, how deletion and decommissioning work,
    and how |product_name| uses cryptography.
 
 :ref:`exp_security_support`
@@ -60,21 +60,6 @@ Security how-to guides
 * :ref:`how_harden_an_application`
 * :ref:`how_get_security_updates`
 * :ref:`how_report_a_vulnerability`
-
-.. todo::
-
-   These security documentation topics need decisions from the product leads:
-
-   * How to manage authentication and identity
-   * How to configure logging and monitoring,
-     and the risks of turning logging off
-   * How to export or migrate data at rest
-   * How to integrate devices securely with other products and services
-   * How to decommission a device securely, including how to remove user data
-   * How to reset a device or workspace to its original state
-   * Whether Workshop SDKs update automatically,
-     and how to postpone or turn off those updates
-   * Reference: logging schema
 
 
 See also

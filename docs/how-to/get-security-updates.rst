@@ -39,6 +39,9 @@ only when you switch it.
 You therefore decide when to apply an update, and you don't need
 to turn off or postpone automatic source updates.
 
+Workshop SDKs do not update automatically. Workshop updates the SDKs only when
+you run :command:`workshop refresh`.
+
 Each day that you delay an update, devices built from your workspace keep
 any vulnerabilities that the update fixes.
 Older updates in the |product_release| series don't receive security fixes.

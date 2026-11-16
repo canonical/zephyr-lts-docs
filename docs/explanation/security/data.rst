@@ -2,7 +2,7 @@
 
 .. meta::
    :description: Where devices built on Zephyr LTS store data, how deletion
-                 works, and how Zephyr LTS uses cryptography.
+                 and decommissioning work, and how Zephyr LTS uses cryptography.
 
 Security of data
 ================
@@ -33,11 +33,23 @@ Data on a device lives in three places:
 Data lifecycle, deletion, and retention
 ---------------------------------------
 
-Zephyr has no retention policy. Stored data stays until your application
-deletes it. Deleting data doesn't always erase it: the NVS and ZMS backends
-and file systems mark deleted data as free, but its contents can remain
-in flash until the storage reuses that space.
-To remove data permanently, erase the flash partition that holds it.
+Zephyr has no retention policy. Stored data stays until your application deletes
+it. Deleting data doesn't always erase it: the NVS and ZMS backends and file
+systems mark deleted data as free, but its contents can remain in flash until
+the storage reuses that space. To remove data permanently, erase the flash
+partition that holds it.
+
+|product_name| doesn't provide a way to export data or migrate it to another
+device. If your product needs one, your application must provide it.
+
+
+Decommissioning
+---------------
+
+|product_name| doesn't provide a decommissioning procedure. Your application
+decides what data a device holds, so you must provide the procedure that
+securely removes that data before a device is retired, resold, or returned.
+Document the procedure for the users of your product.
 
 
 Cryptography

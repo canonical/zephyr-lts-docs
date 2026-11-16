@@ -93,12 +93,52 @@ All previous releases publish their source tags in the manifest repository
      - Zephyr 3.7
      - 0.16.9
 
+.. _ref_releases_support_periods:
+
+Support periods
+---------------
+
+Each release line receives security fixes until its Canonical end of life.
+After that date, the release line no longer receives security fixes.
+The `release plan
+<https://discourse.ubuntu.com/t/zephyr-lts-release-plan-and-activity/89358>`__
+lists planned releases and is updated as plans change.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Release line
+     - Support level
+     - Release date
+     - Zephyr version
+     - Upstream end of life
+     - Canonical end of life
+   * - 26.10
+     - Interim
+     - Nov 2026
+     - 4.5
+     - Oct 2027
+     - Jul 2027
+   * - 26.04
+     - LTS
+     - Sep 2026
+     - 4.4
+     - Apr 2027
+     - Apr 2037
+   * - 24.04
+     - LTS
+     - Sep 2026
+     - 3.7
+     - Jul 2029
+     - Jul 2039
+
 See also
 --------
 
 Explanation:
 
 - :ref:`exp_canonical_distribution`
+- :ref:`exp_security_support`
 
 Reference:
 

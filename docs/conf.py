@@ -255,6 +255,8 @@ linkcheck_ignore = [
     r"https://.*\.sourceforge\.(net|io)/.*",
     # nordicsemi.com blocks the linkcheck bot with a 403
     r"https://www\.nordicsemi\.com/.*",
+    # cisa.gov (Akamai) blocks non-browser clients with a 403
+    r"https://www\.cisa\.gov/.*",
 ]
 
 # A regex list of URLs where anchors are ignored by 'make linkcheck'

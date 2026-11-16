@@ -24,12 +24,22 @@ Which releases
    fix obligation.
 
 For how long
-   Standard security maintenance lasts as long as the upstream Zephyr Project
-   maintains the |upstream_release| LTS line, approximately 2.5 years.
-   Extended Security Maintenance (ESM), a Canonical product that customers can
-   purchase, continues security maintenance after that.
-   When the applicable maintenance period ends,
-   |product_name| no longer receives security fixes.
+   .. only:: lts
+
+      Standard security maintenance lasts as long as the upstream Zephyr
+      Project maintains the |upstream_release| LTS line. Extended Security
+      Maintenance (ESM), a Canonical product that customers can purchase,
+      continues security maintenance after that.
+
+   .. only:: interim
+
+      Standard security maintenance lasts nine months.
+      To keep receiving security fixes after that,
+      move to a newer release.
+
+   When the applicable maintenance period ends, |product_name| no
+   longer receives security fixes. For the end date of each release line, see
+   :ref:`ref_releases_support_periods`.
 
 How fixes reach you
    As new source tags announced in the :ref:`release notes <release-notes>`
@@ -42,10 +52,7 @@ How to report a vulnerability
 
 .. todo::
 
-   Add the end dates for standard security maintenance and ESM,
-   and a link where customers can purchase ESM.
-   The security policy names this page as the published source
-   for these dates.
+   Add a link where customers can purchase ESM.
 
 
 See also

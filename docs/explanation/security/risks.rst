@@ -3,7 +3,8 @@
 .. meta::
    :description: The inherent risks of devices built on Zephyr LTS:
                  misconfiguration, input validation, denial of service, access
-                 control, data handling, tampering, and non-repudiation.
+                 control, integration, data handling, tampering, logging, and
+                 non-repudiation.
 
 Risks
 =====
@@ -73,6 +74,23 @@ anyone who can reach them can control the device.
 Inside the firmware, threads have no access control between them
 unless you enable :ref:`user mode <exp_security_user_mode>`.
 
+|product_name| doesn't manage users, credentials, or device identities.
+Your application decides how it authenticates users, peers, and devices,
+and how it provisions and protects their credentials.
+Zephyr provides building blocks such as TLS client certificates,
+Bluetooth LE pairing, MCUmgr transport security, and shell login.
+See :ref:`how_harden_an_application`.
+
+
+Integration with other products and services
+--------------------------------------------
+
+|product_name| doesn't connect to any service by itself. Your application
+decides which products and services a device connects to and how it trusts
+them. Authenticate every peer, for example with TLS peer verification,
+and treat all data from a peer as untrusted input.
+See :ref:`how_harden_an_application`.
+
 
 Handling data incorrectly
 -------------------------
@@ -102,6 +120,28 @@ Protection against these attacks depends on the SoC.
 Zephyr doesn't detect tampering by itself.
 To notice a malicious actor, your application must log security-relevant
 events and you must monitor them.
+
+
+Logging and monitoring
+----------------------
+
+Zephyr's logging subsystem records messages from the kernel, drivers,
+and your application, but it has no fixed format for security events and
+doesn't send logs anywhere by itself. Your application decides which events
+to log, where to send them, and how to monitor them.
+Security-relevant events include failed authentication, MCUmgr commands,
+firmware updates, and unexpected resets.
+
+Logging and monitoring carry risks either way:
+
+* With logging turned off, you can't detect an attack
+  or investigate one afterwards.
+* With verbose logging turned on, log output can expose keys,
+  credentials, personal data, and kernel state to anyone who can read it.
+
+In production, log only the events that you need, never log secrets or
+personal data, and protect the channel that carries logs off the device.
+See :ref:`how_harden_an_application`.
 
 
 Non-repudiation
