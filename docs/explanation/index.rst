@@ -21,7 +21,7 @@ Distribution
 with a coordinated set of module repositories in Launchpad:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Canonical's Zephyr distribution <canonical-distribution>
 
@@ -33,7 +33,7 @@ The security overview describes the trust boundaries, controls, and risks
 of |product_name|, and the security support that Canonical provides:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Security overview <security/index>
 
@@ -45,6 +45,6 @@ Workshop supplies a managed environment,
 while the host system path follows the conventional upstream setup:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Development environments <development-environments>

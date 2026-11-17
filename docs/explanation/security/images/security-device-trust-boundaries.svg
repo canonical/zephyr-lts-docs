@@ -26,6 +26,8 @@
     </style>
   </defs>
 
+  <rect width="1000" height="660" rx="8" fill="#ffffff"/>
+
   <!-- Outside the device -->
   <text class="zone-label" x="120" y="80" text-anchor="middle">Outside the device</text>
 

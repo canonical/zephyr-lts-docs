@@ -17,7 +17,7 @@ The Workshop reference records the SDK channel,
 project paths, actions, and host interfaces:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Workshop environment <workshop-environment>
    West Manifest File <west-manifest>
@@ -31,7 +31,7 @@ The release reference describes the identifiers
 that apply to this source and its development tools:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Source repositories <repositories>
    Releases <releases>
@@ -43,7 +43,7 @@ This page lists the boards that |product_name| supports and additional testing
 performed by Canonical.
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Supported Boards <supported-boards>
 
@@ -54,6 +54,6 @@ Support
 Use the support reference when you report a technical problem:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Support <support>

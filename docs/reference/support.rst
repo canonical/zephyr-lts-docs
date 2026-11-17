@@ -11,7 +11,7 @@ Search this documentation before you report a problem.
 When you open a report,
 include enough information
 for another developer to reproduce the problem.
-If the problem affects security, don't report it in a public bug:
+If the problem affects security, do not report it in a public bug:
 follow :ref:`how_report_a_vulnerability` instead.
 
 Technical problems
@@ -62,4 +62,3 @@ How-to guides:
 Reference:
 
 - :ref:`ref_releases`
-- `Security policy <https://github.com/canonical/zephyr-lts-docs/blob/main/SECURITY.md>`__

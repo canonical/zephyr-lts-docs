@@ -7,10 +7,9 @@
 How to get security updates
 ===========================
 
-Canonical delivers security fixes for |product_name| as new source updates.
-Each update has a new immutable source tag.
-Only the latest update of the |product_release| release series
-receives security fixes, so keep your workspace on it.
+Canonical delivers security fixes for |product_name| as new source updates. Each
+update has a new immutable source tag. Only the latest update of the
+|product_release| release series receives security fixes.
 
 Prerequisites
 -------------
@@ -25,26 +24,26 @@ Run the commands in this guide from the root of your workspace.
 How you are notified
 --------------------
 
-Canonical announces each update in the :ref:`release notes <release-notes>`
-and, where applicable, in
-`Ubuntu Security Notices <https://ubuntu.com/security/notices>`__.
-The release notes also describe any action that you must take,
-such as a configuration change.
+Canonical announces each update in:
 
-Updates aren't automatic
-------------------------
+* The :ref:`release notes <release-notes>`.
+* The `Zephyr LTS release plan and activity
+  <https://discourse.ubuntu.com/t/zephyr-lts-release-plan-and-activity/89358>`__
+  topic on Ubuntu Discourse.
+* `Ubuntu Security Notices <https://ubuntu.com/security/notices>`__,
+  where applicable.
 
-A source tag never changes, and your workspace moves to a new tag
-only when you switch it.
-You therefore decide when to apply an update, and you don't need
-to turn off or postpone automatic source updates.
+The release notes describe any action that you must take, such as a
+configuration change.
 
-Workshop SDKs do not update automatically. Workshop updates the SDKs only when
-you run :command:`workshop refresh`.
+Updates are not automatic
+-------------------------
 
-Each day that you delay an update, devices built from your workspace keep
-any vulnerabilities that the update fixes.
-Older updates in the |product_release| series don't receive security fixes.
+A source tag never changes, and your workspace moves to a new tag only when you
+switch it. You therefore decide when to apply an update.
+
+Similarly, Workshop SDKs do not update automatically. Workshop updates the SDKs
+only when you run :command:`workshop refresh`.
 
 Check your current update
 -------------------------
@@ -74,14 +73,14 @@ List the updates in the |product_release| series, newest first:
    $ git -C |manifest_repository| tag --list '|product_release|.*' \
        --sort=-version:refname
 
-If the first tag in the list differs from your current tag,
-read its release notes, then apply it.
+If the first tag in the list differs from your current tag, read its release
+notes, then apply it.
 
 Apply the update
 ----------------
 
-Move the manifest repository to the new tag,
-replacing :samp:`{source-tag}` with the tag:
+Move the manifest repository to the new tag, replacing :samp:`{source-tag}` with
+the tag:
 
 .. code-block:: console
    :substitutions:
@@ -155,4 +154,3 @@ How-to guides:
 Reference:
 
 - :ref:`ref_releases`
-- `Security policy`_

@@ -7,7 +7,7 @@
 Get started with Workshop
 =========================
 
-In this tutorial, you'll create a |product_name| workspace and build and run the
+In this tutorial, you will create a |product_name| workspace and build and run the
 Hello World sample.
 
 Prerequisites

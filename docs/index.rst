@@ -121,11 +121,11 @@ and maintains its module revisions through a west manifest.
 .. rubric:: Releases and support
 
 - :ref:`Release notes <release-notes>`
-- :ref:`Security overview <exp_security>`
+- :ref:`Security <exp_security>`
 - :ref:`Support <ref_support>`
 
 .. rubric:: Governance and policies
 
 - `Ubuntu Code of Conduct`_
-- `Security policy`_
+- :ref:`Security policy <exp_security_support>`
 - `License`_

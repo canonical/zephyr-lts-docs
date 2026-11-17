@@ -21,6 +21,8 @@
     </style>
   </defs>
 
+  <rect width="1000" height="330" rx="8" fill="#ffffff"/>
+
   <rect class="upstream" x="20" y="60" width="210" height="130" rx="8"/>
   <text class="title" x="125" y="88" text-anchor="middle">Upstream and vendors</text>
   <text class="small" x="125" y="114" text-anchor="middle">Zephyr Project source</text>

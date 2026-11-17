@@ -78,8 +78,8 @@ or the Ubuntu archive. Package them in an in-project SDK:
    How to add vendor tools to Workshop <adding-vendor-tools-to-workshop>
 
 
-Security
---------
+Stay Secure
+-----------
 
 Harden firmware before you ship it, keep it up to date,
 and report vulnerabilities privately:

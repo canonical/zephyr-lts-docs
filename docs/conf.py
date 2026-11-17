@@ -55,7 +55,9 @@ with open(os.path.join(os.path.dirname(__file__), "versions.env")) as _f:
 product_release = _doc_versions["DOC_VERSION"]
 upstream_release = _doc_versions["DOC_UPSTREAM_VERSION"].rsplit(".", 1)[0]
 upstream_docs_release = _doc_versions["DOC_UPSTREAM_VERSION"]
-sdk_ng_channel = _doc_versions["SDK_NG_CHANNEL"]
+# The SDK Store publishes release tracks but no release-candidate tracks, so
+# drop any -rcN suffix: 26.10.0-rc1/stable -> 26.10.0/stable.
+sdk_ng_channel = re.sub(r"-rc\d+(?=/|$)", "", _doc_versions["SDK_NG_CHANNEL"])
 source_tag = _doc_versions["SOURCE_TAG"]
 docs_branch = f"{product_release}-branch"
 
@@ -480,7 +482,6 @@ rst_epilog = f"""
 .. _Diátaxis documentation framework: https://diataxis.fr/
 .. _License: https://github.com/canonical/zephyr-lts-docs/blob/main/LICENSE
 .. _Report a documentation issue: https://github.com/canonical/zephyr-lts-docs/issues
-.. _Security policy: https://github.com/canonical/zephyr-lts-docs/blob/main/SECURITY.md
 .. _Ubuntu Code of Conduct: https://ubuntu.com/community/docs/ethos/code-of-conduct
 .. _Workshop: https://ubuntu.com/workshop
 """

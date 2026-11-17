@@ -43,9 +43,13 @@ SDK channel. Apply an SDK update with :command:`workshop refresh`:
 
    $ workshop refresh |workshop_name|
 
-Each |product_name| source update has a new immutable tag. To move an existing
-workspace to a newer source tag, fetch and check out the tag in the manifest
-repository:
+Software in the |product_name| Personal Package Archive (PPA), |zephyr-lts-ppa|,
+is updated on a rolling basis, as determined by the security scanning that
+Canonical provides.
+
+Each |product_name| source update is given a new immutable tag. To move an
+existing workspace to a newer source tag, fetch and check out the tag in the
+manifest repository:
 
 .. code-block:: console
    :substitutions:
@@ -115,7 +119,7 @@ lists planned releases and is updated as plans change.
      - Canonical end of life
    * - 26.10
      - Interim
-     - Nov 2026
+     - Dec 2026
      - 4.5
      - Oct 2027
      - Jul 2027

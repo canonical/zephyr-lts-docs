@@ -9,7 +9,7 @@
 Risks
 =====
 
-The threat model rates some risks as *inherent*: Zephyr can't remove them
+The threat model rates some risks as *inherent*: Zephyr cannot remove them
 because they follow from how you configure and use it.
 This page describes them.
 
@@ -54,10 +54,10 @@ so keep your workspace on the latest update to receive their fixes.
 Denial of service
 -----------------
 
-Connected devices receive traffic that they didn't ask for.
+Connected devices receive traffic that they did not ask for.
 Fixed-size buffer pools and connection limits keep a flood from exhausting
 memory, but the flood can still fill the pools and block legitimate traffic
-while it lasts. Zephyr can't prevent volumetric attacks.
+while it lasts. Zephyr cannot prevent volumetric attacks.
 Size the pools and limits for your expected load,
 and use a watchdog to recover a stalled device.
 
@@ -74,7 +74,7 @@ anyone who can reach them can control the device.
 Inside the firmware, threads have no access control between them
 unless you enable :ref:`user mode <exp_security_user_mode>`.
 
-|product_name| doesn't manage users, credentials, or device identities.
+|product_name| does not manage users, credentials, or device identities.
 Your application decides how it authenticates users, peers, and devices,
 and how it provisions and protects their credentials.
 Zephyr provides building blocks such as TLS client certificates,
@@ -85,7 +85,7 @@ See :ref:`how_harden_an_application`.
 Integration with other products and services
 --------------------------------------------
 
-|product_name| doesn't connect to any service by itself. Your application
+|product_name| does not connect to any service by itself. Your application
 decides which products and services a device connects to and how it trusts
 them. Authenticate every peer, for example with TLS peer verification,
 and treat all data from a peer as untrusted input.
@@ -112,12 +112,12 @@ can install firmware of their choice, and it persists across reboots.
 Without downgrade prevention, an attacker can reinstall an older,
 vulnerable version.
 
-Software can't fully stop physical attacks.
+Software cannot fully stop physical attacks.
 Fault injection, such as voltage or clock glitching, can skip signature checks,
 and side-channel analysis can extract keys.
 Protection against these attacks depends on the SoC.
 
-Zephyr doesn't detect tampering by itself.
+Zephyr does not detect tampering by itself.
 To notice a malicious actor, your application must log security-relevant
 events and you must monitor them.
 
@@ -127,14 +127,14 @@ Logging and monitoring
 
 Zephyr's logging subsystem records messages from the kernel, drivers,
 and your application, but it has no fixed format for security events and
-doesn't send logs anywhere by itself. Your application decides which events
+does not send logs anywhere by itself. Your application decides which events
 to log, where to send them, and how to monitor them.
 Security-relevant events include failed authentication, MCUmgr commands,
 firmware updates, and unexpected resets.
 
 Logging and monitoring carry risks either way:
 
-* With logging turned off, you can't detect an attack
+* With logging turned off, you cannot detect an attack
   or investigate one afterwards.
 * With verbose logging turned on, log output can expose keys,
   credentials, personal data, and kernel state to anyone who can read it.
@@ -147,8 +147,8 @@ See :ref:`how_harden_an_application`.
 Non-repudiation
 ---------------
 
-Zephyr doesn't keep an audit trail.
-Without one, you can't tell which client made a change through MCUmgr
+Zephyr does not keep an audit trail.
+Without one, you cannot tell which client made a change through MCUmgr
 or the shell. MCUmgr's notification hooks let your application check and record
 each command.
 
@@ -161,7 +161,7 @@ Risks outside Zephyr's control
 
 * **Vendor binaries**: On RW612, ESP32-C3, and ESP32-S3, the radio stacks
   include closed-source code from NXP and Espressif.
-  Canonical can't audit, test, or patch this code, and fixes depend on the
+  Canonical cannot audit, test, or patch this code, and fixes depend on the
   vendor. Follow the vendors' security advisories as well as Canonical's.
 * **Hardware**: Resistance to side-channel and fault-injection attacks, debug
   port locking, and DMA isolation depend on the SoC and its configuration.

@@ -95,10 +95,10 @@ When you enable user mode, Zephyr uses the memory protection unit (MPU)
 to confine each user-mode thread to the memory partitions that it was granted.
 User-mode threads reach kernel services only through system calls,
 and the kernel validates every argument they pass.
-A bug in a user-mode thread then can't corrupt the kernel
+A bug in a user-mode thread then cannot corrupt the kernel
 or read another thread's secrets.
 
-Memory protection support differs across the supported platform set:
+Memory protection support differs by board, for example:
 
 .. list-table::
    :header-rows: 1
@@ -207,13 +207,13 @@ that you enable or deploy.
      - Built in
    * - System call validation
      - The kernel checks every pointer, length, and object handle that a
-       user-mode thread passes in, so a faulty or malicious thread can't make
-       the kernel access memory that the thread doesn't own.
+       user-mode thread passes in, so a faulty or malicious thread cannot make
+       the kernel access memory that the thread does not own.
      - Built in, when user mode is enabled
    * - User mode and memory domains
      - The MPU confines each user-mode thread to its granted memory, and
        kernel object permissions limit which threads can use which kernel
-       objects. A compromised thread can't read secrets
+       objects. A compromised thread cannot read secrets
        or change kernel data.
      - You enable, on MPU platforms
    * - Stack protection
@@ -236,7 +236,7 @@ that you enable or deploy.
    * - Verified boot
      - MCUboot checks each image's signature, and optionally its version,
        before running it. Only images that you signed can run, and older
-       vulnerable versions can't be reinstalled.
+       vulnerable versions cannot be reinstalled.
      - You deploy your signing keys
    * - TLS peer verification
      - TLS sockets can require a valid certificate and a matching host
@@ -250,12 +250,12 @@ that you enable or deploy.
    * - Authenticated device management
      - MCUmgr has no authentication of its own. Running it only over
        encrypted, authenticated transports, and disabling the command
-       groups you don't need, keeps unauthorized clients
+       groups you do not need, keeps unauthorized clients
        from controlling the device.
      - You deploy
    * - Secure storage
      - The PSA Secure Storage implementation encrypts and authenticates
-       stored secrets, so a flash dump doesn't reveal them in plaintext.
+       stored secrets, so a flash dump does not reveal them in plaintext.
      - You enable
    * - Debug port lockdown
      - Locking SWD/JTAG stops someone with physical access from reading
@@ -270,7 +270,7 @@ that you enable or deploy.
        stops them from leaking secrets or giving anyone a console.
      - You enable
    * - Extension verification
-     - LLEXT doesn't verify extensions. Checking each extension's signature
+     - LLEXT does not verify extensions. Checking each extension's signature
        before you load it, and loading it into a user-mode memory domain,
        stops untrusted code from running with kernel privilege.
      - You deploy

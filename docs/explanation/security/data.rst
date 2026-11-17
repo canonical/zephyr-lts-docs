@@ -15,7 +15,7 @@ to protect it.
 Data collection and storage
 ---------------------------
 
-Zephyr doesn't collect usage data or send data to Canonical.
+Zephyr does not collect usage data or send data to Canonical.
 Your application decides what data a device collects, stores, and sends.
 
 Data on a device lives in three places:
@@ -34,19 +34,19 @@ Data lifecycle, deletion, and retention
 ---------------------------------------
 
 Zephyr has no retention policy. Stored data stays until your application deletes
-it. Deleting data doesn't always erase it: the NVS and ZMS backends and file
+it. Deleting data does not always erase it: the NVS and ZMS backends and file
 systems mark deleted data as free, but its contents can remain in flash until
 the storage reuses that space. To remove data permanently, erase the flash
 partition that holds it.
 
-|product_name| doesn't provide a way to export data or migrate it to another
+|product_name| does not provide a way to export data or migrate it to another
 device. If your product needs one, your application must provide it.
 
 
 Decommissioning
 ---------------
 
-|product_name| doesn't provide a decommissioning procedure. Your application
+|product_name| does not provide a decommissioning procedure. Your application
 decides what data a device holds, so you must provide the procedure that
 securely removes that data before a device is retired, resold, or returned.
 Document the procedure for the users of your product.
@@ -71,7 +71,7 @@ Cryptography
 * **Secure storage**: Zephyr's PSA Secure Storage implementation encrypts and
   authenticates each entry. Its protection depends on the encryption key
   provider. The default provider derives keys from the device ID,
-  which isn't secret. Secure storage doesn't protect data from code running
+  which is not secret. Secure storage does not protect data from code running
   on the device or from an unlocked debug port.
 
 The strength of the cryptographic primitives and of the entropy source
