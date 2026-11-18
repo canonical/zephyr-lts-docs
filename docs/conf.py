@@ -259,6 +259,8 @@ linkcheck_ignore = [
     r"https://www\.nordicsemi\.com/.*",
     # cisa.gov (Akamai) blocks non-browser clients with a 403
     r"https://www\.cisa\.gov/.*",
+    # snapcraft.io returns 502 to the linkcheck bot for these snap pages
+    r"https://snapcraft\.io/(docker|lxd)$",
 ]
 
 # A regex list of URLs where anchors are ignored by 'make linkcheck'

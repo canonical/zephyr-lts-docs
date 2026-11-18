@@ -83,7 +83,7 @@ Which memory protection you can enable depends on your board. User mode and
 hardware stack protection need memory protection hardware on your SoC, such as a
 memory protection unit (MPU), a memory management unit (MMU), or RISC-V Physical
 Memory Protection (PMP). Zephyr's support for your SoC must also enable that
-hardware. In leiu of memory protection hardware, you can still employ
+hardware. In lieu of memory protection hardware, you can still employ
 software-based solutions such as stack canaries and a stack sentinel. There are
 software checks and work on every board.
 
