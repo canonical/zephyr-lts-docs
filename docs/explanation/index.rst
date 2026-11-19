@@ -7,7 +7,8 @@
 Explanation
 ===========
 
-These explanatory articles cover the distribution
+These explanatory articles cover the distribution,
+security maintenance,
 and development environment choices for |product_name|.
 Read them to understand how Canonical's source model
 fits with the standard Zephyr workflow.
@@ -20,9 +21,21 @@ Distribution
 with a coordinated set of module repositories in Launchpad:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Canonical's Zephyr distribution <canonical-distribution>
+
+
+Security
+--------
+
+The security overview describes the trust boundaries, controls, and risks
+of |product_name|, and the security support that Canonical provides:
+
+.. toctree::
+   :maxdepth: 2
+
+   Security overview <security/index>
 
 
 Development workflow
@@ -32,6 +45,6 @@ Workshop supplies a managed environment,
 while the host system path follows the conventional upstream setup:
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    Development environments <development-environments>

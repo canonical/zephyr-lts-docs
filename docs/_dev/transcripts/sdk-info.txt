@@ -13,10 +13,14 @@ CHANNELS
   latest/candidate   ↑
   latest/beta        ↑
   latest/edge        ↑
-  26.04.0/stable     1.0.1    2026-11-10  all    51  52.54MB
-  26.04.0/candidate  ↑
-  26.04.0/beta       ↑
-  26.04.0/edge       ↑
+  26.10.0/stable     1.0.1    2026-11-10  all    50  52.53MB
+  26.10.0/candidate  ↑
+  26.10.0/beta       ↑
+  26.10.0/edge       ↑
+  26.10/stable       1.0.1    2026-11-11  all    53  52.53MB
+  26.10/candidate    ↑
+  26.10/beta         ↑
+  26.10/edge         ↑
   1.0.1/stable       1.0.1    2026-11-10  all    52  52.54MB
   1.0.1/candidate    ↑
   1.0.1/beta         ↑
