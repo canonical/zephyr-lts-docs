@@ -67,9 +67,15 @@ In this documentation
        :ref:`Releases <ref_releases>` •
        :ref:`release_notes_current`
 
+   * - **Security**
+     - :ref:`Security overview <exp_security>` •
+       :ref:`Harden an application <how_harden_an_application>` •
+       :ref:`Get security updates <how_get_security_updates>` •
+       :ref:`Report a vulnerability <how_report_a_vulnerability>`
+
    * - **Project**
      - :ref:`Canonical's Zephyr distribution <exp_canonical_distribution>` •
-       :ref:`Support and security <ref_support>` •
+       :ref:`Support <ref_support>` •
        :ref:`Contribute <contribute>`
 
 
@@ -92,7 +98,8 @@ or connecting a physical board to Workshop.
 :doc:`Reference <reference/index>`: Technical details
 about the Workshop environment, source repositories, releases, and support.
 
-:doc:`Explanation <explanation/index>`: Discussion of the distribution model
+:doc:`Explanation <explanation/index>`: Discussion of the distribution model,
+security maintenance,
 and the development environments available for |product_name|.
 
 ----
@@ -114,10 +121,11 @@ and maintains its module revisions through a west manifest.
 .. rubric:: Releases and support
 
 - :ref:`Release notes <release-notes>`
-- :ref:`Support and security <ref_support>`
+- :ref:`Security <exp_security>`
+- :ref:`Support <ref_support>`
 
 .. rubric:: Governance and policies
 
 - `Ubuntu Code of Conduct`_
-- `Security policy`_
+- :ref:`Security policy <exp_security_support>`
 - `License`_

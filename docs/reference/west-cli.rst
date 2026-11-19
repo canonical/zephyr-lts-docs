@@ -84,7 +84,7 @@ the |zephyr-lts| release into the current directory:
 
    $ west init -m |zephyr-lts-url|/zephyr-manifest --mr |source_tag|
 
-Create a workspace around a local manifest repository that's already present
+Create a workspace around a local manifest repository that is already present
 without cloning anything:
 
 .. code-block:: console
