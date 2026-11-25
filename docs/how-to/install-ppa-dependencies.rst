@@ -57,15 +57,19 @@ The hook runs as root, so the commands need no :command:`sudo`:
    apt install -y |zephyr-ppa-pin|
    # Install the base, build-test, and run-test dependencies.
    apt install -y \
-     gcovr junitparser mypy openocd patool pykwalify reuse west \
-     python3-anytree python3-can python3-canopen python3-cbor python3-colorama \
-     python3-coverage python3-dotenv python3-intelhex python3-jsonschema \
-     python3-junitparser python3-mypy python3-natsort python3-numpy \
-     python3-numpy-dev python3-opencv python3-packaging python3-packaging-whl \
-     python3-ply python3-psutil python3-pyelftools python3-pykwalify \
-     python3-pylink-square python3-pyocd python3-pytest python3-pytest-subtests \
-     python3-requests python3-semver python3-serial python3-spdx-tools \
-     python3-tabulate python3-tqdm python3-yaml esptool
+     esptool gcovr junitparser mypy openocd patool pykwalify reuse west \
+     python3-anytree python3-can python3-canopen python3-cbor \
+     python3-colorama python3-coverage python3-dotenv python3-intelhex \
+     python3-jsonschema python3-junitparser python3-mypy python3-natsort \
+     python3-numpy python3-opencv python3-packaging python3-ply \
+     python3-psutil python3-pyelftools python3-pykwalify \
+     python3-pylink-square python3-pyocd python3-pytest python3-requests \
+     python3-semver python3-serial python3-spdx-python-model \
+     python3-spdx-tools python3-spdx3-validate python3-tabulate python3-tqdm \
+     python3-yaml python3-zeroconf \
+     imgtool python3-cryptography python3-ecdsa python3-grpc-tools \
+     python3-json5 python3-pycryptodome python3-pydes python3-setuptools \
+     python3-sslcrypto
    # Ensure hardware is detectable within the container.
    usermod -a -G dialout workshop
 
@@ -174,15 +178,19 @@ exclude the Zephyr modules and install the package list explicitly:
 .. code-block:: console
 
    $ sudo apt install -y \
-     gcovr junitparser mypy openocd patool pykwalify reuse west \
-     python3-anytree python3-can python3-canopen python3-cbor python3-colorama \
-     python3-coverage python3-dotenv python3-intelhex python3-jsonschema \
-     python3-junitparser python3-mypy python3-natsort python3-numpy \
-     python3-numpy-dev python3-opencv python3-packaging python3-packaging-whl \
-     python3-ply python3-psutil python3-pyelftools python3-pykwalify \
-     python3-pylink-square python3-pyocd python3-pytest python3-pytest-subtests \
-     python3-requests python3-semver python3-serial python3-spdx-tools \
-     python3-tabulate python3-tqdm python3-yaml esptool
+     esptool gcovr junitparser mypy openocd patool pykwalify reuse west \
+     python3-anytree python3-can python3-canopen python3-cbor \
+     python3-colorama python3-coverage python3-dotenv python3-intelhex \
+     python3-jsonschema python3-junitparser python3-mypy python3-natsort \
+     python3-numpy python3-opencv python3-packaging python3-ply \
+     python3-psutil python3-pyelftools python3-pykwalify \
+     python3-pylink-square python3-pyocd python3-pytest python3-requests \
+     python3-semver python3-serial python3-spdx-python-model \
+     python3-spdx-tools python3-spdx3-validate python3-tabulate python3-tqdm \
+     python3-yaml python3-zeroconf \
+     imgtool python3-cryptography python3-ecdsa python3-grpc-tools \
+     python3-json5 python3-pycryptodome python3-pydes python3-setuptools \
+     python3-sslcrypto
 
 .. note::
 
