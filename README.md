@@ -212,5 +212,3 @@ example, run `make transcripts` first; the failure message says so too.
 ## Contribute
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before you propose a change.
-
-Report security problems as described in [SECURITY.md](SECURITY.md).

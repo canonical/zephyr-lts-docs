@@ -7,7 +7,7 @@
 Flash hardware from Workshop
 ============================
 
-In this tutorial, you'll flash a Zephyr application to a physical board from a
+In this tutorial, you will flash a Zephyr application to a physical board from a
 |product_name| Workshop.
 
 Flashing is an inherently unsafe process because it must interface with the host
@@ -163,7 +163,7 @@ Create a device SDK
 Make these edits and run these commands on the host.
 
 Now that we have the ``VENDOR_ID`` and ``PRODUCT_ID`` values, we can create a
-:workshop-docs:`Workshop SDK <reference/definition-files/sdk-definition>`. We'll
+:workshop-docs:`Workshop SDK <reference/definition-files/sdk-definition>`. We will
 create an in-project SDK that declares one custom-device :workshop-docs:`plug
 <explanation/interfaces/plugs-and-slots/>` for each device your boards need:
 

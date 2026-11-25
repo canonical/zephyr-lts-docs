@@ -29,7 +29,7 @@ physical hardware. Support carries the following commitments:
    "Bug policy", "Confirmed regressions block release candidates. Bugs are triaged and assigned within 90 days in accordance with upstream's policy."
 
 CVE response follows Canonical's existing security policy; see
-:ref:`ref_support`.
+:ref:`exp_security_support`.
 
 Targets outside the supported set carry no CI commitment or fix obligation
 from Canonical. Bug reports against them are acknowledged, and fixes are
